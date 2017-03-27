@@ -31,6 +31,6 @@ $PADDING_RIGHT = "4px";
 $PADDING_DOWN = "0px";
 $PADDING_LEFT = "4px";
 // wrap or line for words. preformatted "pre-wrap", "pre", "normal", "nowrap"
-$WHITE_SPACE = "normal";
+$WHITE_SPACE = "pre-wrap";
 $LINE10_COLOR = "#ff0"; // font-color yellow
 $LINE20_COLOR = "#f0f"; // font-color magenta

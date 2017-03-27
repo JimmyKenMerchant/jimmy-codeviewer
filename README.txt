@@ -12,39 +12,190 @@ Jimmy Codeviewer is a multipurpose text viewer. First, I purposed to make a view
 
 Jimmy Codeviewer consists three departments which have several WordPress shortcodes and functions.
 
+
 1. Code Viewer
 
-	a. Shortcodes: [codeview_byid], [codeview_byname] and [codeview_bytitle] to show text in "Posts".
+a. Shortcodes: [codeview_byid], [codeview_byname] and [codeview_bytitle] to show text in "Posts".
 
-	b. EditInstruction: "(edit(exam-ple))" to make HTML markup or other escaped literal codes in "Articles" pages.
+b. Edit Instructions: "(edit(exam-ple))" to make HTML markup or other escaped literal codes in "Articles" pages.
 
-	c. Style Sheet: CSS Style Sheet to make web layout easier with Code Viewer.
+c. Style Sheet: CSS Style Sheet to make web layout easier with Code Viewer.
+
 
 2. Article Loader
 
-	a. Shortcodes: [articleloader_byid], [articleloader_byname] and [articleloader_bytitle] to show SVGs or other scripts in "Posts".
+a. Shortcodes: [articleloader_byid], [articleloader_byname] and [articleloader_bytitle] to show SVGs or other scripts in "Posts".
+
 
 3. Color and Style Changer
 
-	a. Shortcodes: [init_spansearch], [spansearch] and [spansearch_all] to change the text color and other styles. [divsearch] to change the column styles.
+a. Shortcodes: [init_spansearch], [spansearch] and [spansearch_all] to change the text color and other styles. [divsearch] to change the row styles.
 
-	b. JavaSctipt: spanSearch() and its family, the engine to provide the above shortcodes to function.
+b. JavaSctipt: spanSearch() and its family, the engine to provide the above shortcodes to function.
+
 
 == Tutorial ==
 
-ON BREIEF
+I. General
+First, you publish your text or SVGs in "Articles". Second, you call these in "Posts" by using shortcodes. If you want to change color or style on some particular string and row, use shortcodes as the instruction below.
 
-1. General
-First, you publish your text or SVGs in "Articles". Second, you call these in "Posts" by using shortcodes. If you want to change color or style on some particular string and column, use shortcodes as the instruction below.
 
-2. Publish your text or SVGs in "Articles"
-After activated this plugin, you can see "Articles" menu on the Admin Side Bar. Click this, then edit your text and publish. Make sure to note the post ID or the slug you made. This "Article" can not been shown in your site.
+II. Publish your text or SVGs in "Articles"
+After activated this plugin, you can see "Articles" menu on the Admin Side Bar. Click this, then edit your text and publish. Make sure to note the post ID (on URL of the editor page itself) or the slug you made. This "Article" can not been shown in your site publicly.
 
-3. Calling "Articles" in "Posts"
-Now you can use shortcodes on "Posts". e.g. '[codeview_byid theme="default" id="desc" start="1" count="5"]ID of Article[/codeview_byid]' shows line No.1 and sequenced 5 lines from No.1 in the text of the Article and assign table ID as "desc" and its line number.
 
-4. Change Color or style on some particular string and column.
-Also you can change color or style of some particular string and column by shortcodes. If you need to use these Color/Style changer, shortcode '[init_spansearch]' is needed before actual functional shortcodes. .e.g. '[spansearch id="desc" start="1" color="cyan"]What[/spansearch]' changes "What" word on line No.1 of ID "desc" table.
+III. Calling "Articles" in "Posts"
+Now you can use shortcodes on "Posts".
+
+a. '[codeview_byid theme="default" id="desc" start="1" count="5"]111(the post ID of Article)[/codeview_byid]':
+Shows line No.1 and sequenced 5 lines from No.1 in the text of the Article, the post ID is "111" and assign each row ID as "desc-(its linenumber)" and table class as "desc" with default template.
+
+b. '[codeview_byname theme="magazine" id="text" start="4"]some-thing(the post slug [name] of Article)[/codeview_byname]':
+Shows line No.4 in the text of the Article, the post slug is "some-thing" and assign each row ID as "text-(its linenumber)" and table class as "text" with magazine template.
+
+c. '[codeview_bytitle]' actually exist. But I highly recommend not to use this 
+'[codeview_bytitle]' because post titles don't guarantee each unique naming.
+
+'theme="magazine"' in these shortcodes means making html tags with magazine template. For example, if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
+
+Styles on templates can change individually on each shortcode. You can use the parameters below.
+
+1. 'id' // ID to add
+2. 'start' // The number as Initial Line Number
+3. 'count' // Row numbers you want to show
+4. 'width'
+5. 'number-width'
+6. 'text-align'
+7. 'line-height'
+8. 'color'
+9. 'number-color'
+10. 'background-color'
+11. 'odd-background-color'
+12. 'even-background-color'
+13. 'font-family'
+14. 'font-size'
+15. 'font-style'
+16. 'font-weight'
+17. 'opacity'
+18. 'padding-top'
+19. 'padding-right'
+20. 'padding-bottom'
+21. 'padding-left'
+22. 'white-space'
+23. 'title' // Title Name under the code
+24. 'line10-color' // font's color
+25. 'line20-color' // font's color
+26. 'line10-1' // line number (absolute) you want LINE10COL color
+27. 'line10-2' // line number (absolute) you want LINE10COL color
+28. 'line10-3' // line number (absolute) you want LINE10COL color
+29. 'line20-1' // line number (absolute) you want LINE20COL color
+30. 'line20-2' // line number (absolute) you want LINE20COL color
+31. 'line20-3' // line number (absolute) you want LINE20COL color
+
+No.6 to No.22 are similar to html style parameters. But if you use spaces in the value, parameters will be broken. No.1 to No.5 are the basic of making the table. Make sure to add "%" in the value of "number-width" . No.23 to No.31 are to use in programming code viewing to change font color on some particular line.
+
+Jimmy Codeviewer never consider of putting same lines on a page several times. Therefore, if you name the same ID to a doubled line, you will meet ID conflict and functional problems on 'spansearch' series and 'divsearch'.
+
+d. '[articleloader_byid"]111(the post ID of Article)[/articleloader_byid]':
+e. '[articleloader_byname"]some-thing(the post slug [name] of Article)[/articleloader_byname]':
+f. '[articleloader_bytitle"]The Post Title[/articleloader_bytitle]':
+Likewise 'codeviewer' series, these show Articles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeviewer' series, parameters don't exist.
+
+
+IV. Change Color or style on some particular string and row
+a. '[init_spansearch]':
+Make sure to add this to use the shortcodes below. If you use <!--nextpage--> on your post, add this on all divisions to make each pages.
+
+b. '[spansearch id="desc" start="11" end="14" color="red"]Some Word[/spansearch]':
+Searches the string "Some Word" on lines No.11 to No.14 of id "desc" which named in 'codeview' series then changes "Some Word" font color to red. If some line does not exist between No.11 to No.14, This function will be stopped. If you use this shortcode, make sure to confirm sequenced line numbers between "start" and "end".
+
+c. '[spansearch_all id="text" background-color="blue"]Some String[/spansearch_all]':
+Searches the string "Some String" on all lines of id "text" which named in 'codeview' series then changes "Some String" background-color to blue.
+
+'spansearch' series have these parameters below.
+
+1. 'id' // table's id
+4. 'color' // fontcolor of target string
+5. 'background-color' // background-color of target string
+6. 'font-family' // font-size of target string
+7. 'font-size' // font-size of target string
+8. 'font-style' // font-style of target string
+9. 'font-weight' // font-weight of target string
+10. 'vertical-align' // vertical-align of target string
+
+'[spansearch]' have these parameters below.
+
+11. 'start' // line number to start
+12. 'end' // line number to end
+
+
+d. '[divsearch id="title" start="3" end="7" text-align="center" line-height="1.6em"]':
+Searches lines No.3 to No.7 of id "title" which named in 'codeview' series then changes these text-align to center, and line-height to 1.6em. If some line does not exist between No.11 to No.14, This function will be stopped. If you use this shortcode, make sure to confirm sequenced line numbers between "start" and "end".
+
+'[divsearch]' have these parameters below.
+
+1. 'id' // table's id
+2. 'start' // line number to start
+3. 'end' // line number to end
+4. 'text-align' // align property
+5. 'line-height' // line-height of target line(s)
+6. 'color' // color of target line(s)
+7. 'background-color' // background-color of target line(s)
+8. 'font-family' // font-size of target target line(s)
+9. 'font-size' // background-color of target line(s)
+10. 'font-style' // background-color of target line(s)
+11. 'font-weight' // background-color of target line(s)
+
+
+V. Capabilities of editing "Articles"
+On Activation of this plugin, "Adiministor" and "Editor" are added full capabilities to edit and publish "Articles". "Fellow" role, which has limited capabilities to edit "Article", added to admin system. On Deactivation of this plugin, capabilities for "Articles" and "Fellow" role will be erased.
+
+
+VI. Edit Instructions
+In text of "Articles" to use 'codeviewer' series, you can use Edit Instructions to put html tags for ruby ,newline, etc. In 'codeviewer', html specialchars and some entities changes to html escapes such as "&lt; ('<')". Therefore, you need to use Edit Instructions to put html tags. Plus, to function 'spansearch' series, each children tag needs to be named. To take easy of these work, Edit Instructions exist. Plus, if you want newlines in one line on "Articles", you can use '(edit(new-line))'.
+
+Actual Edit Instructions are below.
+
+1. (edit(hard-hyphen)):
+To put Actual Hyphen and have newline.
+
+2. (edit(soft-hyphen)):
+To put a html entity "&shy;" to use "hyphens: manual;" in CSS.
+
+3. (edit(new-line)):
+To have newline.
+
+4. (edit(br-tag)):
+To put <br /> (XHTML Style) tag.
+
+5. (edit(ruby-tag)):
+To put <ruby> tag for ruby.
+
+6. (edit(end-ruby)):
+To put </ruby> tag for ruby.
+
+7. (edit(rb-tag)):
+To put <rb> tag for ruby.
+
+8. (edit(end-rb)):
+To put </rb> tag for ruby.
+
+9. (edit(rt-tag)):
+To put <rt> tag for ruby.
+
+10. (edit(end-rt)):
+To put </rt> tag for ruby.
+
+11. (edit(color-tag-somecolor)):
+To Color the string between this Instruction and '(end-color)'.
+This Instruction is a little special. If you want to color the string to red, use '(edit(color-tag-red))'. Besides, '(edit(color-tag-#09abcd))' means the string colored to hexadecimal #09abcd. Capital letters are recognized as well as small letters.
+
+12. (edit(end-color)):
+To end color-tag.
+
+
+For examples, visit my site and check actually how to write html and shortcodes in your posts.
+
 
 == Installation ==
 

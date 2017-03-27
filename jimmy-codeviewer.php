@@ -110,10 +110,22 @@ function cancel_tagging() {
 	if ( get_post_type() === "post" ) {
 		remove_filter('the_content', 'wpautop');
 		remove_filter('the_excerpt', 'wpautop');
+		add_filter('the_content', 'erase_indents');
+		add_filter('the_excerpt', 'erase_indents');
 	}
 	return true;
 }
 add_action( 'the_post', 'cancel_tagging' );
+
+/**
+ * Erase indents in posts for proportional html.
+ */
+function erase_indents( $content ) {
+	// add multi-lines pattern modifier "m" to use beginning of line outside of the delimiter.
+	$content = preg_replace( "/^\t+<|^\s+</m", "<", $content );
+	$content = preg_replace( "/^\t+\[|^\s+\[/m", "[", $content );
+	return $content;
+}
 
 /**
  * Add style around codeview
@@ -216,17 +228,13 @@ add_shortcode( 'codeview_bytitle', 'shortcode_codeviewer_article_bytitle' );
 function __shortcode_codeviewer_article( $atts, $content_text ) {
 	// include a theme, if a theme is not, require the default theme
 	$pre = (array)$atts; // already array by shortcode_parse_atts in shorcodes.php
-	$tmcheck = "";
 	if ( array_key_exists( "theme", $pre ) ) {
-		$tmcheck = $pre[ 'theme' ];
 		$theme = "theme_" . $pre[ 'theme' ] . ".php";
 		if ( (include $theme) == FALSE ) {
-			$tmcheck = "default";
 			require "theme_default.php";
 
 		}
 	} else {
-		$tmcheck = "default";
 		require "theme_default.php";
 	}
 
@@ -309,13 +317,7 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 		// First, change html special chars to html entities NOT to be actual codes
 		$buffer = htmlentities( $buffer, ENT_QUOTES, 'UTF-8' );
 
-		// Change space or tab to html special chars. Function, htmlentities or htmlspecialchar, does not change space or tab
-		if( $tmcheck === "default" ) {
-			$buffer = preg_replace( '/\s/', '&nbsp;', $buffer );
-			$buffer = preg_replace( '/\t/', '&nbsp;&nbsp;&nbsp;&nbsp;', $buffer );
-		}
-
-		// "(edit([a-z]+\-[a-z]+[a-zA-Z0-9#\-]*))", instructions
+		// "(edit([a-z]+\-[a-z]+[a-zA-Z0-9#\-]*))", Edit Instructions
 		// Use Double quotations for immediate string to use escape
 		// Escape of "(edit([a-z\-]+))" itself by backslash at first
 		$buffer = preg_replace( '/\x5C\(edit\(([a-z]+\-[a-z]+[a-zA-Z0-9#\-]*)\)\)/', "&#40;edit&#40;$1&#41;&#41;", $buffer );
@@ -337,13 +339,13 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 						$buffer = preg_replace( '/\(edit\(new-line\)\)/', "\r\n", $buffer, 1 );
 						break;
 					case "br-tag":
-						$buffer = preg_replace( '/\(edit\(br-tag\)\)/', "</span><br /><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\">", $buffer, 1 );
+						$buffer = preg_replace( '/\(edit\(br-tag\)\)/', "</span><br /><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr[ 'white-space' ] . ";\">", $buffer, 1 );
 						break;
 					case "ruby-tag":
 						$buffer = preg_replace( '/\(edit\(ruby-tag\)\)/', "</span><ruby>" , $buffer, 1 );
 						break;
 					case "end-ruby":
-						$buffer = preg_replace( '/\(edit\(end-ruby\)\)/', "</ruby><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\">", $buffer, 1 );
+						$buffer = preg_replace( '/\(edit\(end-ruby\)\)/', "</ruby><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr[ 'white-space' ] . ";\">", $buffer, 1 );
 						break;
 					case "rb-tag":
 						$buffer = preg_replace( '/\(edit\(rb-tag\)\)/', "<rb>" , $buffer, 1 );
@@ -358,10 +360,10 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 						$buffer = preg_replace( '/\(edit\(end-rt\)\)/', "</rt>" , $buffer, 1 );
 						break;
 					case "color-tag":
-						$buffer = preg_replace( '/\(edit\(color-tag-([a-zA-Z0-9#]+)\)\)/', "</span><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"color: $1;\">" , $buffer, 1 );
+						$buffer = preg_replace( '/\(edit\(color-tag-([a-zA-Z0-9#]+)\)\)/', "</span><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"color: $1;white-space: " . $arr[ 'white-space' ] . ";\">", $buffer, 1 );
 						break;
 					case "end-color":
-						$buffer = preg_replace( '/\(edit\(end-color\)\)/', "</span><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\">", $buffer, 1 );
+						$buffer = preg_replace( '/\(edit\(end-color\)\)/', "</span><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr[ 'white-space' ] . ";\">", $buffer, 1 );
 						break;
 					default:
 						$buffer = preg_replace( '/\(edit\(([a-z]+\-[a-z]+)[a-zA-Z0-9#\-]*\)\)/', "", $buffer, 1 );
@@ -402,7 +404,7 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 
 		// use cast to remove "%" this cast uses 'atoi', a c function
 		$textwidth = 100 - (int)$arr[ 'number-width' ];
-		$return_str .= "display: inline-block;margin: 0;padding: " . $arr[ 'padding-top' ] . " " . $arr[ 'padding-right' ] . " " . $arr[ 'padding-bottom' ] . " " . $arr[ 'padding-left' ] . ";vertical-align: top;text-align: " . $arr[ 'text-align' ] . ";white-space: " . $arr[ 'white-space' ] . ";width: " . $textwidth . "%;";
+		$return_str .= "display: inline-block;margin: 0;padding: " . $arr[ 'padding-top' ] . " " . $arr[ 'padding-right' ] . " " . $arr[ 'padding-bottom' ] . " " . $arr[ 'padding-left' ] . ";vertical-align: top;text-align: " . $arr[ 'text-align' ] . ";width: " . $textwidth . "%;";
 
 		if ( $incre % 2 === 1 ) {
 			$return_str .= "background-color: " . $arr[ 'odd-background-color' ] . ";\">\r\n";
@@ -410,7 +412,7 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 			$return_str .= "background-color: " . $arr[ 'even-background-color' ] . ";\">\r\n";
 		}
 
-		$return_str .= "\t\t\t<span id=\"" . $arr [ 'id' ] . $incre . "-sp1\">" . $buffer . "</span>\r\n";
+		$return_str .= "\t\t\t<span id=\"" . $arr [ 'id' ] . $incre . "-sp1\" style=\"white-space: " . $arr[ 'white-space' ] . ";\">" . $buffer . "</span>\r\n";
 
 		$return_str .= "\t\t</div>\r\n";
 		$return_str .= "\t</div>\r\n";
