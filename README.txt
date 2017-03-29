@@ -2,7 +2,7 @@
 Contributors: Kenta Ishii, Tokyo
 Requires at least: WordPress 4.8-trunk
 Tested up to: WordPress 4.7.3
-Version: 0.9.1 Beta
+Version: 0.9.2 Beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Jimmy Codeviewer consists three departments which have several WordPress shortco
 
 1. Code Viewer
 
-a. Shortcodes: [codeview_byid], [codeview_byname] and [codeview_bytitle] to show text in "Posts".
+a. Shortcodes: [codeview_byid] and [codeview_byname] to show text in "Posts".
 
 b. Edit Instructions: "(edit(exam-ple))" to make HTML markup or other escaped literal codes in "Articles" pages.
 
@@ -24,7 +24,7 @@ c. Style Sheet: CSS Style Sheet to make web layout easier with Code Viewer.
 
 2. Article Loader
 
-a. Shortcodes: [articleloader_byid], [articleloader_byname] and [articleloader_bytitle] to show SVGs or other scripts in "Posts".
+a. Shortcodes: [articleloader_byid] and [articleloader_byname] to show SVGs or other scripts in "Posts".
 
 
 3. Color and Style Changer
@@ -52,9 +52,6 @@ Shows line No.1 and sequenced 5 lines from No.1 in the text of the Article, the 
 
 b. '[codeview_byname theme="magazine" id="text" start="4"]some-thing(the post slug [name] of Article)[/codeview_byname]':
 Shows line No.4 in the text of the Article, the post slug is "some-thing" and assign each row ID as "text-(its linenumber)" and table class as "text" with magazine template.
-
-c. '[codeview_bytitle]' actually exist. But I highly recommend not to use this 
-'[codeview_bytitle]' because post titles don't guarantee each unique naming.
 
 'theme="magazine"' in these shortcodes means making html tags with magazine template. For example, if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
 
@@ -96,9 +93,8 @@ No.6 to No.22 are similar to html style parameters. But if you use spaces in the
 
 Jimmy Codeviewer never consider of putting same lines on a page several times. Therefore, if you name the same ID to a doubled line, you will meet ID conflict and functional problems on 'spansearch' series and 'divsearch'.
 
-d. '[articleloader_byid"]111(the post ID of Article)[/articleloader_byid]':
-e. '[articleloader_byname"]some-thing(the post slug [name] of Article)[/articleloader_byname]':
-f. '[articleloader_bytitle"]The Post Title[/articleloader_bytitle]':
+c. '[articleloader_byid"]111(the post ID of Article)[/articleloader_byid]':
+d. '[articleloader_byname"]some-thing(the post slug [name] of Article)[/articleloader_byname]':
 Likewise 'codeviewer' series, these show Articles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeviewer' series, parameters don't exist.
 
 
@@ -156,46 +152,59 @@ In text of "Articles" to use 'codeviewer' series, you can use Edit Instructions 
 
 Actual Edit Instructions are below.
 
-1. (edit(hard-hyphen)):
+1. '(edit(hard-hyphen))':
 To put Actual Hyphen and have newline.
 
-2. (edit(soft-hyphen)):
+2. '(edit(soft-hyphen))':
 To put a html entity "&shy;" to use "hyphens: manual;" in CSS.
 
-3. (edit(new-line)):
+3. '(edit(new-line))':
 To have newline.
 
-4. (edit(br-tag)):
+4. '(edit(br-tag))':
 To put <br /> (XHTML Style) tag.
 
-5. (edit(ruby-tag)):
+5. '(edit(ruby-tag))':
 To put <ruby> tag for ruby.
 
-6. (edit(end-ruby)):
+6. '(edit(end-ruby))':
 To put </ruby> tag for ruby.
 
-7. (edit(rb-tag)):
+7. '(edit(rb-tag))':
 To put <rb> tag for ruby.
 
-8. (edit(end-rb)):
+8. '(edit(end-rb))':
 To put </rb> tag for ruby.
 
-9. (edit(rt-tag)):
+9. '(edit(rt-tag))':
 To put <rt> tag for ruby.
 
-10. (edit(end-rt)):
+10. '(edit(end-rt))':
 To put </rt> tag for ruby.
 
-11. (edit(color-tag-somecolor)):
+11. '(edit(color-tag-somecolor))':
 To Color the string between this Instruction and '(end-color)'.
 This Instruction is a little special. If you want to color the string to red, use '(edit(color-tag-red))'. Besides, '(edit(color-tag-#09abcd))' means the string colored to hexadecimal #09abcd. Capital letters are recognized as well as small letters.
 
-12. (edit(end-color)):
+12. '(edit(end-color))':
 To end color-tag.
 
 
-For examples, visit my site and check actually how to write html and shortcodes in your posts.
+Visit my site to check layout samples, and actually how to write html and shortcodes in your posts.
+http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 
+
+== Compatibility ==
+
+1. Theme Compatibility
+On WordPress Team's "Twenty Seventeen", This Plugin works but you need to customize "Twenty Seventeen" or this plugin to fit on display. Some themes such as "Twenty Seventeen" are having style flexibility between mobile devices and personal computers. Nowadays, rendering power of displays on both mobiles and personals are close to each other. Small displays can work as well as big displays. So I now recommend to trash flexibility between both. This gives us concentration of manpower to one layout in one site and grows quality of the site design. 
+
+2. Browser Compatibility
+Firefox, Chrome (webkit), Opera, IE and Edges work on this plugin. This plugin never guarantee to work SVG, JavaScript or other scripts in browsers. Even though you can load scripts using 'articleloader' series, these may not work properly.
+
+== Security Notice ==
+
+Both 'codeviewer' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "Fellow"). post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "Articles". This plugin prohibit to load "Articles" which do not be published by senior graded users (such as "Editor"). Senior graded users should pay attention to invest SVGs, JavaScript and other scripts in "Articles" for stopping any malicous activities before publishing "Articles".
 
 == Installation ==
 
@@ -217,6 +226,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 == Changelog ==
+
+= 0.9.2 Beta =
+* shorcodes using post titles are deprecated because of a security reason. Please see Securiy Notice above
+: March 29, 2017
 
 = 0.9.1 Beta =
 * Released: March 26, 2017

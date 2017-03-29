@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Jimmy Codeviewer
-Plugin URI: http://electronics.jimmykenmerchant.com
-Description: A Codeviewer
+Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
+Description: Multipurpose text viewer
 Author: Kenta Ishii
-Author URI: http://electronics.jimmykenmerchant.com
-Version: 0.9.1 Beta
+Author URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
+Version: 0.9.2 Beta
 Text Domain: jimmy-codeviewer
 Domain Path: /languages
 License: GPL2 or Later
@@ -122,7 +122,7 @@ add_action( 'the_post', 'cancel_tagging' );
  */
 function erase_indents( $content ) {
 	// add multi-lines pattern modifier "m" to use beginning of line outside of the delimiter.
-	$content = preg_replace( "/^\t+<|^\s+</m", "<", $content );
+	$content = preg_replace( "/^[\t\s]+(<\/?div>?)/m", "$1", $content );
 	$content = preg_replace( "/^\t+\[|^\s+\[/m", "[", $content );
 	return $content;
 }
@@ -158,7 +158,6 @@ function shortcode_codeviewer_article_byid( $atts, $content = null ) {
 
 	return __shortcode_codeviewer_article( $atts, $content_text );
 }
-
 add_shortcode( 'codeview_byid', 'shortcode_codeviewer_article_byid' );
 
 /**
@@ -183,44 +182,7 @@ function shortcode_codeviewer_article_byname( $atts, $content = null ) {
 
 	return __shortcode_codeviewer_article( $atts, $content_text );
 }
-
 add_shortcode( 'codeview_byname', 'shortcode_codeviewer_article_byname' );
-
-/**
- *  Make shortcode [codeview_bytitle]
- *  e.g. [codeview_bytitle title="something"]article title[/codeview_bytitle]
- *  Make Codeview from article by article title
- *  Memo: No Need of Escaped code for space, even if it's 1 byte char.
- *		Besides, [spanSearch] needs Escaped code for space because of JavaScript.
- */
-/**
- * Title Querying is a little tricky
- * because post_title in WP_Post Object seems to
- * store initial titled item and newest changed titled item
- * in addition, same titled post can be exist
- * it may make Querying conflict
- * basically, posts retrieves its unique name by post_name, a post slug
- * it differs from post_title
- */
-function shortcode_codeviewer_article_bytitle( $atts, $content = null ) {
-	// To safety, return Error
-	if ( !$content ) return "!codeview_bytitle Error: No article-Title!";
-
-	// Get Content
-	$article = get_page_by_title( $content, OBJECT, 'article' ); // articletitle
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "article" && ! $article->post_password ) {
-		$content_text = $article->post_content;
-	} else {
-		return "!codeview_bytitle Error: No article!";
-	}
-
-	// To safety, return Error
-	if ( !$content_text ) return "!codeview_bytitle Error: No content!";
-
-	return __shortcode_codeviewer_article( $atts, $content_text );
-}
-
-add_shortcode( 'codeview_bytitle', 'shortcode_codeviewer_article_bytitle' );
 
 /**
  * Common function to make html on codeviewer

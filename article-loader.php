@@ -27,7 +27,6 @@ function shortcode_articleloader_byid( $atts, $content = null ) {
 
 	return $content_text;
 }
-
 add_shortcode( 'articleloader_byid', 'shortcode_articleloader_byid' );
 
 /**
@@ -52,30 +51,4 @@ function shortcode_articleloader_byname( $atts, $content = null ) {
 
 	return $content_text;
 }
-
 add_shortcode( 'articleloader_byname', 'shortcode_articleloader_byname' );
-
-/**
- *  Make shortcode [articleloader_bytitle]
- *  e.g. [articleloader_bytitle]article title[/articleloader_bytitle]
- *  Load article by article title
- */
-function shortcode_articleloader_bytitle( $atts, $content = null ) {
-	// To safety, return Error
-	if ( !$content ) return "!articleloader_bytitle Error: No article-Title!";
-
-	// Get Content
-	$article = get_page_by_title( $content, OBJECT, 'article' ); // articletitle
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "article" && ! $article->post_password ) {
-		$content_text = $article->post_content;
-	} else {
-		return "!articleloader_bytitle Error: No article!";
-	}
-
-	// To safety, return Error
-	if ( !$content_text ) return "!articleloader_bytitle Error: No content!";
-
-	return $content_text;
-}
-
-add_shortcode( 'articleloader_bytitle', 'shortcode_articleloader_bytitle' );
