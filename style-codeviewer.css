@@ -3,10 +3,11 @@ Codeviewer
 --------------------------------------------------------------*/
 
 div#magazine-content {
-	font-family: lato, ipagothic, ipaminchyo, sans-serif;
+	font-family: lato, ipagothic, sans-serif;
 	position: relative;
 	width: 1040px;
 	height: 1428px;
+	color: #000;
 	background-color: #fff;
 }
 

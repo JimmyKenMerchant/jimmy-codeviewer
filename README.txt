@@ -2,7 +2,7 @@
 Contributors: Kenta Ishii, Tokyo
 Requires at least: WordPress 4.8-trunk
 Tested up to: WordPress 4.7.3
-Version: 0.9.2 Beta
+Version: 0.9.3 Beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,11 +118,12 @@ Searches the string "Some String" on all lines of id "text" which named in 'code
 8. 'font-style' // font-style of target string
 9. 'font-weight' // font-weight of target string
 10. 'vertical-align' // vertical-align of target string
+11. 'regex-enable' //use Regular Expression ('TRUE' or 'true') or not
 
 '[spansearch]' have these parameters below.
 
-11. 'start' // line number to start
-12. 'end' // line number to end
+12. 'start' // line number to start
+13. 'end' // line number to end
 
 
 d. '[divsearch id="title" start="3" end="7" text-align="center" line-height="1.6em"]':
@@ -226,6 +227,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 == Changelog ==
+
+= 0.9.3 Beta =
+* Added Regular Expression Search to 'spansearch' series
+: March 30, 2017
 
 = 0.9.2 Beta =
 * shorcodes using post titles are deprecated because of a security reason. Please see Securiy Notice above

@@ -28,10 +28,11 @@
  * font_style: font-style of target string
  * font_weight: font-weight of target string
  * v_align: vertical-align property
+ * regex_enable: enable Regular Expression or not
  * 
- * end, col, back_col, font_family, font_size, font_style, font_weight, v_align can be undefined.
+ * end, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable can be undefined.
  */
-function spanSearch (id, start, end, str, col, back_col, font_family, font_size, font_style, font_weight, v_align) {
+function spanSearch (id, start, end, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable) {
 	if (id === "" || typeof id === "undefined") {
 		console.error("spanSearch: 'id' empty or undefined!");
 		return false;
@@ -56,7 +57,7 @@ function spanSearch (id, start, end, str, col, back_col, font_family, font_size,
 		//console.log(idnum);
 		var roottag = document.getElementById(idnum);
 		if (roottag) {
-			var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align);
+			var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable);
 			if (!error) {
 				console.error("spanSearch: Failed to __spanSearch");
 				return false;
@@ -82,10 +83,11 @@ function spanSearch (id, start, end, str, col, back_col, font_family, font_size,
  * font_style: font-style of target string
  * font_weight: font-weight of target string
  * v_align: vertical-align property
+ * regex_enable: enable Regular Expression or not
  * 
- * col, back_col, font_family, font_size, font_style, font_weight, v_align can be undefined.
+ * col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable can be undefined.
  */
-function spanSearch_All (id, str, col, back_col, font_family, font_size, font_style, font_weight, v_align) {
+function spanSearch_All (id, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable) {
 	if (id === "" || typeof id === "undefined") {
 		console.error("spanSearch_All: 'id' empty or undefined!");
 		return false;
@@ -109,7 +111,7 @@ function spanSearch_All (id, str, col, back_col, font_family, font_size, font_st
 			var incre = 2;
 			for (var k = 0; k < blk_length; k++) {
 				idnum = c_eles[incre].id;
-				var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align);
+				var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable);
 				if (!error) {
 					console.error("spanSearch_All: Failed to __spanSearch");
 					return false;
@@ -128,7 +130,10 @@ function spanSearch_All (id, str, col, back_col, font_family, font_size, font_st
  * Pseudo Recursive Function to search target string in all span tags on one line
  * Change font styles, color, etc. of target string
  */
-function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align) {
+function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable) {
+	if (regex_enable === "TRUE" || regex_enable === "true") {
+		str = new RegExp(str, "m");
+	}
 	// without value, "" or undefined, depending on Browsers
 	var clist = document.getElementById(idnum).getElementsByTagName("SPAN");
 	var curlength = clist.length;
@@ -146,7 +151,7 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 			// Get Text on the last lavel child to search target string
 			var seartxt = target.textContent;
 			// Check whether target string exists or not in text
-			if (seartxt.indexOf(str) !== -1) {
+			if (txtChecker(seartxt, str, regex_enable) !== -1) {
 				// Remove all text node in this span tag
 				while (target.hasChildNodes()) {
 					target.removeChild(target.lastChild);
@@ -154,15 +159,21 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 				// Check whether second time or not on next loop
 				var stflag = false;
 				// Loop to change status of all target string in this tag
-				while (seartxt.indexOf(str) !== -1) {
+				while (txtChecker(seartxt, str, regex_enable) !== -1) {
 					// If second time on this loop, remove last children span tag in this tag not to duplicate strings
 					if (stflag) {
 						target.removeChild(target.lastChild);
 						asign_number--;
 					}
-					var hit = seartxt.indexOf(str);
+					if (regex_enable === "TRUE" || regex_enable === "true") {
+						var hit = seartxt.search(str);
+						var mat = seartxt.match(str);
+						var strlth = mat[0].length;
+					} else {
+						var hit = seartxt.indexOf(str);
+						var strlth = str.length;
+					}
 					var txtlth = seartxt.length;
-					var strlth = str.length;
 					var lastcheck = txtlth - hit - strlth;
 					// Check wheter target string is on end of text or not
 					if (lastcheck === 0) {
@@ -336,6 +347,20 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 		//console.log(clist.length);
 	}
 	return true;
+}
+
+
+/**
+ * Style Changer in function _spanSearch
+ */
+function txtChecker (seartxt, str, regex_enable) {
+	if (regex_enable === "TRUE" || regex_enable === "true") {
+		var val = seartxt.search(str);
+		return val;
+	} else {
+		var val = seartxt.indexOf(str);
+		return val;
+	}
 }
 
 /**

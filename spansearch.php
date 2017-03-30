@@ -41,6 +41,7 @@ function shortcode_spansearch( $atts, $content = null ) {
 			'font-style' => '', // font-style of target string
 			'font-weight' => '', // font-weight of target string
 			'vertical-align' => '', // vertical-align of target string
+			'regex-enable' => '', //use Regular Expression ('TRUE' or 'true') or not
 		),
 		$atts);
 
@@ -57,6 +58,7 @@ function shortcode_spansearch( $atts, $content = null ) {
 						"\", \"" . $arr[ 'font-style' ] .
 						"\", \"" . $arr[ 'font-weight' ] .
 						"\", \"" . $arr[ 'vertical-align' ] .
+						"\", \"" . $arr[ 'regex-enable' ] .
 						"\");\r\n";
 
 	$return_str .= "</script>\r\n";
@@ -81,6 +83,7 @@ function shortcode_spansearch_all( $atts, $content = null ) {
 			'font-style' => '', // font-style of target string
 			'font-weight' => '', // font-weight of target string
 			'vertical-align' => '', // vertical-align of target string
+			'regex-enable' => '', //use Regular Expression ('TRUE' or 'true') or not
 		),
 		$atts);
 
@@ -95,6 +98,7 @@ function shortcode_spansearch_all( $atts, $content = null ) {
 						"\", \"" . $arr[ 'font-style' ] .
 						"\", \"" . $arr[ 'font-weight' ] .
 						"\", \"" . $arr[ 'vertical-align' ] .
+						"\", \"" . $arr[ 'regex-enable' ] .
 						"\");\r\n";
 
 	$return_str .= "</script>\r\n";
