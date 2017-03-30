@@ -28,6 +28,7 @@ function create_post_type() {
 			'title',
 			'editor',
 			'author',
+			'revisions',
 		),
 		'public' => false,
 		'has_archive' => false,
