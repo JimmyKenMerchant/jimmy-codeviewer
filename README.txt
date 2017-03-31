@@ -2,13 +2,13 @@
 Contributors: Kenta Ishii, Tokyo
 Requires at least: WordPress 4.8-trunk
 Tested up to: WordPress 4.7.3
-Version: 0.9.3 Beta
+Version: 0.9.4 Beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Jimmy Codeviewer is a multipurpose text viewer. First, I purposed to make a viewer for programming code for my site that introduces my articles. It was OK. But in making Jimmy Codeviewer, I think that this could be a multipurpose text viewer. On this time, many news sites have very simple layout for their contents. By the way, you could watch magazines or papers at a news-stand every day and these are so colorful and design-riches. I just want these on Internet. Colorful design-riches actually make us some attention and affection. Browsers is growing their rendering ability right now. This challenge — mocking magazines or news papers on Internet — not a dream, but a real on Internet. In addition to this, I tried to change WordPress to SVG-Free. SVG is one of vector graphics containers. It's just like HTML and JavaScrpt. This is exactly the reason why WordPress Community prohibits to upload SVG Files by Media Uploader. If SVGs are programming codes, these should be stored as scripts in pages. But "Posts" and "Pages" are having these unique purpose as public pages, so I decided to make "Articles" inner pages and store texts and SVGs to "Articles". For loading "Articles" on "Posts" I made several WordPress shortcodes.
+Jimmy Codeviewer is a multipurpose text viewer. First, I purposed to make a viewer for programming code for my site that introduces my articles. It was OK. But in making Jimmy Codeviewer, I think that this could be a multipurpose text viewer. On this time, many news sites have very simple layout for their contents. By the way, you could watch magazines or papers at a news-stand every day and these are so colorful and design-riches. I just want these on Internet. Colorful design-riches actually make us some attention and affection. Browsers is growing their rendering ability right now. This challenge — mocking magazines or news papers on Internet — not a dream, but a real on Internet. In addition to this, I tried to change WordPress to SVG-Free. SVG is one of vector graphics containers. It's just like HTML and JavaScrpt. This is exactly the reason why WordPress Community prohibits to upload SVG Files by Media Uploader. If SVGs are programming codes, these should be stored as scripts in pages. But "Posts" and "Pages" are having these unique purpose as public pages, so I decided to make "jArticles" inner pages and store texts and SVGs to "jArticles". For loading "jArticles" on "Posts" I made several WordPress shortcodes.
 
 Jimmy Codeviewer consists three departments which have several WordPress shortcodes and functions.
 
@@ -17,7 +17,7 @@ Jimmy Codeviewer consists three departments which have several WordPress shortco
 
 a. Shortcodes: [codeview_byid] and [codeview_byname] to show text in "Posts".
 
-b. Edit Instructions: "(edit(exam-ple))" to make HTML markup or other escaped literal codes in "Articles" pages.
+b. Edit Instructions: "(edit(exam-ple))" to make HTML markup or other escaped literal codes in "jArticles" pages.
 
 c. Style Sheet: CSS Style Sheet to make web layout easier with Code Viewer.
 
@@ -37,21 +37,21 @@ b. JavaSctipt: spanSearch() and its family, the engine to provide the above shor
 == Tutorial ==
 
 I. General
-First, you publish your text or SVGs in "Articles". Second, you call these in "Posts" by using shortcodes. If you want to change color or style on some particular string and row, use shortcodes as the instruction below.
+First, you publish your text or SVGs in "jArticles". Second, you call these in "Posts" by using shortcodes. If you want to change color or style on some particular string and row, use shortcodes as the instruction below.
 
 
-II. Publish your text or SVGs in "Articles"
-After activated this plugin, you can see "Articles" menu on the Admin Side Bar. Click this, then edit your text and publish. Make sure to note the post ID (on URL of the editor page itself) or the slug you made. This "Article" can not been shown in your site publicly.
+II. Publish your text or SVGs in "jArticles"
+After activated this plugin, you can see "jArticles" menu on the Admin Side Bar. Click this, then edit your text and publish. Make sure to note the post ID (on URL of the editor page itself) or the slug you made. This "jArticle" can not been shown in your site publicly.
 
 
-III. Calling "Articles" in "Posts"
+III. Calling "jArticles" in "Posts"
 Now you can use shortcodes on "Posts".
 
-a. '[codeview_byid theme="default" id="desc" start="1" count="5"]111(the post ID of Article)[/codeview_byid]':
-Shows line No.1 and sequenced 5 lines from No.1 in the text of the Article, the post ID is "111" and assign each row ID as "desc-(its linenumber)" and table class as "desc" with default template.
+a. '[codeview_byid theme="default" id="desc" start="1" count="5"]111(the post ID of jArticle)[/codeview_byid]':
+Shows line No.1 and sequenced 5 lines from No.1 in the text of the jArticle, the post ID is "111" and assign each row ID as "desc-(its linenumber)" and table class as "desc" with default template.
 
-b. '[codeview_byname theme="magazine" id="text" start="4"]some-thing(the post slug [name] of Article)[/codeview_byname]':
-Shows line No.4 in the text of the Article, the post slug is "some-thing" and assign each row ID as "text-(its linenumber)" and table class as "text" with magazine template.
+b. '[codeview_byname theme="magazine" id="text" start="4"]some-thing(the post slug [name] of jArticle)[/codeview_byname]':
+Shows line No.4 in the text of the jArticle, the post slug is "some-thing" and assign each row ID as "text-(its linenumber)" and table class as "text" with magazine template.
 
 'theme="magazine"' in these shortcodes means making html tags with magazine template. For example, if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
 
@@ -93,9 +93,9 @@ No.6 to No.22 are similar to html style parameters. But if you use spaces in the
 
 Jimmy Codeviewer never consider of putting same lines on a page several times. Therefore, if you name the same ID to a doubled line, you will meet ID conflict and functional problems on 'spansearch' series and 'divsearch'.
 
-c. '[articleloader_byid"]111(the post ID of Article)[/articleloader_byid]':
-d. '[articleloader_byname"]some-thing(the post slug [name] of Article)[/articleloader_byname]':
-Likewise 'codeviewer' series, these show Articles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeviewer' series, parameters don't exist.
+c. '[articleloader_byid"]111(the post ID of jArticle)[/articleloader_byid]':
+d. '[articleloader_byname"]some-thing(the post slug [name] of jArticle)[/articleloader_byname]':
+Likewise 'codeviewer' series, these show jArticles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeviewer' series, parameters don't exist.
 
 
 IV. Change Color or style on some particular string and row
@@ -144,12 +144,12 @@ Searches lines No.3 to No.7 of id "title" which named in 'codeview' series then 
 11. 'font-weight' // background-color of target line(s)
 
 
-V. Capabilities of editing "Articles"
-On Activation of this plugin, "Adiministor" and "Editor" are added full capabilities to edit and publish "Articles". "Fellow" role, which has limited capabilities to edit "Article", added to admin system. On Deactivation of this plugin, capabilities for "Articles" and "Fellow" role will be erased.
+V. Capabilities of editing "jArticles"
+On Activation of this plugin, "Adiministor" and "Editor" are added full capabilities to edit and publish "jArticles". "Fellow" role, which has limited capabilities to edit "jArticle", added to admin system. On Deactivation of this plugin, capabilities for "jArticles" and "Fellow" role will be erased.
 
 
 VI. Edit Instructions
-In text of "Articles" to use 'codeviewer' series, you can use Edit Instructions to put html tags for ruby ,newline, etc. In 'codeviewer', html specialchars and some entities changes to html escapes such as "&lt; ('<')". Therefore, you need to use Edit Instructions to put html tags. Plus, to function 'spansearch' series, each children tag needs to be named. To take easy of these work, Edit Instructions exist. Plus, if you want newlines in one line on "Articles", you can use '(edit(new-line))'.
+In text of "jArticles" to use 'codeviewer' series, you can use Edit Instructions to put html tags for ruby ,newline, etc. In 'codeviewer', html specialchars and some entities changes to html escapes such as "&lt; ('<')". Therefore, you need to use Edit Instructions to put html tags. Plus, to function 'spansearch' series, each children tag needs to be named. To take easy of these work, Edit Instructions exist. Plus, if you want newlines in one line on "jArticles", you can use '(edit(new-line))'.
 
 Actual Edit Instructions are below.
 
@@ -205,11 +205,13 @@ Firefox, Chrome (webkit), Opera, IE and Edges work on this plugin. This plugin n
 
 == Security Notice ==
 
-Both 'codeviewer' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "Fellow"). post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "Articles". This plugin prohibit to load "Articles" which do not be published by senior graded users (such as "Editor"). Senior graded users should pay attention to invest SVGs, JavaScript and other scripts in "Articles" for stopping any malicous activities before publishing "Articles".
+Both 'codeviewer' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "Fellow"). post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which do not be published by senior graded users (such as "Editor"). Senior graded users should pay attention to invest SVGs, JavaScript and other scripts in "jArticles" for stopping any malicous activities before publishing "jArticles".
 
 == Installation ==
 
 Jimmy Codeviewer is a plugin under the terms of the GNU GPL. Now on its Beta Version. I can't guarantee correct functions on this plugin. But if you have some curious to this plugin, you can download and test it. Make sure to activate this plugin in "Installed Plugins" page.
+
+This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. Post Type Name, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other Post Type Name. LATEX, a renowned digital document preparation system, uses "jarticle" as a document class. But I think, in WordPress, "jArticle" as Post Type Name is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others.
 
 == Copyright ==
 
@@ -228,12 +230,16 @@ GNU General Public License for more details.
 
 == Changelog ==
 
+= 0.9.4 Beta =
+* Changed the Post Type Name "article" to "jarticle" for unique naming
+: March 31, 2017
+
 = 0.9.3 Beta =
 * Added Regular Expression Search to 'spansearch' series
 : March 30, 2017
 
 = 0.9.2 Beta =
-* shorcodes using post titles are deprecated because of a security reason. Please see Securiy Notice above
+* Shorcodes using post titles are deprecated because of a security reason. Please see Securiy Notice above
 : March 29, 2017
 
 = 0.9.1 Beta =

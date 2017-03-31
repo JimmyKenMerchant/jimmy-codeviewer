@@ -16,7 +16,7 @@ function shortcode_articleloader_byid( $atts, $content = null ) {
 
 	// Get Content
 	$article = get_post( (int)$content ); // articleid
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "article" && ! $article->post_password ) {
+	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
 		$content_text = $article->post_content;
 	} else {
 		return "!articleloader_byid Error: No article!";
@@ -39,8 +39,8 @@ function shortcode_articleloader_byname( $atts, $content = null ) {
 	if ( !$content ) return "!articleloader_byname Error: No article-Name!";
 
 	// Get Content
-	$article = get_page_by_path( $content, OBJECT, 'article' ); // articlename
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "article" && ! $article->post_password ) {
+	$article = get_page_by_path( $content, OBJECT, 'jarticle' ); // articlename
+	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
 		$content_text = $article->post_content;
 	} else {
 		return "!articleloader_byname Error: No article!";

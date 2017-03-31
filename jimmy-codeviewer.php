@@ -5,7 +5,7 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Description: Multipurpose text viewer
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
-Version: 0.9.3 Beta
+Version: 0.9.4 Beta
 Text Domain: jimmy-codeviewer
 Domain Path: /languages
 License: GPL2 or Later
@@ -18,11 +18,11 @@ require "constants.php";
  */
 function create_post_type() {
 	register_post_type(
-		'article',
+		'jarticle',
 		array(
 		'labels' => array(
-			'name' => __( 'Articles' ),
-			'singular_name' => __( 'Article' ),
+			'name' => __( 'jArticles' ),
+			'singular_name' => __( 'jArticle' ),
 		),
 		'supports' => array(
 			'title',
@@ -33,7 +33,7 @@ function create_post_type() {
 		'public' => false,
 		'has_archive' => false,
 		'show_ui' => true,
-		'capability_type' => array( 'article', 'articles' ),
+		'capability_type' => array( 'jarticle', 'jarticles' ),
 		'map_meta_cap' => true,
 		'menu_position' => 20,
 		)
@@ -44,16 +44,16 @@ add_action( 'init', 'create_post_type' );
 /* Role Making "fellow" to only edit or delete article on activation */
 function roles_customize() {
 	$capabilities = array(
-			'edit_posts' => 'edit_articles',
-			'edit_others_posts' => 'edit_others_articles',
-			'edit_private_posts' => 'edit_private_articles',
-			'edit_published_posts' => 'edit_published_articles',
-			'delete_posts' => 'delete_articles',
-			'delete_others_posts' => 'delete_others_articles',
-			'delete_private_posts' => 'delete_private_articles',
-			'delete_published_posts' => 'delete_published_articles',
-			'publish_posts' => 'publish_articles',
-			'read_private_posts' => 'read_private_articles',
+			'edit_posts' => 'edit_jarticles',
+			'edit_others_posts' => 'edit_others_jarticles',
+			'edit_private_posts' => 'edit_private_jarticles',
+			'edit_published_posts' => 'edit_published_jarticles',
+			'delete_posts' => 'delete_jarticles',
+			'delete_others_posts' => 'delete_others_jarticles',
+			'delete_private_posts' => 'delete_private_jarticles',
+			'delete_published_posts' => 'delete_published_jarticles',
+			'publish_posts' => 'publish_jarticles',
+			'read_private_posts' => 'read_private_jarticles',
 			);
 
 	$role = get_role( 'administrator' );
@@ -68,8 +68,8 @@ function roles_customize() {
 
 	add_role( 'fellow', 'Fellow',
 		 array( 'read' => true,
-			'edit_articles' => true,
-			'delete_articles' => true,
+			'edit_jarticles' => true,
+			'delete_jarticles' => true,
 		) );
 }
 register_activation_hook( __FILE__, 'roles_customize' );
@@ -77,16 +77,16 @@ register_activation_hook( __FILE__, 'roles_customize' );
 /* Role Delete on Deactivation */
 function roles_retrieve() {
 	$capabilities = array(
-			'edit_posts' => 'edit_articles',
-			'edit_others_posts' => 'edit_others_articles',
-			'edit_private_posts' => 'edit_private_articles',
-			'edit_published_posts' => 'edit_published_articles',
-			'delete_posts' => 'delete_articles',
-			'delete_others_posts' => 'delete_others_articles',
-			'delete_private_posts' => 'delete_private_articles',
-			'delete_published_posts' => 'delete_published_articles',
-			'publish_posts' => 'publish_articles',
-			'read_private_posts' => 'read_private_articles',
+			'edit_posts' => 'edit_jarticles',
+			'edit_others_posts' => 'edit_others_jarticles',
+			'edit_private_posts' => 'edit_private_jarticles',
+			'edit_published_posts' => 'edit_published_jarticles',
+			'delete_posts' => 'delete_jarticles',
+			'delete_others_posts' => 'delete_others_jarticles',
+			'delete_private_posts' => 'delete_private_jarticles',
+			'delete_published_posts' => 'delete_published_jarticles',
+			'publish_posts' => 'publish_jarticles',
+			'read_private_posts' => 'read_private_jarticles',
 			);
 
 	$role = get_role( 'administrator' );
@@ -148,7 +148,7 @@ function shortcode_codeviewer_article_byid( $atts, $content = null ) {
 
 	// Get Content
 	$article = get_post( (int)$content ); // articleid
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "article" && ! $article->post_password ) {
+	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
 		$content_text = $article->post_content;
 	} else {
 		return "!codeview_byid Error: No article!";
@@ -171,8 +171,8 @@ function shortcode_codeviewer_article_byname( $atts, $content = null ) {
 	if ( !$content ) return "!codeview_byname Error: No article-Name!";
 
 	// Get Content
-	$article = get_page_by_path( $content, OBJECT, 'article' ); // articlename
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "article" && ! $article->post_password ) {
+	$article = get_page_by_path( $content, OBJECT, 'jarticle' ); // articlename
+	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
 		$content_text = $article->post_content;
 	} else {
 		return "!codeview_byname Error: No article!";
@@ -258,7 +258,9 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 	// Counter Set
 	$i = 0;
 	// explode seems if empty, return empty but array exist
-	$bufferarr = explode( "\r\n", $content_text );
+	// For Compatibility POSIX and WINDOWS
+	$content_text = preg_replace( '/\r/', "", $content_text );
+	$bufferarr = explode( "\n", $content_text );
 	// Add count limit to be safe code
 	while ( array_key_exists( $i, $bufferarr ) && $i < $countlimit && $i < LOOP_LIMITTER ) {
 		$buffer = $bufferarr[ $i ];
