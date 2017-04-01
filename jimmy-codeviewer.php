@@ -5,7 +5,7 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Description: Multipurpose text viewer
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
-Version: 0.9.4 Beta
+Version: 0.9.5 Beta
 Text Domain: jimmy-codeviewer
 Domain Path: /languages
 License: GPL2 or Later
@@ -16,7 +16,7 @@ require "constants.php";
 /**
  * Add Custom Post type, article
  */
-function create_post_type() {
+function jimmy_codeviewer_create_post_type() {
 	register_post_type(
 		'jarticle',
 		array(
@@ -39,10 +39,10 @@ function create_post_type() {
 		)
 	);
 }
-add_action( 'init', 'create_post_type' );
+add_action( 'init', 'jimmy_codeviewer_create_post_type' );
 
-/* Role Making "fellow" to only edit or delete article on activation */
-function roles_customize() {
+/* Role Making "jfellow" to only edit or delete article on activation */
+function jimmy_codeviewer_roles_customize() {
 	$capabilities = array(
 			'edit_posts' => 'edit_jarticles',
 			'edit_others_posts' => 'edit_others_jarticles',
@@ -66,16 +66,16 @@ function roles_customize() {
 		$role->add_cap( $cap );
 	}
 
-	add_role( 'fellow', 'Fellow',
+	add_role( 'jfellow', 'jFellow',
 		 array( 'read' => true,
 			'edit_jarticles' => true,
 			'delete_jarticles' => true,
 		) );
 }
-register_activation_hook( __FILE__, 'roles_customize' );
+register_activation_hook( __FILE__, 'jimmy_codeviewer_roles_customize' );
 
 /* Role Delete on Deactivation */
-function roles_retrieve() {
+function jimmy_codeviewer_roles_retrieve() {
 	$capabilities = array(
 			'edit_posts' => 'edit_jarticles',
 			'edit_others_posts' => 'edit_others_jarticles',
@@ -99,29 +99,29 @@ function roles_retrieve() {
 		$role->remove_cap( $cap );
 	}
 
-	remove_role( 'fellow' );
+	remove_role( 'jfellow' );
 }
-register_deactivation_hook( __FILE__, 'roles_retrieve' );
+register_deactivation_hook( __FILE__, 'jimmy_codeviewer_roles_retrieve' );
 
 /**
  * Cancels auto html tagging <p> and/or <br />
  * On Default, post is only capable with Code Viewer. 
  */
-function cancel_tagging() {
+function jimmy_codeviewer_cancel_tagging() {
 	if ( get_post_type() === "post" ) {
 		remove_filter('the_content', 'wpautop');
 		remove_filter('the_excerpt', 'wpautop');
-		add_filter('the_content', 'erase_indents');
-		add_filter('the_excerpt', 'erase_indents');
+		add_filter('the_content', 'jimmy_codeviewer_erase_indents');
+		add_filter('the_excerpt', 'jimmy_codeviewer_erase_indents');
 	}
 	return true;
 }
-add_action( 'the_post', 'cancel_tagging' );
+add_action( 'the_post', 'jimmy_codeviewer_cancel_tagging' );
 
 /**
  * Erase indents in posts for proportional html.
  */
-function erase_indents( $content ) {
+function jimmy_codeviewer_erase_indents( $content ) {
 	// add multi-lines pattern modifier "m" to use beginning of line outside of the delimiter.
 	$content = preg_replace( "/^[\t\s]+(<\/?div>?)/m", "$1", $content );
 	$content = preg_replace( "/^\t+\[|^\s+\[/m", "[", $content );
@@ -131,11 +131,11 @@ function erase_indents( $content ) {
 /**
  * Add style around codeview
  */
-function codeviewer_style() {
-	wp_enqueue_style( 'codeviewer-style',  plugins_url( 'style-codeviewer.css', __FILE__ ), array(), null );
+function jimmy_codeviewer_style() {
+	wp_enqueue_style( 'jimmy-codeviewer-style',  plugins_url( 'style-codeviewer.css', __FILE__ ), array(), null );
 	return true;
 }
-add_action( 'wp_enqueue_scripts', 'codeviewer_style' );
+add_action( 'wp_enqueue_scripts', 'jimmy_codeviewer_style' );
 
 /**
  *  Make shortcode [codeview_byid]

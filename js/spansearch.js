@@ -28,11 +28,12 @@
  * font_style: font-style of target string
  * font_weight: font-weight of target string
  * v_align: vertical-align property
- * regex_enable: enable Regular Expression or not
+ * regex_enable: enable Regular Expression ('TRUE' or 'true') or not
+ * regex_modifier: assign "i" and/or "m" modifier on RegExp. "g" will be ignored
  * 
- * end, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable can be undefined.
+ * end, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier can be undefined.
  */
-function spanSearch (id, start, end, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable) {
+function spanSearch (id, start, end, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
 	if (id === "" || typeof id === "undefined") {
 		console.error("spanSearch: 'id' empty or undefined!");
 		return false;
@@ -57,7 +58,7 @@ function spanSearch (id, start, end, str, col, back_col, font_family, font_size,
 		//console.log(idnum);
 		var roottag = document.getElementById(idnum);
 		if (roottag) {
-			var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable);
+			var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier);
 			if (!error) {
 				console.error("spanSearch: Failed to __spanSearch");
 				return false;
@@ -83,11 +84,12 @@ function spanSearch (id, start, end, str, col, back_col, font_family, font_size,
  * font_style: font-style of target string
  * font_weight: font-weight of target string
  * v_align: vertical-align property
- * regex_enable: enable Regular Expression or not
+ * regex_enable: enable Regular Expression ('TRUE' or 'true') or not
+ * regex_modifier: assign "i" and/or "m" modifier on RegExp. "g" will be ignored
  * 
- * col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable can be undefined.
+ * col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier can be undefined.
  */
-function spanSearch_All (id, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable) {
+function spanSearch_All (id, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
 	if (id === "" || typeof id === "undefined") {
 		console.error("spanSearch_All: 'id' empty or undefined!");
 		return false;
@@ -111,7 +113,7 @@ function spanSearch_All (id, str, col, back_col, font_family, font_size, font_st
 			var incre = 2;
 			for (var k = 0; k < blk_length; k++) {
 				idnum = c_eles[incre].id;
-				var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable);
+				var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier);
 				if (!error) {
 					console.error("spanSearch_All: Failed to __spanSearch");
 					return false;
@@ -130,9 +132,16 @@ function spanSearch_All (id, str, col, back_col, font_family, font_size, font_st
  * Pseudo Recursive Function to search target string in all span tags on one line
  * Change font styles, color, etc. of target string
  */
-function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable) {
+function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
 	if (regex_enable === "TRUE" || regex_enable === "true") {
-		str = new RegExp(str, "m");
+		var modi = "";
+		if (regex_modifier.indexOf("m") !== -1) {
+			modi = modi + "m";
+		}
+		if (regex_modifier.indexOf("i") !== -1) {
+			modi = modi + "i";
+		}
+		str = new RegExp(str, modi);
 	}
 	// without value, "" or undefined, depending on Browsers
 	var clist = document.getElementById(idnum).getElementsByTagName("SPAN");

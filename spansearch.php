@@ -41,7 +41,8 @@ function shortcode_spansearch( $atts, $content = null ) {
 			'font-style' => '', // font-style of target string
 			'font-weight' => '', // font-weight of target string
 			'vertical-align' => '', // vertical-align of target string
-			'regex-enable' => '', //use Regular Expression ('TRUE' or 'true') or not
+			'regex-enable' => '', // enable Regular Expression ('TRUE' or 'true') or not
+			'regex-modifier' => '', // assign "i" and/or "m" modifier on RegExp. "g" will be ignored
 		),
 		$atts);
 
@@ -59,6 +60,7 @@ function shortcode_spansearch( $atts, $content = null ) {
 						"\", \"" . $arr[ 'font-weight' ] .
 						"\", \"" . $arr[ 'vertical-align' ] .
 						"\", \"" . $arr[ 'regex-enable' ] .
+						"\", \"" . $arr[ 'regex-modifier' ] .
 						"\");\r\n";
 
 	$return_str .= "</script>\r\n";
@@ -83,7 +85,8 @@ function shortcode_spansearch_all( $atts, $content = null ) {
 			'font-style' => '', // font-style of target string
 			'font-weight' => '', // font-weight of target string
 			'vertical-align' => '', // vertical-align of target string
-			'regex-enable' => '', //use Regular Expression ('TRUE' or 'true') or not
+			'regex-enable' => '', // enable Regular Expression ('TRUE' or 'true') or not
+			'regex-modifier' => '', // assign "i" and/or "m" modifier on RegExp. "g" will be ignored
 		),
 		$atts);
 
@@ -99,6 +102,7 @@ function shortcode_spansearch_all( $atts, $content = null ) {
 						"\", \"" . $arr[ 'font-weight' ] .
 						"\", \"" . $arr[ 'vertical-align' ] .
 						"\", \"" . $arr[ 'regex-enable' ] .
+						"\", \"" . $arr[ 'regex-modifier' ] .
 						"\");\r\n";
 
 	$return_str .= "</script>\r\n";

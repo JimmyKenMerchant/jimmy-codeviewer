@@ -2,7 +2,7 @@
 Contributors: Kenta Ishii
 Requires at least: WordPress 4.8-trunk
 Tested up to: WordPress 4.7.3
-Version: 0.9.4 Beta
+Version: 0.9.5 Beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,19 +111,22 @@ Searches the string "Some String" on all lines of id "text" which named in 'code
 'spansearch' series have these parameters below.
 
 1. 'id' // table's id
-4. 'color' // fontcolor of target string
-5. 'background-color' // background-color of target string
-6. 'font-family' // font-size of target string
-7. 'font-size' // font-size of target string
-8. 'font-style' // font-style of target string
-9. 'font-weight' // font-weight of target string
-10. 'vertical-align' // vertical-align of target string
-11. 'regex-enable' //use Regular Expression ('TRUE' or 'true') or not
+2. 'color' // fontcolor of target string
+3. 'background-color' // background-color of target string
+4. 'font-family' // font-size of target string
+5. 'font-size' // font-size of target string
+6. 'font-style' // font-style of target string
+7. 'font-weight' // font-weight of target string
+8. 'vertical-align' // vertical-align of target string
+9. 'regex-enable' // enable Regular Expression ('TRUE' or 'true') or not
+10. 'regex-modifier' // assign "i" and/or "m" modifier on RegExp. "g" will be ignored
 
 '[spansearch]' have these parameters below.
 
-12. 'start' // line number to start
-13. 'end' // line number to end
+11. 'start' // line number to start
+12. 'end' // line number to end
+
+If 9. 'regex-enable' is "TRUE" or "true", 'spansearch' series are searching the word by JavaScript's Regular Expression. Type your search word by JavaScript's rule for Regular Expression without delimiters and assign "m" (multi-lines modifier for use "^", "$" on each lines), and/or "i" (ignore cases) in 10. 'regex-modifier'. "g" is never be used because this modifier for all replacing words on one time [String.prototype.replace()], or get all matching words on one time [String.prototype.match()].
 
 
 d. '[divsearch id="title" start="3" end="7" text-align="center" line-height="1.6em"]':
@@ -145,7 +148,7 @@ Searches lines No.3 to No.7 of id "title" which named in 'codeview' series then 
 
 
 V. Capabilities of editing "jArticles"
-On Activation of this plugin, "Adiministor" and "Editor" are added full capabilities to edit and publish "jArticles". "Fellow" role, which has limited capabilities to edit "jArticle", added to admin system. On Deactivation of this plugin, capabilities for "jArticles" and "Fellow" role will be erased.
+On Activation of this plugin, "Adiministor" and "Editor" are added full capabilities to edit and publish "jArticles". "jFellow" role, which has limited capabilities to edit "jArticle", added to admin system. On Deactivation of this plugin, capabilities for "jArticles" and "jFellow" role will be erased.
 
 
 VI. Edit Instructions
@@ -205,7 +208,7 @@ Firefox, Chrome (webkit), Opera, IE and Edges work on this plugin. This plugin n
 
 == Security Notice ==
 
-Both 'codeviewer' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "Fellow"). post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which do not be published by senior graded users (such as "Editor"). Senior graded users should pay attention to invest SVGs, JavaScript and other scripts in "jArticles" for stopping any malicous activities before publishing "jArticles".
+Both 'codeviewer' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "jFellow"). post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which do not be published by senior graded users (such as "Editor"). Senior graded users should pay attention to invest SVGs, JavaScript and other scripts in "jArticles" for stopping any malicous activities before publishing "jArticles".
 
 == Installation ==
 
@@ -229,6 +232,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 == Changelog ==
+
+= 0.9.5 Beta =
+* Added Variable Modifiers of Regular Expression Search | Reviewed Text Domain
+: April 1, 2017
 
 = 0.9.4 Beta =
 * Changed the Post Type Name "article" to "jarticle" for unique naming
