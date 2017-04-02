@@ -51,7 +51,7 @@ function shortcode_spansearch( $atts, $content = null ) {
 	$return_str .= "\tspanSearch(\"" . $arr[ 'id' ] .
 						"\", \"" . $arr[ 'start' ] .
 						"\", \"" . $arr[ 'end' ] .
-						"\", \"" . $content . // target string to change status
+						"\", \"" . htmlspecialchars( $content ) . // target string to change status
 						"\", \"" . $arr[ 'color' ] .
 						"\", \"" . $arr[ 'background-color' ] .
 						"\", \"" . $arr[ 'font-family' ] .
@@ -93,7 +93,7 @@ function shortcode_spansearch_all( $atts, $content = null ) {
 	$return_str = "<script defer type=\"text/javascript\">\r\n";
 
 	$return_str .= "\tspanSearch_All(\"" . $arr[ 'id' ] .
-						"\", \"" . $content . // target string to change status
+						"\", \"" . htmlspecialchars( $content ) . // target string to change status
 						"\", \"" . $arr[ 'color' ] .
 						"\", \"" . $arr[ 'background-color' ] .
 						"\", \"" . $arr[ 'font-family' ] .

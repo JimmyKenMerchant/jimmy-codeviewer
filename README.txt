@@ -2,7 +2,7 @@
 Contributors: Kenta Ishii
 Requires at least: WordPress 4.8-trunk
 Tested up to: WordPress 4.7.3
-Version: 0.9.5 Beta
+Version: 0.9.6 Beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,10 @@ Searches the string "Some Word" on lines No.11 to No.14 of id "desc" which named
 
 c. '[spansearch_all id="text" background-color="blue"]Some String[/spansearch_all]':
 Searches the string "Some String" on all lines of id "text" which named in 'codeview' series then changes "Some String" background-color to blue.
+
+To search for some special chars, you may need escape chars. WordPress shortcodes specially hate raw ">" and "<", even in the enclosed content, otherwise shortcodes will be broken. Shortcode values should not contain [, ], ", ', <, >. Plus, in the enclosed content, ', ", & will be html entities because of safety. e.g. use "\x3E" for ">", less-than and "\x3C""<", greater-than.
+
+To put spaces in attribute values, use quotes. spaces in unquoted values will be broken.
 
 'spansearch' series have these parameters below.
 
@@ -232,6 +236,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 == Changelog ==
+
+= 0.9.6 Beta =
+* Reviewed the security of 'spansearch' series, typically handling special characters
+: April 2, 2017
 
 = 0.9.5 Beta =
 * Added Variable Modifiers of Regular Expression Search | Reviewed Text Domain
