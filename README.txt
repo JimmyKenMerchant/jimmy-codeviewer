@@ -1,16 +1,26 @@
 === Jimmy Codeviewer ===
-Contributors: Kenta Ishii
+Contributors: jimmyken
+Plugin Name: Jimmy Codeviewer
+Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
+Tags: code, viewer, code-viewer, text, text-viewer, layout, magaine, magazine-sytle
+Author: Kenta Ishii
+Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: WordPress 4.8-trunk
 Tested up to: WordPress 4.7.3
-Version: 0.9.6 Beta
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+== Summary ==
+
+Jimmy Codeviewer, a WordPress plugin, is a shortcode library to load text, SVG (Scalable Vector Graphics) and other scripts to WordPress pages. By using this plugin, you can reduce quantity of your code, e.g., if you want to put a proportional sample of programming code in your page, you just type one shortcode then you get the sample with line numbers and colored words you intended. In addition, you can make pages with the layout similar to magazines on paper by using "magazine", a theme template.
+
+
 == Description ==
 
-Jimmy Codeviewer is a multipurpose text viewer. First, I purposed to make a viewer for programming code for my site that introduces my articles. It was OK. But in making Jimmy Codeviewer, I think that this could be a multipurpose text viewer. On this time, many news sites have very simple layout for their contents. By the way, you could watch magazines or papers at a news-stand every day and these are so colorful and design-riches. I just want these on Internet. Colorful design-riches actually make us some attention and affection. Browsers is growing their rendering ability right now. This challenge — mocking magazines or news papers on Internet — not a dream, but a real on Internet. In addition to this, I tried to change WordPress to SVG-Free. SVG is one of vector graphics containers. It's just like HTML and JavaScrpt. This is exactly the reason why WordPress Community prohibits to upload SVG Files by Media Uploader. If SVGs are programming codes, these should be stored as scripts in pages. But "Posts" and "Pages" are having these unique purpose as public pages, so I decided to make "jArticles" inner pages and store texts and SVGs to "jArticles". For loading "jArticles" on "Posts" I made several WordPress shortcodes.
+First, I purposed to make a viewer for programming code for my site that introduces my articles. It was OK. But in making Jimmy Codeviewer, I think that this could be a multipurpose text viewer. On this time, many news sites have very simple layout for their contents. You could watch magazines or papers at a news-stand everyday, and these are so colorful and design-riches. I just want these on Internet. Colorful design-riches actually make us some attention and affection. Browsers is growing their rendering ability right now. This challenge — mocking magazines or news papers on Internet — not a dream, but a real on Internet. In addition, I tried to change WordPress to SVG-Free. SVG is one of vector graphics containers. It's just like HTML and JavaScrpt. This is exactly the reason why WordPress Community prohibits to upload SVG Files by Media Uploader. If SVGs are programming codes, these should be stored as scripts in pages. But "Posts" and "Pages" are having these unique purpose as public pages, so I decided to make "jArticles" inner pages and store texts, SVGs and scripts to "jArticles". For loading "jArticles" on "Posts" I made several WordPress shortcodes.
 
-Jimmy Codeviewer consists three departments which have several WordPress shortcodes and functions.
+Jimmy Codeviewer consists of three departments which have several WordPress shortcodes and functions.
 
 
 1. Code Viewer
@@ -31,7 +41,7 @@ a. Shortcodes: [articleloader_byid] and [articleloader_byname] to show SVGs or o
 
 a. Shortcodes: [init_spansearch], [spansearch] and [spansearch_all] to change the text color and other styles. [divsearch] to change the row styles.
 
-b. JavaSctipt: spanSearch() and its family, the engine to provide the above shortcodes to function.
+b. JavaSctipt: spanSearch and its family, the engine to provide the above shortcodes to function.
 
 
 == Tutorial ==
@@ -55,7 +65,7 @@ Shows line No.4 in the text of the jArticle, the post slug is "some-thing" and a
 
 'theme="magazine"' in these shortcodes means making html tags with magazine template. For example, if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
 
-Styles on templates can change individually on each shortcode. You can use the parameters below.
+Styles can change individually on each shortcode. You can use attributes below.
 
 1. 'id' // ID to add
 2. 'start' // The number as Initial Line Number
@@ -89,13 +99,13 @@ Styles on templates can change individually on each shortcode. You can use the p
 30. 'line20-2' // line number (absolute) you want LINE20COL color
 31. 'line20-3' // line number (absolute) you want LINE20COL color
 
-No.6 to No.22 are similar to html style parameters. But if you use spaces in the value, parameters will be broken. No.1 to No.5 are the basic of making the table. Make sure to add "%" in the value of "number-width" . No.23 to No.31 are to use in programming code viewing to change font color on some particular line.
+No.6 to No.22 are similar to html style attributes. But if you use spaces in unquoted values, arguments to function spanSearch (JavaScript) will be broken. No.1 to No.5 are the basic of making the table. Make sure to add "%" in the value of "number-width" . No.23 to No.31 are to use in programming code viewing to change font color on some particular line.
 
 Jimmy Codeviewer never consider of putting same lines on a page several times. Therefore, if you name the same ID to a doubled line, you will meet ID conflict and functional problems on 'spansearch' series and 'divsearch'.
 
 c. '[articleloader_byid"]111(the post ID of jArticle)[/articleloader_byid]':
 d. '[articleloader_byname"]some-thing(the post slug [name] of jArticle)[/articleloader_byname]':
-Likewise 'codeviewer' series, these show jArticles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeviewer' series, parameters don't exist.
+Likewise 'codeviewer' series, these show jArticles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeviewer' series, attributes don't exist.
 
 
 IV. Change Color or style on some particular string and row
@@ -108,11 +118,11 @@ Searches the string "Some Word" on lines No.11 to No.14 of id "desc" which named
 c. '[spansearch_all id="text" background-color="blue"]Some String[/spansearch_all]':
 Searches the string "Some String" on all lines of id "text" which named in 'codeview' series then changes "Some String" background-color to blue.
 
-To search for some special chars, you may need escape chars. WordPress shortcodes specially hate raw ">" and "<", even in the enclosed content, otherwise shortcodes will be broken. Shortcode values should not contain [, ], ", ', <, >. Plus, in the enclosed content, ', ", & will be html entities because of safety. e.g. use "\x3E" for ">", less-than and "\x3C""<", greater-than.
+To search for some special chars, you may need escape chars. WordPress shortcodes specially hate raw ">" and "<", even in the enclosed content (between a shorcode and its slashed shorcode), otherwise shortcodes will be broken. Shortcode values should not contain [, ], ", ', <, >. Plus, in the enclosed content, ', ", & will be html entities because of safety, e.g., use "\x3E" for ">", less-than and "\x3C" for "<", greater-than.
 
 To put spaces in attribute values, use quotes. spaces in unquoted values will be broken.
 
-'spansearch' series have these parameters below.
+'spansearch' series have these attributes below.
 
 1. 'id' // table's id
 2. 'color' // fontcolor of target string
@@ -125,7 +135,7 @@ To put spaces in attribute values, use quotes. spaces in unquoted values will be
 9. 'regex-enable' // enable Regular Expression ('TRUE' or 'true') or not
 10. 'regex-modifier' // assign "i" and/or "m" modifier on RegExp. "g" will be ignored
 
-'[spansearch]' have these parameters below.
+'[spansearch]' have these attributes below.
 
 11. 'start' // line number to start
 12. 'end' // line number to end
@@ -136,7 +146,7 @@ If 9. 'regex-enable' is "TRUE" or "true", 'spansearch' series are searching the 
 d. '[divsearch id="title" start="3" end="7" text-align="center" line-height="1.6em"]':
 Searches lines No.3 to No.7 of id "title" which named in 'codeview' series then changes these text-align to center, and line-height to 1.6em. If some line does not exist between No.11 to No.14, This function will be stopped. If you use this shortcode, make sure to confirm sequenced line numbers between "start" and "end".
 
-'[divsearch]' have these parameters below.
+'[divsearch]' have these attributes below.
 
 1. 'id' // table's id
 2. 'start' // line number to start
@@ -204,21 +214,21 @@ http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 
 == Compatibility ==
 
-1. Theme Compatibility
-On WordPress Team's "Twenty Seventeen", This Plugin works but you need to customize "Twenty Seventeen" or this plugin to fit on display. Some themes such as "Twenty Seventeen" are having style flexibility between mobile devices and personal computers. Nowadays, rendering power of displays on both mobiles and personals are close to each other. Small displays can work as well as big displays. So I now recommend to trash flexibility between both. This gives us concentration of manpower to one layout in one site and grows quality of the site design. 
+1. Themes
+On WordPress Team's "Twenty Seventeen", this Plugin works but you need to customize "Twenty Seventeen" or this plugin to fit on display. Some themes such as "Twenty Seventeen" are having style flexibility between mobile devices and personal computers. Nowadays, rendering power of displays on both mobiles and personals are close to each other. Small displays can work as well as big displays by high density pixels. So I now recommend to trash flexibility between both. This gives us concentration of manpower to one layout in one site and grows quality of the site design. 
 
-2. Browser Compatibility
+2. Browsers
 Firefox, Chrome (webkit), Opera, IE and Edges work on this plugin. This plugin never guarantee to work SVG, JavaScript or other scripts in browsers. Even though you can load scripts using 'articleloader' series, these may not work properly.
 
 == Security Notice ==
 
-Both 'codeviewer' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "jFellow"). post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which do not be published by senior graded users (such as "Editor"). Senior graded users should pay attention to invest SVGs, JavaScript and other scripts in "jArticles" for stopping any malicous activities before publishing "jArticles".
+Both 'codeviewer' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "jFellow"). Post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which don't be published by senior graded users (such as "Editor"). Senior graded users should pay attention to investigate SVGs, JavaScript and other scripts in "jArticles" for stopping any malicous activities before publishing "jArticles".
 
 == Installation ==
 
-Jimmy Codeviewer is a plugin under the terms of the GNU GPL. Now on its Beta Version. I can't guarantee correct functions on this plugin. But if you have some curious to this plugin, you can download and test it. Make sure to activate this plugin in "Installed Plugins" page.
+Jimmy Codeviewer is a plugin under the terms of the GNU GPL. If you have some curious to this plugin, you can download and test it from GitHub public repository. https://github.com/JimmyKenMerchant/jimmy-codeviewer/
 
-This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. Post Type Name, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other Post Type Name. LATEX, a renowned digital document preparation system, uses "jarticle" as a document class. But I think, in WordPress, "jArticle" as Post Type Name is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others.
+This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. The name of post type, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other names. LATEX, a renowned digital document preparation system, uses "jarticle" as a Japanese document class. But I think, in WordPress, "jArticle" as one of post types is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others.
 
 == Copyright ==
 
