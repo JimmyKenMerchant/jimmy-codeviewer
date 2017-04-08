@@ -17,17 +17,17 @@ function shortcode_spansearch_init() {
 
 	return $return_str;
 }
-
 add_shortcode( 'init_spansearch', 'shortcode_spansearch_init' );
+
 
 /**
  *  Make shortcode [spansearch]
  *  e.g. [spansearch id="" start="" end=""]Something Else[/spansearch]
  *  Search Targeted Strings and Treat These
- *  Memo: In content, just use typed chars. no need of escaped code for space, etc. if both 1bytes and 2 bytes chars.
- *		Besides, if you want search html entities such as "&nbsp;" use unicode escape,
- *		just as "\xA0" or "\u00A0" or "\u{00A0}". In shortcode $atts process, escape chars tranlsate actual chars.
- *		Attribute values must not contain ] [ ' " and < > are in limited use. Spaces makes attributes broken.
+ *  Memo: In content, just use typed chars. No need of escape char for space, etc. Even if you want both 1 byte and 2 bytes chars.
+ *	Besides, if you want to search html entities such as "&nbsp;" use unicode escape,
+ *	just as "\xA0", "\u00A0" or "\u{00A0}". In shortcode $atts process, escape chars tranlsate actual chars.
+ *	Attribute values must not contain ] [ ' " and < > are in limited use.
  */
 function shortcode_spansearch( $atts, $content = null ) {
 	$arr = shortcode_atts(
@@ -67,8 +67,8 @@ function shortcode_spansearch( $atts, $content = null ) {
 
 	return $return_str;
 }
-
 add_shortcode( 'spansearch', 'shortcode_spansearch' );
+
 
 /**
  *  Make shortcode [spansearch_all]
@@ -109,8 +109,8 @@ function shortcode_spansearch_all( $atts, $content = null ) {
 
 	return $return_str;
 }
-
 add_shortcode( 'spansearch_all', 'shortcode_spansearch_all' );
+
 
 /**
  *  Make shortcode [divsearch]
@@ -152,5 +152,4 @@ function shortcode_divsearch( $atts ) {
 
 	return $return_str;
 }
-
 add_shortcode( 'divsearch', 'shortcode_divsearch' );

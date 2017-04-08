@@ -13,15 +13,13 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Summary ==
 
-Jimmy Codeviewer, a WordPress plugin, is a shortcode library to load text, SVG (Scalable Vector Graphics) and other scripts to WordPress pages. By using this plugin, you can reduce quantity of your code, e.g., if you want to put a proportional sample of programming code in your page, you just type one shortcode then you get the sample with line numbers and colored words you intended. In addition, you can make pages with the layout similar to magazines on paper by using "magazine", a theme template.
-
+Jimmy Codeviewer, a WordPress plugin, is a shortcode library to load text, SVG (Scalable Vector Graphics) and other scripts to WordPress pages. By using this plugin, you can reduce quantity of your code, e.g., if you want to put a proportional sample of programming code in your page, you just type one shortcode, then you get the sample with line numbers and colored words which you intended. In addition, you can make pages with layout similar to magazines on paper by using "magazine", a theme template.
 
 == Description ==
 
-First, I purposed to make a viewer for programming code for my site that introduces my articles. It was OK. But in making Jimmy Codeviewer, I think that this could be a multipurpose text viewer. On this time, many news sites have very simple layout for their contents. You could watch magazines or papers at a news-stand everyday, and these are so colorful and design-riches. I just want these on Internet. Colorful design-riches actually make us some attention and affection. Browsers is growing their rendering ability right now. This challenge — mocking magazines or news papers on Internet — not a dream, but a real on Internet. In addition, I tried to change WordPress to SVG-Free. SVG is one of vector graphics containers. It's just like HTML and JavaScrpt. This is exactly the reason why WordPress Community prohibits to upload SVG Files by Media Uploader. If SVGs are programming codes, these should be stored as scripts in pages. But "Posts" and "Pages" are having these unique purpose as public pages, so I decided to make "jArticles" inner pages and store texts, SVGs and scripts to "jArticles". For loading "jArticles" on "Posts" I made several WordPress shortcodes.
+In my first mind, I purposed to make a viewer for programming code for my site that introduces my articles. It was OK and named this plugin as "Jimmy Codeviewer". But in making "Jimmy Codeviewer", I think this could be a multipurpose text viewer. On this time, many news sites have very simple layout for their contents. You could watch magazines or papers at a news-stand everyday, and these are so colorful and design-riches. I just want these on Internet. Colorful design-riches actually make us some attention and affection. Web browsers are growing their rendering ability right now. This challenge — making magazines or newspapers on Internet — not a dream, but a real on Internet. In addition, I tried to change WordPress to SVG-Free. SVG (Scalable Vector Graphics) is one of vector graphics containers. It's just like HTML and JavaScrpt. This is exactly the reason why WordPress Community prohibits to upload SVG Files by Media Uploader. If SVGs are programming codes, these should be stored as scripts in pages. But "Posts" and "Pages" are having their own purposes as public pages. So I decided to make "jArticles", inner pages and store texts, SVGs and scripts to "jArticles". For loading "jArticles" on "Posts", I made several WordPress shortcodes.
 
 Jimmy Codeviewer consists of three departments which have several WordPress shortcodes and functions.
-
 
 1. Code Viewer
 
@@ -46,7 +44,7 @@ b. JavaSctipt: spanSearch and its family, the engine to provide the above shortc
 
 == Tutorial ==
 
-I. General
+I. Brief
 First, you publish your text or SVGs in "jArticles". Second, you call these in "Posts" by using shortcodes. If you want to change color or style on some particular string and row, use shortcodes as the instruction below.
 
 
@@ -58,10 +56,10 @@ III. Calling "jArticles" in "Posts"
 Now you can use shortcodes on "Posts".
 
 a. '[codeview_byid theme="default" id="desc" start="1" count="5"]111(the post ID of jArticle)[/codeview_byid]':
-Shows line No.1 and sequenced 5 lines from No.1 in the text of the jArticle, the post ID is "111" and assign each row ID as "desc-(its linenumber)" and table class as "desc" with default template.
+Shows line No.1 and sequenced 5 lines from No.1 in the text of the jArticle, the post ID is "111" and assign each row ID as "desc-(its line number)" and table class as "desc" with default template.
 
 b. '[codeview_byname theme="magazine" id="text" start="4"]some-thing(the post slug [name] of jArticle)[/codeview_byname]':
-Shows line No.4 in the text of the jArticle, the post slug is "some-thing" and assign each row ID as "text-(its linenumber)" and table class as "text" with magazine template.
+Shows line No.4 in the text of the jArticle, the post slug is "some-thing" and assign each row ID as "text-(its line number)" and table class as "text" with magazine template.
 
 'theme="magazine"' in these shortcodes means making html tags with magazine template. For example, if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
 
@@ -99,13 +97,13 @@ Styles can change individually on each shortcode. You can use attributes below.
 30. 'line20-2' // line number (absolute) you want LINE20COL color
 31. 'line20-3' // line number (absolute) you want LINE20COL color
 
-No.6 to No.22 are similar to html style attributes. But if you use spaces in unquoted values, arguments to function spanSearch (JavaScript) will be broken. No.1 to No.5 are the basic of making the table. Make sure to add "%" in the value of "number-width" . No.23 to No.31 are to use in programming code viewing to change font color on some particular line.
+No.6 to No.22 are similar to html style attributes. But if you use spaces in unquoted values, arguments to function spanSearch (JavaScript) will be broken. No.1 to No.5 are the basic of making the table. Make sure to add "%" in the value of "number-width". No.23 to No.31 are to use in programming code viewing to change font color on particular rows.
 
-Jimmy Codeviewer never consider of putting same lines on a page several times. Therefore, if you name the same ID to a doubled line, you will meet ID conflict and functional problems on 'spansearch' series and 'divsearch'.
+Jimmy Codeviewer never consider of putting same lines on a page several times. Therefore, if you name the same ID to the tables which have the same line numbers, you will meet ID conflict and functional problems on 'spansearch' series and 'divsearch'.
 
 c. '[articleloader_byid"]111(the post ID of jArticle)[/articleloader_byid]':
 d. '[articleloader_byname"]some-thing(the post slug [name] of jArticle)[/articleloader_byname]':
-Likewise 'codeviewer' series, these show jArticles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeviewer' series, attributes don't exist.
+Likewise 'codeview' series, these show jArticles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeview' series, attributes don't exist.
 
 
 IV. Change Color or style on some particular string and row
@@ -116,11 +114,9 @@ b. '[spansearch id="desc" start="11" end="14" color="red"]Some Word[/spansearch]
 Searches the string "Some Word" on lines No.11 to No.14 of id "desc" which named in 'codeview' series then changes "Some Word" font color to red. If some line does not exist between No.11 to No.14, This function will be stopped. If you use this shortcode, make sure to confirm sequenced line numbers between "start" and "end".
 
 c. '[spansearch_all id="text" background-color="blue"]Some String[/spansearch_all]':
-Searches the string "Some String" on all lines of id "text" which named in 'codeview' series then changes "Some String" background-color to blue.
+Searches the string "Some String" on all lines of id "text" which named in 'codeview' series then changes "Some String" background-color to blue. This shortcode does not require sequenced line numbers of made tables by 'codeview' series.
 
-To search for some special chars, you may need escape chars. WordPress shortcodes specially hate raw ">" and "<", even in the enclosed content (between a shorcode and its slashed shorcode), otherwise shortcodes will be broken. Shortcode values should not contain [, ], ", ', <, >. Plus, in the enclosed content, ', ", & will be html entities because of safety, e.g., use "\x3E" for ">", less-than and "\x3C" for "<", greater-than.
-
-To put spaces in attribute values, use quotes. spaces in unquoted values will be broken.
+To search for some special chars, you may need escape chars. WordPress shortcodes specially hate raw ">" and "<", even in the enclosed content (between a shortcode and its slashed shortcode), otherwise shortcodes will be broken. Shortcode values should not contain [, ], ", ', <, >. Plus, in the enclosed content, ', ", & will be html entities because of safety, e.g., use "\x3E" for ">", less-than and "\x3C" for "<", greater-than. To put spaces in attribute values, use quotes. Spaces in unquoted values will be broken.
 
 'spansearch' series have these attributes below.
 
@@ -140,8 +136,7 @@ To put spaces in attribute values, use quotes. spaces in unquoted values will be
 11. 'start' // line number to start
 12. 'end' // line number to end
 
-If 9. 'regex-enable' is "TRUE" or "true", 'spansearch' series are searching the word by JavaScript's Regular Expression. Type your search word by JavaScript's rule for Regular Expression without delimiters and assign "m" (multi-lines modifier for use "^", "$" on each lines), and/or "i" (ignore cases) in 10. 'regex-modifier'. "g" is never be used because this modifier for all replacing words on one time [String.prototype.replace()], or get all matching words on one time [String.prototype.match()].
-
+If No.9, 'regex-enable', is "TRUE" or "true", 'spansearch' series are searching the word by JavaScript's Regular Expression. Type your search word by JavaScript's rule for Regular Expression without delimiters and assign "m" (multi-lines modifier for use "^", "$" on each lines), and/or "i" (ignore cases) in No.10, 'regex-modifier'. "g" is never be used because this modifier for all replacing words on one time [String.prototype.replace()], or get all matching words on one time [String.prototype.match()].
 
 d. '[divsearch id="title" start="3" end="7" text-align="center" line-height="1.6em"]':
 Searches lines No.3 to No.7 of id "title" which named in 'codeview' series then changes these text-align to center, and line-height to 1.6em. If some line does not exist between No.11 to No.14, This function will be stopped. If you use this shortcode, make sure to confirm sequenced line numbers between "start" and "end".
@@ -162,11 +157,11 @@ Searches lines No.3 to No.7 of id "title" which named in 'codeview' series then 
 
 
 V. Capabilities of editing "jArticles"
-On Activation of this plugin, "Adiministor" and "Editor" are added full capabilities to edit and publish "jArticles". "jFellow" role, which has limited capabilities to edit "jArticle", added to admin system. On Deactivation of this plugin, capabilities for "jArticles" and "jFellow" role will be erased.
+On activation of this plugin, "Adiministor" and "Editor" are added full capabilities to edit and publish "jArticles". "jFellow" role, which has limited capabilities to edit "jArticle", added to admin system. On deactivation of this plugin, capabilities for "jArticles" and "jFellow" role will be erased.
 
 
 VI. Edit Instructions
-In text of "jArticles" to use 'codeviewer' series, you can use Edit Instructions to put html tags for ruby ,newline, etc. In 'codeviewer', html specialchars and some entities changes to html escapes such as "&lt; ('<')". Therefore, you need to use Edit Instructions to put html tags. Plus, to function 'spansearch' series, each children tag needs to be named. To take easy of these work, Edit Instructions exist. Plus, if you want newlines in one line on "jArticles", you can use '(edit(new-line))'.
+In text of "jArticles" to use 'codeview' series, you can use Edit Instructions to put html tags for ruby, newline, etc. In 'codeview', html specialchars and some entities changes to html escapes such as "&lt;" (for "<"). Therefore, you need to use Edit Instructions to put html tags. Plus, to function 'spansearch' series, each children tag needs to be named. To take easy of these work, Edit Instructions exist. Plus, if you want newlines in one line on "jArticles", you can use '(edit(new-line))'.
 
 Actual Edit Instructions are below.
 
@@ -207,7 +202,6 @@ This Instruction is a little special. If you want to color the string to red, us
 12. '(edit(end-color))':
 To end color-tag.
 
-
 Visit my site to check layout samples, and actually how to write html and shortcodes in your posts.
 http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 
@@ -215,20 +209,22 @@ http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 == Compatibility ==
 
 1. Themes
-On WordPress Team's "Twenty Seventeen", this Plugin works but you need to customize "Twenty Seventeen" or this plugin to fit on display. Some themes such as "Twenty Seventeen" are having style flexibility between mobile devices and personal computers. Nowadays, rendering power of displays on both mobiles and personals are close to each other. Small displays can work as well as big displays by high density pixels. So I now recommend to trash flexibility between both. This gives us concentration of manpower to one layout in one site and grows quality of the site design. 
+On WordPress Team's "Twenty Seventeen", this Plugin works but you may need to customize "Twenty Seventeen" or this plugin to fit on display. Some themes such as "Twenty Seventeen" are having style flexibility between mobile devices and personal computers. Nowadays, rendering power of displays on both mobiles and personals are close to each other. Small displays can work as well as big displays by high density pixels. So I now recommend to trash flexibility between both. This gives us concentration of manpower to one layout in one site and grows quality of the site design. 
 
-2. Browsers
-Firefox, Chrome (webkit), Opera, IE and Edges work on this plugin. This plugin never guarantee to work SVG, JavaScript or other scripts in browsers. Even though you can load scripts using 'articleloader' series, these may not work properly.
+
+2. Web Browsers
+Firefox, Chrome, Opera, IE and Edge work on this plugin. Other browsers have not been tested. This plugin never guarantee to work SVG, JavaScript or other scripts in browsers. Even though you can load scripts using 'articleloader' series, these may not work properly.
+
 
 == Security Notice ==
 
-Both 'codeviewer' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "jFellow"). Post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which don't be published by senior graded users (such as "Editor"). Senior graded users should pay attention to investigate SVGs, JavaScript and other scripts in "jArticles" for stopping any malicous activities before publishing "jArticles".
+Both 'codeview' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "jFellow"). Post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which don't be published by senior graded users (such as "Editor"). Senior graded users should pay attention to investigate SVGs, JavaScript and other scripts in "jArticles" for stopping any malicous activities before publishing "jArticles".
 
 == Installation ==
 
 Jimmy Codeviewer is a plugin under the terms of the GNU GPL. If you have some curious to this plugin, you can download and test it from GitHub public repository. https://github.com/JimmyKenMerchant/jimmy-codeviewer/
 
-This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. The name of post type, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other names. LATEX, a renowned digital document preparation system, uses "jarticle" as a Japanese document class. But I think, in WordPress, "jArticle" as one of post types is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others.
+This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. The name of post type, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other names. LATEX, a renowned digital document preparation system, uses "jarticle" as a Japanese document class. But I think, in WordPress, "jArticle" as one of post types is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others. Embedded CSS in this plugin uses several names for HTML ids and classes, such as "magazine-content". If you meet any naming conflict in whole HTML ids or classes in your page, change these names to save each unique naming. Changing names of ids and classes in "style-codeviewer.css" does not affect functions of shortcodes in this plugin.
 
 == Copyright ==
 
@@ -246,6 +242,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 == Changelog ==
+
+= 0.9.7 Beta =
+* Modified README.txt and comments
+: April 8, 2017
 
 = 0.9.6 Beta =
 * Reviewed the security of 'spansearch' series, typically handling special characters

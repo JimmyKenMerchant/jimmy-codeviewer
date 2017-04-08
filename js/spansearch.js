@@ -9,11 +9,11 @@
  * Besides, In var str, if you want plain space, just use " " itself.
  * In var str, if you want search &amp, use "&" itself or "\x26" or "\u0026" or "\u{0026}", not "&amp".
  * Likewise if you want search &copy, use copryright-symbol itself (if you can type) or "\xA9" or "\u00A9" or "\u{00A9}", not "&copy".
- * Element.textContent returns actual inner text and translate alphabetical html entities codes to numerical unicodes.
+ * Element.textContent returns actual inner text and translates html entities to numerical unicodes.
  * Beside, other vars use ordinary space and chars just keyboard displays.
  */
 
-//spanSearch("alpha", "24", "25", "Array", "#0ff", "", "", "", "", "", "");
+//spanSearch("alpha", "24", "25", "Array", "#0ff", "", "", "", "", "", "", "", "");
 
 /**
  * Search some word or spring then treat its font styles, color, etc.

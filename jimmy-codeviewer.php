@@ -5,16 +5,27 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Description: Multipurpose text viewer
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
-Version: 0.9.6 Beta
+Version: 0.9.7 Beta
 Text Domain: jimmy-codeviewer
 Domain Path: /languages
 License: GPL2 or Later
 */
 
+/**
+ * Strictly wants that Encoding of the text is UTF-8 otherwise, you meet empty return of html code
+ * mb_detect_encoding and mb_convert_encoding are useful
+ * Plus, use utf-8 as PHP default. e.g. set "default_charset = UTF-8" in php.ini
+ * You may need settings of Multibyte String Extension (php-mbstring) and so on
+ * Make sure to set utf-8 in html. e.g. set "<meta charset="UTF-8">" in head tag
+ * In addition, MySQL's Table charset needs utf8mb4, collate needs utf8mb4_unicode_ci
+ *
+ * MEMO: UTF-8 is ultimatelly in-bytes format for unicode. if you want to search raw unicode, you may need utf-16 style unicode sucn as "/\x{2010}/u"
+ */
+
 require "constants.php";
 
 /**
- * Add Custom Post type, article
+ * Adds Custom Post type, article
  */
 function jimmy_codeviewer_create_post_type() {
 	register_post_type(
@@ -41,7 +52,8 @@ function jimmy_codeviewer_create_post_type() {
 }
 add_action( 'init', 'jimmy_codeviewer_create_post_type' );
 
-/* Role Making "jfellow" to only edit or delete article on activation */
+
+/* Role making of "jfellow" to only edit or delete article on activation */
 function jimmy_codeviewer_roles_customize() {
 	$capabilities = array(
 			'edit_posts' => 'edit_jarticles',
@@ -74,7 +86,8 @@ function jimmy_codeviewer_roles_customize() {
 }
 register_activation_hook( __FILE__, 'jimmy_codeviewer_roles_customize' );
 
-/* Role Delete on Deactivation */
+
+/* Deletes Capabilities and the original role on deactivation */
 function jimmy_codeviewer_roles_retrieve() {
 	$capabilities = array(
 			'edit_posts' => 'edit_jarticles',
@@ -103,9 +116,10 @@ function jimmy_codeviewer_roles_retrieve() {
 }
 register_deactivation_hook( __FILE__, 'jimmy_codeviewer_roles_retrieve' );
 
+
 /**
  * Cancels auto html tagging <p> and/or <br />
- * On Default, post is only capable with Code Viewer. 
+ * On default of this plugin, post is only capable with Code Viewer. 
  */
 function jimmy_codeviewer_cancel_tagging() {
 	if ( get_post_type() === "post" ) {
@@ -118,8 +132,9 @@ function jimmy_codeviewer_cancel_tagging() {
 }
 add_action( 'the_post', 'jimmy_codeviewer_cancel_tagging' );
 
+
 /**
- * Erase indents in posts for proportional html.
+ * Erases indents in posts for proportional html.
  */
 function jimmy_codeviewer_erase_indents( $content ) {
 	// add multi-lines pattern modifier "m" to use beginning of line outside of the delimiter.
@@ -128,14 +143,16 @@ function jimmy_codeviewer_erase_indents( $content ) {
 	return $content;
 }
 
+
 /**
- * Add style around codeview
+ * Adds style in using 'codeview' series
  */
 function jimmy_codeviewer_style() {
 	wp_enqueue_style( 'jimmy-codeviewer-style',  plugins_url( 'style-codeviewer.css', __FILE__ ), array(), null );
 	return true;
 }
 add_action( 'wp_enqueue_scripts', 'jimmy_codeviewer_style' );
+
 
 /**
  *  Make shortcode [codeview_byid]
@@ -161,6 +178,7 @@ function shortcode_codeviewer_article_byid( $atts, $content = null ) {
 }
 add_shortcode( 'codeview_byid', 'shortcode_codeviewer_article_byid' );
 
+
 /**
  *  Make shortcode [codeview_byname]
  *  e.g. [codeview_byname title="something"]articlename[/codeview_byname]
@@ -185,12 +203,13 @@ function shortcode_codeviewer_article_byname( $atts, $content = null ) {
 }
 add_shortcode( 'codeview_byname', 'shortcode_codeviewer_article_byname' );
 
+
 /**
  * Common function to make html on codeviewer
  */
 function __shortcode_codeviewer_article( $atts, $content_text ) {
 	// include a theme, if a theme is not, require the default theme
-	$pre = (array)$atts; // already array by shortcode_parse_atts in shorcodes.php
+	$pre = (array)$atts; // already array by shortcode_parse_atts in shortcodes.php
 	if ( array_key_exists( "theme", $pre ) ) {
 		$theme = "theme_" . $pre[ 'theme' ] . ".php";
 		if ( (include $theme) == FALSE ) {
@@ -201,7 +220,8 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 		require "theme_default.php";
 	}
 
-	// '',"",'0',"0", NULL all means and false, except '\0' in C lang. '', "" means empty
+	// 0, '', "", '0', "0", array() and NULL means FALSE in boolean check, TRUE in empty check [empty()].
+	// Besides "\0" stores actual 0 character in String. This means no empty.
 	$arr = shortcode_atts(
 		array( 'id' => '', // ID to add
 			'start' => 1, // The number as Initial Line Number
@@ -235,18 +255,17 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 			'line20-2' => 0, // line number (absolute) you want LINE20COL color
 			'line20-3' => 0, // line number (absolute) you want LINE20COL color
 		),
-		$atts);
+		$atts );
 
 	// Set Numbers from attributes
-	// Attributes all seem like to be string type even though number...
-	$incre = $arr[ 'start' ];
+	// Attributes all seem like to be String type even though number...
+	$incre = (int)$arr[ 'start' ];
 	// To make sequence numbers for span tags
 	$sequence = 1;
-	$countlimit = $arr[ 'count' ] + $arr[ 'start' ] - 1;
+	$countlimit = (int)$arr[ 'count' ] + (int)$arr[ 'start' ] - 1;
 
-	// Make Return String
-	// display: inline-block; ... overflow style is basically second order, because of not indicating height
-	// Use double quotations and escape to use \r\n
+	// Start to make the return html code
+	// Use double quotations for escape chars such as "\r\n"
 	if ( $arr[ 'id' ] ) {
 		$return_str = "<div class=\"" . $arr[ 'id' ] . "\"";
 	} else {
@@ -257,41 +276,30 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 
 	// Counter Set
 	$i = 0;
-	// explode seems if empty, return empty but array exist
 	// For Compatibility POSIX and WINDOWS
 	$content_text = preg_replace( '/\r/', "", $content_text );
+	// explode seems that if empty, returns empty but the empty exists as an item in the array
 	$bufferarr = explode( "\n", $content_text );
-	// Add count limit to be safe code
+
+	// Main loop to make html code
 	while ( array_key_exists( $i, $bufferarr ) && $i < $countlimit && $i < LOOP_LIMITTER ) {
 		$buffer = $bufferarr[ $i ];
-		if(!$buffer) $buffer=" ";
+		if ( !$buffer ) $buffer = " ";
 		$i++;
 		if ( $i < $arr[ 'start' ] ) continue;
-
-		/* 
-		 * Strictly wants that Encoding of the text is UTF-8 otherwise, you meet empty return
-		 * mb_detect_encoding and mb_convert_encoding are useful
-		 * Plus, use utf-8 as PHP default. e.g. set "default_charset = UTF-8" in php.ini
-		 * You may need settings of Multibyte String Extension (php-mbstring) and so on
-		 * Make sure to set utf-8 in html. e.g. set "<meta charset="UTF-8">" in head tag
-		 * In addition, MySQL's Table charset needs utf8mb4, collate needs utf8mb4_unicode_ci
-		 *
-		 * MEMO: UTF-8 is ultimatelly in-bytes format for unicode. if you want to search raw unicode, you may need utf-16 style unicode sucn as "/\x{2010}/u"
-		 */
 
 		// First, change html special chars to html entities NOT to be actual codes
 		$buffer = htmlentities( $buffer, ENT_QUOTES, 'UTF-8' );
 
 		// "(edit([a-z]+\-[a-z]+[a-zA-Z0-9#\-]*))", Edit Instructions
-		// Use Double quotations for immediate string to use escape
 		// Escape of "(edit([a-z\-]+))" itself by backslash at first
 		$buffer = preg_replace( '/\x5C\(edit\(([a-z]+\-[a-z]+[a-zA-Z0-9#\-]*)\)\)/', "&#40;edit&#40;$1&#41;&#41;", $buffer );
 		$matches = array();
 
 		if ( preg_match_all( '/\(edit\(([a-z]+\-[a-z]+)[a-zA-Z0-9#\-]*\)\)/', $buffer, $matches, PREG_PATTERN_ORDER ) > 0) {
-			// $matches[0] stores all matched text,
-			// and $matches[1] and after stores word in parenthesis
-			// In this case, first and second words. Third is omitted.
+			// $matches[0] stores all matched text
+			// $matches[1] and after stores words in parenthesis
+			// $matches[1] stores 1st and 2nd word connected with a hyphen. 3rd word is omitted.
 			foreach ($matches[1] as $value) {
 				switch ($value) {
 					case "hard-hyphen":
@@ -337,7 +345,7 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 			}
 		}
 
-		// Then Make html
+		// Then Make html code
 		$return_str .= "\t<div style=\"display: block;margin: 0;padding: 0;width: 100%;text-align: left;\">\r\n";
 
 		$return_str .= "\t\t<div style=\"display: inline-block;margin: 0;vertical-align: top;text-align: right;width: " . $arr[ 'number-width' ] . ";color: " . $arr[ 'number-color' ];
@@ -367,7 +375,7 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 			$return_str .= "color: " . $arr[ 'line20-color' ] . ";";
 		}
 
-		// use cast to remove "%" this cast uses 'atoi', a c function
+		// Use cast to remove "%". This cast uses 'atoi', a C lang function
 		$textwidth = 100 - (int)$arr[ 'number-width' ];
 		$return_str .= "display: inline-block;margin: 0;padding: " . $arr[ 'padding-top' ] . " " . $arr[ 'padding-right' ] . " " . $arr[ 'padding-bottom' ] . " " . $arr[ 'padding-left' ] . ";vertical-align: top;text-align: " . $arr[ 'text-align' ] . ";width: " . $textwidth . "%;";
 

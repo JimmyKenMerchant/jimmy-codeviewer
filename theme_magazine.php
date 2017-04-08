@@ -4,12 +4,14 @@
  * @author Kenta Ishii, Tokyo. Copyright 2017 Kenta Ishii. All Rights Reserved.
  * @package Jimmy Codeviewer
  */
+
 /**
  * In shortcode attributes,
- * ]["' never be used and HTML Chars <> are limited. Spaces makes attributes broken.
+ * ]["' never be used and HTML Chars <> are limited.
  * Use html entities for restricted chars, such as &#34 (Double Quotation).
  * See the newest text of https://codex.wordpress.org/Shortcode_API
  */
+
 $LINE_COUNT = 1; // lines you want to make
 $BLOCK_WIDTH = "480px"; // width of this block
 $NUMBER_WIDTH = "0%"; // number width
