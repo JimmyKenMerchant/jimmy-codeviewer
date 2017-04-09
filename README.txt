@@ -2,7 +2,7 @@
 Contributors: jimmyken
 Plugin Name: Jimmy Codeviewer
 Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
-Tags: code, viewer, code-viewer, text, text-viewer, layout, magaine, magazine-sytle
+Tags: code, viewer, code-viewer, text, text-viewer, layout, magazine, magazine-style
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: WordPress 4.8-trunk
@@ -61,15 +61,15 @@ Shows line No.1 and sequenced 5 lines from No.1 in the text of the jArticle, the
 b. '[codeview_byname theme="magazine" id="text" start="4"]some-thing(the post slug [name] of jArticle)[/codeview_byname]':
 Shows line No.4 in the text of the jArticle, the post slug is "some-thing" and assign each row ID as "text-(its line number)" and table class as "text" with magazine template.
 
-'theme="magazine"' in these shortcodes means making html tags with magazine template. For example, if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
+'theme="magazine"' in these shortcodes means making HTML tags with magazine template. For example, if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
 
 Styles can change individually on each shortcode. You can use attributes below.
 
 1. 'id' // ID to add
-2. 'start' // The number as Initial Line Number
-3. 'count' // Row numbers you want to show
-4. 'width'
-5. 'number-width'
+2. 'start' // Initial Line Number
+3. 'count' // The number of rows you want to show
+4. 'width' // width of this block
+5. 'number-width' // number width
 6. 'text-align'
 7. 'line-height'
 8. 'color'
@@ -86,7 +86,7 @@ Styles can change individually on each shortcode. You can use attributes below.
 19. 'padding-right'
 20. 'padding-bottom'
 21. 'padding-left'
-22. 'white-space'
+22. 'white-space' // wrap or line for words. preformatted "pre-wrap", "pre", "normal", "nowrap"
 23. 'title' // Title Name under the code
 24. 'line10-color' // font's color
 25. 'line20-color' // font's color
@@ -97,7 +97,7 @@ Styles can change individually on each shortcode. You can use attributes below.
 30. 'line20-2' // line number (absolute) you want LINE20COL color
 31. 'line20-3' // line number (absolute) you want LINE20COL color
 
-No.6 to No.22 are similar to html style attributes. But if you use spaces in unquoted values, arguments to function spanSearch (JavaScript) will be broken. No.1 to No.5 are the basic of making the table. Make sure to add "%" in the value of "number-width". No.23 to No.31 are to use in programming code viewing to change font color on particular rows.
+No.6 to No.22 are similar to HTML style attributes. But if you use spaces in unquoted values, arguments to function spanSearch (JavaScript) will be broken. No.1 to No.5 are the basic of making the table. Make sure to add "%" in the value of "number-width". No.23 to No.31 are to use in programming code viewing to change font color on particular rows.
 
 Jimmy Codeviewer never consider of putting same lines on a page several times. Therefore, if you name the same ID to the tables which have the same line numbers, you will meet ID conflict and functional problems on 'spansearch' series and 'divsearch'.
 
@@ -116,7 +116,9 @@ Searches the string "Some Word" on lines No.11 to No.14 of id "desc" which named
 c. '[spansearch_all id="text" background-color="blue"]Some String[/spansearch_all]':
 Searches the string "Some String" on all lines of id "text" which named in 'codeview' series then changes "Some String" background-color to blue. This shortcode does not require sequenced line numbers of made tables by 'codeview' series.
 
-To search for some special chars, you may need escape chars. WordPress shortcodes specially hate raw ">" and "<", even in the enclosed content (between a shortcode and its slashed shortcode), otherwise shortcodes will be broken. Shortcode values should not contain [, ], ", ', <, >. Plus, in the enclosed content, ', ", & will be html entities because of safety, e.g., use "\x3E" for ">", less-than and "\x3C" for "<", greater-than. To put spaces in attribute values, use quotes. Spaces in unquoted values will be broken.
+To search for some special chars, you may need escape chars. WordPress shortcodes specially hate raw ">" and "<", even in the enclosed content (between a shortcode and its slashed shortcode), otherwise shortcodes will be broken. Shortcode values should not contain [, ], ", ', <, >. See the newest text of "https://codex.wordpress.org/Shortcode_API". Plus, by adding a code, ' (single quotation), " (double quotations) and & (ampersand) in the enclosed content will be HTML entities because of safety. To search special chars, use "\x3E" for ">", less-than and "\x3C" for "<", greater-than. To put spaces in attribute values, use quotes. Spaces in unquoted values will be broken.
+
+In the enclosed content, just use typed chars. No need of escape char for space, etc. Even if you want both 1 byte and 2 bytes chars. Besides, if you want to search HTML entities such as "&nbsp;" use unicode escape, just as "\xA0", "\u00A0" or "\u{00A0}". In making attributes of each shortcode, escape chars translate actual chars.
 
 'spansearch' series have these attributes below.
 
@@ -161,7 +163,7 @@ On activation of this plugin, "Adiministor" and "Editor" are added full capabili
 
 
 VI. Edit Instructions
-In text of "jArticles" to use 'codeview' series, you can use Edit Instructions to put html tags for ruby, newline, etc. In 'codeview', html specialchars and some entities changes to html escapes such as "&lt;" (for "<"). Therefore, you need to use Edit Instructions to put html tags. Plus, to function 'spansearch' series, each children tag needs to be named. To take easy of these work, Edit Instructions exist. Plus, if you want newlines in one line on "jArticles", you can use '(edit(new-line))'.
+In text of "jArticles" to use 'codeview' series, you can use Edit Instructions to put HTML tags for ruby, newline, etc. In 'codeview', HTML special characters and some entities changes to HTML escapes such as "&lt;" (for "<"). Therefore, you need to use Edit Instructions to put HTML tags. Plus, to function 'spansearch' series, each children tag needs to be named. To take easy of these work, Edit Instructions exist. Plus, if you want newlines in one line on "jArticles", you can use '(edit(new-line))'.
 
 Actual Edit Instructions are below.
 
@@ -169,7 +171,7 @@ Actual Edit Instructions are below.
 To put Actual Hyphen and have newline.
 
 2. '(edit(soft-hyphen))':
-To put a html entity "&shy;" to use "hyphens: manual;" in CSS.
+To put a HTML entity "&shy;" to use "hyphens: manual;" in CSS.
 
 3. '(edit(new-line))':
 To have newline.
@@ -202,7 +204,7 @@ This Instruction is a little special. If you want to color the string to red, us
 12. '(edit(end-color))':
 To end color-tag.
 
-Visit my site to check layout samples, and actually how to write html and shortcodes in your posts.
+Visit my site to check layout samples, and actually how to write HTML and shortcodes in your posts.
 http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 
 
@@ -218,13 +220,19 @@ Firefox, Chrome, Opera, IE and Edge work on this plugin. Other browsers have not
 
 == Security Notice ==
 
-Both 'codeview' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, rewriting content attack by hackers may occur on junior graded users (such as "jFellow"). Post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which don't be published by senior graded users (such as "Editor"). Senior graded users should pay attention to investigate SVGs, JavaScript and other scripts in "jArticles" for stopping any malicous activities before publishing "jArticles".
+Both 'codeview' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, cross-site scripting attacks may occur by rewriting contents of "jArticles" on junior graded users (such as "jFellow"). Post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which don't be published by senior graded users (such as "Editor"). Senior graded users should pay attention to investigate SVGs, JavaScript and other scripts in "jArticles" for stopping any malicious activities before publishing "jArticles".
+
+In PHP, 0, '', "", '0', "0", array() and null means FALSE in boolean check, TRUE in empty check [empty()]. Besides, "\0" stores null character in String. This means no empty. C language recognizes null character such as null terminator (recognized as End of String). This difference between PHP and C language is used by hackers. To prevent possible null byte injection, I added a method to erase every null character in every relevant shortcode.
+
+Every attribute in shortcodes seems like to be String type. Check shortcode_parse_atts in shortcodes.php in wp-includes. This function uses a set of shorcode attributes as a text. Therefore, for example, if you want some number as Integer type, you need cast the value to Integer type. PHP's integer cast uses 'atoi', a C language function.
 
 == Installation ==
 
 Jimmy Codeviewer is a plugin under the terms of the GNU GPL. If you have some curious to this plugin, you can download and test it from GitHub public repository. https://github.com/JimmyKenMerchant/jimmy-codeviewer/
 
 This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. The name of post type, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other names. LATEX, a renowned digital document preparation system, uses "jarticle" as a Japanese document class. But I think, in WordPress, "jArticle" as one of post types is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others. Embedded CSS in this plugin uses several names for HTML ids and classes, such as "magazine-content". If you meet any naming conflict in whole HTML ids or classes in your page, change these names to save each unique naming. Changing names of ids and classes in "style-codeviewer.css" does not affect functions of shortcodes in this plugin.
+
+This Plugin wants encoding of the text is UTF-8, otherwise you meet empty return of HTML code. Setting UTF-8 to mb_detect_encoding and mb_convert_encoding is useful. Plus, you can use UTF-8 as PHP default, e.g., set "default_charset = UTF-8" in php.ini. You may need settings of Multibyte String Extension (php-mbstring) and more to fit UTF-8 encoding. Make sure to set UTF-8 in HTML, e.g., write "<meta charset="UTF-8">" in head tag. In addition, MySQL's Table charset needs utf8mb4, collate needs utf8mb4_unicode_ci. UTF-8 is ultimatelly in-bytes format for Unicode. If you want to search raw Unicode, you may need utf-16 style Unicode sucn as "/\x{2010}/u".
 
 == Copyright ==
 
@@ -242,6 +250,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 == Changelog ==
+
+= 0.9.8 Beta =
+* Reviewed the security of 'codeview' series and 'articleloader' series | Modified README.txt and comments
+: April 9, 2017
 
 = 0.9.7 Beta =
 * Modified README.txt and comments

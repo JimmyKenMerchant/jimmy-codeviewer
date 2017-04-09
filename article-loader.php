@@ -1,8 +1,8 @@
 <?php
 /**
- * article-loader.php in Jimmy Codeviewer, a WordPress plugins
- * @author Kenta Ishii, Tokyo. Copyright 2017 Kenta Ishii. All Rights Reserved.
+ * article-loader.php in Jimmy Codeviewer, a WordPress plugin
  * @package Jimmy Codeviewer
+ * @author Kenta Ishii
  */
 
 /**
@@ -15,7 +15,7 @@ function shortcode_articleloader_byid( $atts, $content = null ) {
 	if ( !$content ) return "!articleloader_byid Error: No article-ID!";
 
 	// Get Content
-	$article = get_post( (int)$content ); // articleid
+	$article = get_post( (int)$content );
 	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
 		$content_text = $article->post_content;
 	} else {
@@ -24,6 +24,9 @@ function shortcode_articleloader_byid( $atts, $content = null ) {
 
 	// To safety, return Error
 	if ( !$content_text ) return "!articleloader_byid Error: No content!";
+
+	// Erase null character for security
+	$content_text = preg_replace( '/\x00/', "", $content_text );
 
 	return $content_text;
 }
@@ -40,7 +43,7 @@ function shortcode_articleloader_byname( $atts, $content = null ) {
 	if ( !$content ) return "!articleloader_byname Error: No article-Name!";
 
 	// Get Content
-	$article = get_page_by_path( $content, OBJECT, 'jarticle' ); // articlename
+	$article = get_page_by_path( $content, OBJECT, 'jarticle' );
 	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
 		$content_text = $article->post_content;
 	} else {
@@ -49,6 +52,9 @@ function shortcode_articleloader_byname( $atts, $content = null ) {
 
 	// To safety, return Error
 	if ( !$content_text ) return "!articleloader_byname Error: No content!";
+
+	// Erase null character for security
+	$content_text = preg_replace( '/\x00/', "", $content_text );
 
 	return $content_text;
 }

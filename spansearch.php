@@ -1,8 +1,8 @@
 <?php
 /**
- * spansearch.php in Jimmy Codeviewer, a WordPress plugins
- * @author Kenta Ishii, Tokyo. Copyright 2017 Kenta Ishii. All Rights Reserved.
+ * spansearch.php in Jimmy Codeviewer, a WordPress plugin
  * @package Jimmy Codeviewer
+ * @author Kenta Ishii
  */
 
 /**
@@ -13,7 +13,7 @@ function shortcode_spansearch_init() {
 	/*
 	 * Make sure to NOT use of async or defer on library javascript file
 	 */
-	$return_str = "<script src=\"" . plugins_url( "js/spansearch.js", __FILE__ ) . "\" " . "type=\"text/javascript\"></script>\r\n";
+	$return_str = "<script type=\"text/javascript\" src=\"" . plugins_url( "js/spansearch.js", __FILE__ ) . "\"></script>\r\n";
 
 	return $return_str;
 }
@@ -24,29 +24,25 @@ add_shortcode( 'init_spansearch', 'shortcode_spansearch_init' );
  *  Make shortcode [spansearch]
  *  e.g. [spansearch id="" start="" end=""]Something Else[/spansearch]
  *  Search Targeted Strings and Treat These
- *  Memo: In content, just use typed chars. No need of escape char for space, etc. Even if you want both 1 byte and 2 bytes chars.
- *	Besides, if you want to search html entities such as "&nbsp;" use unicode escape,
- *	just as "\xA0", "\u00A0" or "\u{00A0}". In shortcode $atts process, escape chars tranlsate actual chars.
- *	Attribute values must not contain ] [ ' " and < > are in limited use.
  */
 function shortcode_spansearch( $atts, $content = null ) {
 	$arr = shortcode_atts(
-		array( 'id' => '', // table's id
-			'start' => '', // line number to start
-			'end' => '', // line number to end
-			'color' => '', // fontcolor of target string
-			'background-color' => '', // background-color of target string
-			'font-family' => '', // font-size of target string
-			'font-size' => '', // font-size of target string
-			'font-style' => '', // font-style of target string
-			'font-weight' => '', // font-weight of target string
-			'vertical-align' => '', // vertical-align of target string
-			'regex-enable' => '', // enable Regular Expression ('TRUE' or 'true') or not
-			'regex-modifier' => '', // assign "i" and/or "m" modifier on RegExp. "g" will be ignored
+		array( 'id' => '',
+			'start' => '',
+			'end' => '',
+			'color' => '',
+			'background-color' => '',
+			'font-family' => '',
+			'font-size' => '',
+			'font-style' => '',
+			'font-weight' => '',
+			'vertical-align' => '',
+			'regex-enable' => '',
+			'regex-modifier' => '',
 		),
-		$atts);
+		$atts );
 
-	$return_str = "<script defer type=\"text/javascript\">\r\n";
+	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
 	$return_str .= "\tspanSearch(\"" . $arr[ 'id' ] .
 						"\", \"" . $arr[ 'start' ] .
@@ -77,20 +73,20 @@ add_shortcode( 'spansearch', 'shortcode_spansearch' );
  */
 function shortcode_spansearch_all( $atts, $content = null ) {
 	$arr = shortcode_atts(
-		array( 'id' => '', // table's id
-			'color' => '', // fontcolor of target string
-			'background-color' => '', // background-color of target string
-			'font-family' => '', // font-size of target string
-			'font-size' => '', // font-size of target string
-			'font-style' => '', // font-style of target string
-			'font-weight' => '', // font-weight of target string
-			'vertical-align' => '', // vertical-align of target string
-			'regex-enable' => '', // enable Regular Expression ('TRUE' or 'true') or not
-			'regex-modifier' => '', // assign "i" and/or "m" modifier on RegExp. "g" will be ignored
+		array( 'id' => '',
+			'color' => '',
+			'background-color' => '',
+			'font-family' => '',
+			'font-size' => '',
+			'font-style' => '',
+			'font-weight' => '',
+			'vertical-align' => '',
+			'regex-enable' => '',
+			'regex-modifier' => '',
 		),
-		$atts);
+		$atts );
 
-	$return_str = "<script defer type=\"text/javascript\">\r\n";
+	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
 	$return_str .= "\tspanSearch_All(\"" . $arr[ 'id' ] .
 						"\", \"" . htmlspecialchars( $content ) . // target string to change status
@@ -119,21 +115,21 @@ add_shortcode( 'spansearch_all', 'shortcode_spansearch_all' );
  */
 function shortcode_divsearch( $atts ) {
 	$arr = shortcode_atts(
-		array( 'id' => '', // table's id
-			'start' => '', // line number to start
-			'end' => '', // line number to end
-			'text-align' => '', // align property
-			'line-height' => '', // line-height of target line(s)
-			'color' => '', // color of target line(s)
-			'background-color' => '', // background-color of target line(s)
-			'font-family' => '', // font-size of target target line(s)
-			'font-size' => '', // background-color of target line(s)
-			'font-style' => '', // background-color of target line(s)
-			'font-weight' => '', // background-color of target line(s)
+		array( 'id' => '',
+			'start' => '',
+			'end' => '',
+			'text-align' => '',
+			'line-height' => '',
+			'color' => '',
+			'background-color' => '',
+			'font-family' => '',
+			'font-size' => '',
+			'font-style' => '',
+			'font-weight' => '',
 		),
-		$atts);
+		$atts );
 
-	$return_str = "<script defer type=\"text/javascript\">\r\n";
+	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
 	$return_str .= "\tdivSearch(\"" . $arr[ 'id' ] .
 						"\", \"" . $arr[ 'start' ] .

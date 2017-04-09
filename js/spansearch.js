@@ -1,16 +1,16 @@
 /**
- * spansearch.js in Jimmy Codeviewer, a WordPress plugins
- * @author Kenta Ishii, Tokyo. Copyright 2017 Kenta Ishii. All Rights Reserved.
+ * spansearch.js in Jimmy Codeviewer, a WordPress plugin
  * @package Jimmy Codeviewer
+ * @author Kenta Ishii
  * License: GPLv2 or later
  */
+
 /**
- * In var str (for string searching), if you want search &nbsp, use "\xA0" or "\u00A0" or "\u{00A0}" (Unicode No-Break space), not "&nbsp".
- * Besides, In var str, if you want plain space, just use " " itself.
- * In var str, if you want search &amp, use "&" itself or "\x26" or "\u0026" or "\u{0026}", not "&amp".
- * Likewise if you want search &copy, use copryright-symbol itself (if you can type) or "\xA9" or "\u00A9" or "\u{00A9}", not "&copy".
- * Element.textContent returns actual inner text and translates html entities to numerical unicodes.
- * Beside, other vars use ordinary space and chars just keyboard displays.
+ * Element.textContent returns actual inner text and translates HTML entities to numerical unicodes.
+ * e.g., in var str (for string searching), if you want search &nbsp, use "\xA0" or "\u00A0" (Unicode No-Break space), not "&nbsp".
+ * If you want search &amp, use "&" itself or "\x26" or "\u0026", not "&amp".
+ * If you want search &copy, use copryright-symbol itself (if you can type) or "\xA9" or "\u00A9", not "&copy".
+ * Besides, if you want plain space, just use " " itself.
  */
 
 //spanSearch("alpha", "24", "25", "Array", "#0ff", "", "", "", "", "", "", "", "");
@@ -360,7 +360,7 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 
 
 /**
- * Style Changer in function _spanSearch
+ * Check usage of Regular Expression in function __spanSearch
  */
 function txtChecker (seartxt, str, regex_enable) {
 	if (regex_enable === "TRUE" || regex_enable === "true") {
@@ -373,7 +373,7 @@ function txtChecker (seartxt, str, regex_enable) {
 }
 
 /**
- * Style Changer in function _spanSearch
+ * Style Changer in function __spanSearch
  */
 function spanStyle (ele, col, back_col, font_family, font_size, font_style, font_weight, v_align) {
 	if (col !== "" && typeof col !== "undefined") {
@@ -430,7 +430,7 @@ function spanStyle (ele, col, back_col, font_family, font_size, font_style, font
 }
 
 /**
- * Search line(s) and set text-align, line-height and background-color
+ * Search line(s) and set text-align, line-height, etc.
  * id: table's id
  * start: line number to start
  * end: line number to end

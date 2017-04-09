@@ -1,20 +1,13 @@
 <?php
 /**
- * theme_magazine.php in Jimmy Codeviewer, a WordPress plugins
- * @author Kenta Ishii, Tokyo. Copyright 2017 Kenta Ishii. All Rights Reserved.
+ * theme_magazine.php in Jimmy Codeviewer, a WordPress plugin
  * @package Jimmy Codeviewer
+ * @author Kenta Ishii
  */
 
-/**
- * In shortcode attributes,
- * ]["' never be used and HTML Chars <> are limited.
- * Use html entities for restricted chars, such as &#34 (Double Quotation).
- * See the newest text of https://codex.wordpress.org/Shortcode_API
- */
-
-$LINE_COUNT = 1; // lines you want to make
-$BLOCK_WIDTH = "480px"; // width of this block
-$NUMBER_WIDTH = "0%"; // number width
+$LINE_COUNT = "1";
+$BLOCK_WIDTH = "480px";
+$NUMBER_WIDTH = "0%";
 $TEXT_ALIGN = "justify";
 $LINE_HEIGHT = "1.2";
 $FONT_COLOR = "#fff";
@@ -31,7 +24,6 @@ $PADDING_TOP = "0px";
 $PADDING_RIGHT = "0px";
 $PADDING_DOWN = "0px";
 $PADDING_LEFT = "0px";
-// wrap or line for words. preformatted "pre-wrap", "pre", "normal", "nowrap"
 $WHITE_SPACE = "normal";
-$LINE10_COLOR = "#ff0"; // font-color yellow
-$LINE20_COLOR = "#f0f"; // font-color magenta
+$LINE10_COLOR = "#ff0";
+$LINE20_COLOR = "#f0f";
