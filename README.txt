@@ -1,5 +1,5 @@
 === Jimmy Codeviewer ===
-Contributors: jimmyken
+Contributors: kenjmk7r9merchant
 Plugin Name: Jimmy Codeviewer
 Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Tags: code, viewer, code-viewer, text, text-viewer, layout, magazine, magazine-style

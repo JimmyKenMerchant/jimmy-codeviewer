@@ -5,4 +5,4 @@
  * @author Kenta Ishii
  */
 
-define("LOOP_LIMITTER", 1024); // while loop limiter
+define("JIMMY_CODEVIEWER_LOOP_LIMITTER", 1024); // while loop limiter

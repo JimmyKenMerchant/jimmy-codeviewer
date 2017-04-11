@@ -10,7 +10,7 @@
  *  e.g. [articleloader_byid]articleid[/articleloader_byid]
  *  Load article by article id
  */
-function shortcode_articleloader_byid( $atts, $content = null ) {
+function jimmy_codeviewer_shortcode_articleloader_byid( $atts, $content = null ) {
 	// To safety, return Error
 	if ( !$content ) return "!articleloader_byid Error: No article-ID!";
 
@@ -30,7 +30,7 @@ function shortcode_articleloader_byid( $atts, $content = null ) {
 
 	return $content_text;
 }
-add_shortcode( 'articleloader_byid', 'shortcode_articleloader_byid' );
+add_shortcode( 'articleloader_byid', 'jimmy_codeviewer_shortcode_articleloader_byid' );
 
 
 /**
@@ -38,7 +38,7 @@ add_shortcode( 'articleloader_byid', 'shortcode_articleloader_byid' );
  *  e.g. [articleloader_byname]articlename[/articleloader_byname]
  *  Load article by name (article slug)
  */
-function shortcode_articleloader_byname( $atts, $content = null ) {
+function jimmy_codeviewer_shortcode_articleloader_byname( $atts, $content = null ) {
 	// To safety, return Error
 	if ( !$content ) return "!articleloader_byname Error: No article-Name!";
 
@@ -58,4 +58,4 @@ function shortcode_articleloader_byname( $atts, $content = null ) {
 
 	return $content_text;
 }
-add_shortcode( 'articleloader_byname', 'shortcode_articleloader_byname' );
+add_shortcode( 'articleloader_byname', 'jimmy_codeviewer_shortcode_articleloader_byname' );

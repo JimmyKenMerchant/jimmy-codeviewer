@@ -2,7 +2,7 @@
 /*
 Plugin Name: Jimmy Codeviewer
 Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
-Description: Multipurpose text viewer
+Description: Multipurpose Text Viewer
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Version: 1.0
@@ -152,7 +152,7 @@ add_action( 'wp_enqueue_scripts', 'jimmy_codeviewer_style' );
  *  e.g. [codeview_byid title="something"]articleid[/codeview_byid]
  *  Make Codeview from article by article id
  */
-function shortcode_codeviewer_article_byid( $atts, $content = null ) {
+function jimmy_codeviewer_shortcode_codeview_byid( $atts, $content = null ) {
 	// To safety, return Error
 	if ( !$content ) return "!codeview_byid Error: No article-ID!";
 
@@ -170,9 +170,9 @@ function shortcode_codeviewer_article_byid( $atts, $content = null ) {
 	// Erase null character for security
 	$content_text = preg_replace( '/\x00/', "", $content_text );
 
-	return __shortcode_codeviewer_article( $atts, $content_text );
+	return jimmy_codeviewer_shortcode_codeview( $atts, $content_text );
 }
-add_shortcode( 'codeview_byid', 'shortcode_codeviewer_article_byid' );
+add_shortcode( 'codeview_byid', 'jimmy_codeviewer_shortcode_codeview_byid' );
 
 
 /**
@@ -180,7 +180,7 @@ add_shortcode( 'codeview_byid', 'shortcode_codeviewer_article_byid' );
  *  e.g. [codeview_byname title="something"]articlename[/codeview_byname]
  *  Make Codeview from article by name (article slug)
  */
-function shortcode_codeviewer_article_byname( $atts, $content = null ) {
+function jimmy_codeviewer_shortcode_codeview_byname( $atts, $content = null ) {
 	// To safety, return Error
 	if ( !$content ) return "!codeview_byname Error: No article-Name!";
 
@@ -198,15 +198,15 @@ function shortcode_codeviewer_article_byname( $atts, $content = null ) {
 	// Erase null character for security
 	$content_text = preg_replace( '/\x00/', "", $content_text );
 
-	return __shortcode_codeviewer_article( $atts, $content_text );
+	return jimmy_codeviewer_shortcode_codeview( $atts, $content_text );
 }
-add_shortcode( 'codeview_byname', 'shortcode_codeviewer_article_byname' );
+add_shortcode( 'codeview_byname', 'jimmy_codeviewer_shortcode_codeview_byname' );
 
 
 /**
  * Common function to make html on codeviewer
  */
-function __shortcode_codeviewer_article( $atts, $content_text ) {
+function jimmy_codeviewer_shortcode_codeview( $atts, $content_text ) {
 	// Include a theme. If no value in "theme" attribute, require the default theme
 	$pre = (array)$atts; // It's already array by shortcode_parse_atts in shortcodes.php though
 	if ( array_key_exists( "theme", $pre ) ) {
@@ -280,7 +280,7 @@ function __shortcode_codeviewer_article( $atts, $content_text ) {
 	$bufferarr = explode( "\n", $content_text );
 
 	// Main loop to make HTML codes
-	while ( array_key_exists( $i, $bufferarr ) && $i < $countlimit && $i < LOOP_LIMITTER ) {
+	while ( array_key_exists( $i, $bufferarr ) && $i < $countlimit && $i < JIMMY_CODEVIEWER_LOOP_LIMITTER ) {
 		$buffer = $bufferarr[ $i ];
 		if ( !$buffer ) $buffer = " ";
 		$i++;

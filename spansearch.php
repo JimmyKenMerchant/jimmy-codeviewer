@@ -9,7 +9,7 @@
  *  Make shortcode [init_spansearch]
  *  e.g. make sure to put [init_spansearch] before [spansearch], [spansearch_all] and [divsearch]
  */
-function shortcode_spansearch_init() {
+function jimmy_codeviewer_shortcode_spansearch_init() {
 	/*
 	 * Make sure to NOT use of async or defer on library javascript file
 	 */
@@ -17,7 +17,7 @@ function shortcode_spansearch_init() {
 
 	return $return_str;
 }
-add_shortcode( 'init_spansearch', 'shortcode_spansearch_init' );
+add_shortcode( 'init_spansearch', 'jimmy_codeviewer_shortcode_spansearch_init' );
 
 
 /**
@@ -25,7 +25,7 @@ add_shortcode( 'init_spansearch', 'shortcode_spansearch_init' );
  *  e.g. [spansearch id="" start="" end=""]Something Else[/spansearch]
  *  Search Targeted Strings and Treat These
  */
-function shortcode_spansearch( $atts, $content = null ) {
+function jimmy_codeviewer_shortcode_spansearch( $atts, $content = null ) {
 	$arr = shortcode_atts(
 		array( 'id' => '',
 			'start' => '',
@@ -63,7 +63,7 @@ function shortcode_spansearch( $atts, $content = null ) {
 
 	return $return_str;
 }
-add_shortcode( 'spansearch', 'shortcode_spansearch' );
+add_shortcode( 'spansearch', 'jimmy_codeviewer_shortcode_spansearch' );
 
 
 /**
@@ -71,7 +71,7 @@ add_shortcode( 'spansearch', 'shortcode_spansearch' );
  *  e.g. [spansearch_all id=""]Something Else[/spansearch_all]
  *  Search Targeted Strings and Treat These in all lines
  */
-function shortcode_spansearch_all( $atts, $content = null ) {
+function jimmy_codeviewer_shortcode_spansearch_all( $atts, $content = null ) {
 	$arr = shortcode_atts(
 		array( 'id' => '',
 			'color' => '',
@@ -105,7 +105,7 @@ function shortcode_spansearch_all( $atts, $content = null ) {
 
 	return $return_str;
 }
-add_shortcode( 'spansearch_all', 'shortcode_spansearch_all' );
+add_shortcode( 'spansearch_all', 'jimmy_codeviewer_shortcode_spansearch_all' );
 
 
 /**
@@ -113,7 +113,7 @@ add_shortcode( 'spansearch_all', 'shortcode_spansearch_all' );
  *  e.g. [divsearch id="" start="" end="" text-align="" line-height=""]
  *  Set text-align, line-height, background-color of line(s)
  */
-function shortcode_divsearch( $atts ) {
+function jimmy_codeviewer_shortcode_divsearch( $atts ) {
 	$arr = shortcode_atts(
 		array( 'id' => '',
 			'start' => '',
@@ -148,4 +148,4 @@ function shortcode_divsearch( $atts ) {
 
 	return $return_str;
 }
-add_shortcode( 'divsearch', 'shortcode_divsearch' );
+add_shortcode( 'divsearch', 'jimmy_codeviewer_shortcode_divsearch' );
