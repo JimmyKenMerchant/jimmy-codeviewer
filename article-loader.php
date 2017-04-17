@@ -12,18 +12,22 @@
  */
 function jimmy_codeviewer_shortcode_articleloader_byid( $atts, $content = null ) {
 	// To safety, return Error
-	if ( !$content ) return "!articleloader_byid Error: No article-ID!";
+	if ( empty( $content ) ) return "Error (jimmy-codeviewer: 2000)";
 
 	// Get Content
 	$article = get_post( (int)$content );
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
-		$content_text = $article->post_content;
+	if ( isset( $article ) ) {
+		if ( ! empty( $article->ID ) && $article->post_status === "publish" && $article->post_type === "jarticle" && empty( $article->post_password ) ) {
+			$content_text = $article->post_content;
+		} else {
+			return "Error (jimmy-codeviewer: 2002)";
+		}
 	} else {
-		return "!articleloader_byid Error: No article!";
+		return "Error (jimmy-codeviewer: 2001)";
 	}
 
 	// To safety, return Error
-	if ( !$content_text ) return "!articleloader_byid Error: No content!";
+	if ( empty( $content_text ) ) return "Error (jimmy-codeviewer: 2003)";
 
 	// Erase null character for security
 	$content_text = preg_replace( '/\x00/', "", $content_text );
@@ -40,18 +44,22 @@ add_shortcode( 'articleloader_byid', 'jimmy_codeviewer_shortcode_articleloader_b
  */
 function jimmy_codeviewer_shortcode_articleloader_byname( $atts, $content = null ) {
 	// To safety, return Error
-	if ( !$content ) return "!articleloader_byname Error: No article-Name!";
+	if ( empty( $content ) ) return "Error (jimmy-codeviewer: 2100)";
 
 	// Get Content
 	$article = get_page_by_path( $content, OBJECT, 'jarticle' );
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
-		$content_text = $article->post_content;
+	if ( isset( $article ) ) {
+		if ( ! empty( $article->ID ) && $article->post_status === "publish" && $article->post_type === "jarticle" && empty( $article->post_password ) ) {
+			$content_text = $article->post_content;
+		} else {
+			return "Error (jimmy-codeviewer: 2102)";
+		}
 	} else {
-		return "!articleloader_byname Error: No article!";
+		return "Error (jimmy-codeviewer: 2101)";
 	}
 
 	// To safety, return Error
-	if ( !$content_text ) return "!articleloader_byname Error: No content!";
+	if ( empty( $content_text ) ) return "Error (jimmy-codeviewer: 2103)";
 
 	// Erase null character for security
 	$content_text = preg_replace( '/\x00/', "", $content_text );

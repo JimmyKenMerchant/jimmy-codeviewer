@@ -13,7 +13,7 @@ function jimmy_codeviewer_shortcode_spansearch_init() {
 	/*
 	 * Make sure to NOT use of async or defer on library javascript file
 	 */
-	$return_str = "<script type=\"text/javascript\" src=\"" . plugins_url( "js/spansearch.js", __FILE__ ) . "\"></script>\r\n";
+	$return_str = "<script type=\"text/javascript\" src=\"" . plugins_url( "js/spansearch.min.js", __FILE__ ) . "\"></script>\r\n";
 
 	return $return_str;
 }
@@ -44,19 +44,19 @@ function jimmy_codeviewer_shortcode_spansearch( $atts, $content = null ) {
 
 	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
-	$return_str .= "\tspanSearch(\"" . $arr[ 'id' ] .
-						"\", \"" . $arr[ 'start' ] .
-						"\", \"" . $arr[ 'end' ] .
+	$return_str .= "\tspanSearch(\"" . $arr['id'] .
+						"\", \"" . $arr['start'] .
+						"\", \"" . $arr['end'] .
 						"\", \"" . htmlspecialchars( $content ) . // target string to change status
-						"\", \"" . $arr[ 'color' ] .
-						"\", \"" . $arr[ 'background-color' ] .
-						"\", \"" . $arr[ 'font-family' ] .
-						"\", \"" . $arr[ 'font-size' ] .
-						"\", \"" . $arr[ 'font-style' ] .
-						"\", \"" . $arr[ 'font-weight' ] .
-						"\", \"" . $arr[ 'vertical-align' ] .
-						"\", \"" . $arr[ 'regex-enable' ] .
-						"\", \"" . $arr[ 'regex-modifier' ] .
+						"\", \"" . $arr['color'] .
+						"\", \"" . $arr['background-color'] .
+						"\", \"" . $arr['font-family'] .
+						"\", \"" . $arr['font-size'] .
+						"\", \"" . $arr['font-style'] .
+						"\", \"" . $arr['font-weight'] .
+						"\", \"" . $arr['vertical-align'] .
+						"\", \"" . $arr['regex-enable'] .
+						"\", \"" . $arr['regex-modifier'] .
 						"\");\r\n";
 
 	$return_str .= "</script>\r\n";
@@ -88,17 +88,17 @@ function jimmy_codeviewer_shortcode_spansearch_all( $atts, $content = null ) {
 
 	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
-	$return_str .= "\tspanSearch_All(\"" . $arr[ 'id' ] .
+	$return_str .= "\tspanSearch_All(\"" . $arr['id'] .
 						"\", \"" . htmlspecialchars( $content ) . // target string to change status
-						"\", \"" . $arr[ 'color' ] .
-						"\", \"" . $arr[ 'background-color' ] .
-						"\", \"" . $arr[ 'font-family' ] .
-						"\", \"" . $arr[ 'font-size' ] .
-						"\", \"" . $arr[ 'font-style' ] .
-						"\", \"" . $arr[ 'font-weight' ] .
-						"\", \"" . $arr[ 'vertical-align' ] .
-						"\", \"" . $arr[ 'regex-enable' ] .
-						"\", \"" . $arr[ 'regex-modifier' ] .
+						"\", \"" . $arr['color'] .
+						"\", \"" . $arr['background-color'] .
+						"\", \"" . $arr['font-family'] .
+						"\", \"" . $arr['font-size'] .
+						"\", \"" . $arr['font-style'] .
+						"\", \"" . $arr['font-weight'] .
+						"\", \"" . $arr['vertical-align'] .
+						"\", \"" . $arr['regex-enable'] .
+						"\", \"" . $arr['regex-modifier'] .
 						"\");\r\n";
 
 	$return_str .= "</script>\r\n";
@@ -131,17 +131,17 @@ function jimmy_codeviewer_shortcode_divsearch( $atts ) {
 
 	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
-	$return_str .= "\tdivSearch(\"" . $arr[ 'id' ] .
-						"\", \"" . $arr[ 'start' ] .
-						"\", \"" . $arr[ 'end' ] .
-						"\", \"" . $arr[ 'text-align' ] .
-						"\", \"" . $arr[ 'line-height' ] .
-						"\", \"" . $arr[ 'color' ] .
-						"\", \"" . $arr[ 'background-color' ] .
-						"\", \"" . $arr[ 'font-family' ] .
-						"\", \"" . $arr[ 'font-size' ] .
-						"\", \"" . $arr[ 'font-style' ] .
-						"\", \"" . $arr[ 'font-weight' ] .
+	$return_str .= "\tdivSearch(\"" . $arr['id'] .
+						"\", \"" . $arr['start'] .
+						"\", \"" . $arr['end'] .
+						"\", \"" . $arr['text-align'] .
+						"\", \"" . $arr['line-height'] .
+						"\", \"" . $arr['color'] .
+						"\", \"" . $arr['background-color'] .
+						"\", \"" . $arr['font-family'] .
+						"\", \"" . $arr['font-size'] .
+						"\", \"" . $arr['font-style'] .
+						"\", \"" . $arr['font-weight'] .
 						"\");\r\n";
 
 	$return_str .= "</script>\r\n";

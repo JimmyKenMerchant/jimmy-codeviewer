@@ -5,7 +5,7 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Description: Multipurpose Text Viewer
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
-Version: 1.0
+Version: 1.0.1
 Text Domain: jimmy-codeviewer
 Domain Path: /languages
 License: GPL2 or Later
@@ -60,12 +60,12 @@ function jimmy_codeviewer_roles_customize() {
 			);
 
 	$role = get_role( 'administrator' );
-	foreach( $capabilities as $cap ) {
+	foreach ( $capabilities as $cap ) {
 		$role->add_cap( $cap );
 	}
 
 	$role = get_role( 'editor' );
-	foreach( $capabilities as $cap ) {
+	foreach ( $capabilities as $cap ) {
 		$role->add_cap( $cap );
 	}
 
@@ -96,12 +96,12 @@ function jimmy_codeviewer_roles_retrieve() {
 			);
 
 	$role = get_role( 'administrator' );
-	foreach( $capabilities as $cap ) {
+	foreach ( $capabilities as $cap ) {
 		$role->remove_cap( $cap );
 	}
 
 	$role = get_role( 'editor' );
-	foreach( $capabilities as $cap ) {
+	foreach ( $capabilities as $cap ) {
 		$role->remove_cap( $cap );
 	}
 
@@ -116,10 +116,10 @@ register_deactivation_hook( __FILE__, 'jimmy_codeviewer_roles_retrieve' );
  */
 function jimmy_codeviewer_cancel_tagging() {
 	if ( get_post_type() === "post" ) {
-		remove_filter('the_content', 'wpautop');
-		remove_filter('the_excerpt', 'wpautop');
-		add_filter('the_content', 'jimmy_codeviewer_erase_indents');
-		add_filter('the_excerpt', 'jimmy_codeviewer_erase_indents');
+		remove_filter( 'the_content', 'wpautop' );
+		remove_filter( 'the_excerpt', 'wpautop' );
+		add_filter( 'the_content', 'jimmy_codeviewer_erase_indents' );
+		add_filter( 'the_excerpt', 'jimmy_codeviewer_erase_indents' );
 	}
 	return true;
 }
@@ -154,18 +154,22 @@ add_action( 'wp_enqueue_scripts', 'jimmy_codeviewer_style' );
  */
 function jimmy_codeviewer_shortcode_codeview_byid( $atts, $content = null ) {
 	// To safety, return Error
-	if ( !$content ) return "!codeview_byid Error: No article-ID!";
+	if ( empty( $content ) ) return "Error (jimmy-codeviewer: 1000)";
 
 	// Get Content
 	$article = get_post( (int)$content );
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
-		$content_text = $article->post_content;
+	if ( isset( $article ) ) {
+		if ( ! empty( $article->ID ) && $article->post_status === "publish" && $article->post_type === "jarticle" && empty( $article->post_password ) ) {
+			$content_text = $article->post_content;
+		} else {
+			return "Error (jimmy-codeviewer: 1002)";
+		}
 	} else {
-		return "!codeview_byid Error: No article!";
+		return "Error (jimmy-codeviewer: 1001)";
 	}
 
 	// To safety, return Error
-	if ( !$content_text ) return "!codeview_byid Error: No content!";
+	if ( empty( $content_text ) ) return "Error (jimmy-codeviewer: 1003)";
 
 	// Erase null character for security
 	$content_text = preg_replace( '/\x00/', "", $content_text );
@@ -182,18 +186,22 @@ add_shortcode( 'codeview_byid', 'jimmy_codeviewer_shortcode_codeview_byid' );
  */
 function jimmy_codeviewer_shortcode_codeview_byname( $atts, $content = null ) {
 	// To safety, return Error
-	if ( !$content ) return "!codeview_byname Error: No article-Name!";
+	if ( empty( $content ) ) return "Error (jimmy-codeviewer: 1100)";
 
 	// Get Content
 	$article = get_page_by_path( $content, OBJECT, 'jarticle' );
-	if ( $article->ID && $article->post_status === "publish" && $article->post_type === "jarticle" && ! $article->post_password ) {
-		$content_text = $article->post_content;
+	if ( isset( $article ) ) {
+		if ( ! empty( $article->ID ) && $article->post_status === "publish" && $article->post_type === "jarticle" && empty( $article->post_password ) ) {
+			$content_text = $article->post_content;
+		} else {
+			return "Error (jimmy-codeviewer: 1102)";
+		}
 	} else {
-		return "!codeview_byname Error: No article!";
+		return "Error (jimmy-codeviewer: 1101)";
 	}
 
 	// To safety, return Error
-	if ( !$content_text ) return "!codeview_byname Error: No content!";
+	if ( empty( $content_text ) ) return "Error (jimmy-codeviewer: 1103)";
 
 	// Erase null character for security
 	$content_text = preg_replace( '/\x00/', "", $content_text );
@@ -210,7 +218,7 @@ function jimmy_codeviewer_shortcode_codeview( $atts, $content_text ) {
 	// Include a theme. If no value in "theme" attribute, require the default theme
 	$pre = (array)$atts; // It's already array by shortcode_parse_atts in shortcodes.php though
 	if ( array_key_exists( "theme", $pre ) ) {
-		$theme = "theme_" . $pre[ 'theme' ] . ".php";
+		$theme = "theme_" . $pre['theme'] . ".php";
 		if ( (include $theme) == FALSE ) {
 			require "theme_default.php";
 
@@ -252,25 +260,26 @@ function jimmy_codeviewer_shortcode_codeview( $atts, $content_text ) {
 			'line20-1' => 0,
 			'line20-2' => 0,
 			'line20-3' => 0,
+			'edit-instruction' => $EDIT_INSTRUCTION,
 		),
 		$atts );
 
 	// Set Numbers from attributes
-	$incre = (int)$arr[ 'start' ];
-	$countlimit = (int)$arr[ 'count' ] + (int)$arr[ 'start' ] - 1;
+	$incre = (int)$arr['start'];
+	$countlimit = (int)$arr['count'] + (int)$arr['start'] - 1;
 
 	// Make sequence numbers for span tags
 	$sequence = 1;
 
 	// Start to make the return HTML codes
 	// Use double quotations for escape chars such as "\r\n"
-	if ( $arr[ 'id' ] ) {
-		$return_str = "<div class=\"" . $arr[ 'id' ] . "\"";
+	if ( $arr['id'] ) {
+		$return_str = "<div class=\"" . $arr['id'] . "\"";
 	} else {
 		$return_str = "<div";
 	}
 
-	$return_str .= " style=\"display: block;margin: 0;padding: 0;width: " . $arr[ 'width' ] . ";font-size: " . $arr[ 'font-size' ] . ";color: " . $arr[ 'color' ] . ";background-color: " . $arr[ 'background-color' ] . ";font-family: " . $arr[ 'font-family' ] . ";font-style: " . $arr[ 'font-style' ] . ";font-weight: " . $arr[ 'font-weight' ] . ";line-height: " . $arr[ 'line-height' ] . ";opacity: " . $arr[ 'opacity' ] . ";\">\r\n";
+	$return_str .= " style=\"display: block;margin: 0;padding: 0;width: " . $arr['width'] . ";font-size: " . $arr['font-size'] . ";color: " . $arr['color'] . ";background-color: " . $arr['background-color'] . ";font-family: " . $arr['font-family'] . ";font-style: " . $arr['font-style'] . ";font-weight: " . $arr['font-weight'] . ";line-height: " . $arr['line-height'] . ";opacity: " . $arr['opacity'] . ";\">\r\n";
 
 	// Counter Set
 	$i = 0;
@@ -281,64 +290,65 @@ function jimmy_codeviewer_shortcode_codeview( $atts, $content_text ) {
 
 	// Main loop to make HTML codes
 	while ( array_key_exists( $i, $bufferarr ) && $i < $countlimit && $i < JIMMY_CODEVIEWER_LOOP_LIMITTER ) {
-		$buffer = $bufferarr[ $i ];
+		$buffer = $bufferarr[$i];
 		if ( !$buffer ) $buffer = " ";
 		$i++;
-		if ( $i < $arr[ 'start' ] ) continue;
+		if ( $i < (int)$arr['start'] ) continue;
 
 		// First, change HTML special chars to HTML entities NOT to be actual codes
 		$buffer = htmlentities( $buffer, ENT_QUOTES, 'UTF-8' );
 
 		// "(edit([a-z]+\-[a-z]+[a-zA-Z0-9#\-]*))", Edit Instructions
-		// Escape of "(edit([a-z\-]+))" itself by backslash at first
-		$buffer = preg_replace( '/\x5C\(edit\(([a-z]+\-[a-z]+[a-zA-Z0-9#\-]*)\)\)/', "&#40;edit&#40;$1&#41;&#41;", $buffer );
-		$matches = array();
+		if ( $arr['edit-instruction'] === 'true' || $arr['edit-instruction'] === 'TRUE' ) {
+			// Escape of "(edit([a-z\-]+))" itself by backslash at first
+			$buffer = preg_replace( '/\x5C\(edit\(([a-z]+\-[a-z]+[a-zA-Z0-9#\-]*)\)\)/', "&#40;edit&#40;$1&#41;&#41;", $buffer );
 
-		if ( preg_match_all( '/\(edit\(([a-z]+\-[a-z]+)[a-zA-Z0-9#\-]*\)\)/', $buffer, $matches, PREG_PATTERN_ORDER ) > 0) {
-			// $matches[0] stores all matched text
-			// $matches[1] and after stores words in parenthesis
-			// $matches[1] stores 1st and 2nd word connected with a hyphen. 3rd word is omitted.
-			foreach ($matches[1] as $value) {
-				switch ($value) {
-					case "hard-hyphen":
-						$buffer = preg_replace( '/\(edit\(hard-hyphen\)\)/', "\x2D\r\n", $buffer, 1 );
-						break;
-					case "soft-hyphen":
-						$buffer = preg_replace( '/\(edit\(soft-hyphen\)\)/', "&shy;", $buffer, 1 );
-						break;
-					case "new-line":
-						$buffer = preg_replace( '/\(edit\(new-line\)\)/', "\r\n", $buffer, 1 );
-						break;
-					case "br-tag":
-						$buffer = preg_replace( '/\(edit\(br-tag\)\)/', "</span><br /><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr[ 'white-space' ] . ";\">", $buffer, 1 );
-						break;
-					case "ruby-tag":
-						$buffer = preg_replace( '/\(edit\(ruby-tag\)\)/', "</span><ruby>" , $buffer, 1 );
-						break;
-					case "end-ruby":
-						$buffer = preg_replace( '/\(edit\(end-ruby\)\)/', "</ruby><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr[ 'white-space' ] . ";\">", $buffer, 1 );
-						break;
-					case "rb-tag":
-						$buffer = preg_replace( '/\(edit\(rb-tag\)\)/', "<rb>" , $buffer, 1 );
-						break;
-					case "end-rb":
-						$buffer = preg_replace( '/\(edit\(end-rb\)\)/', "</rb>" , $buffer, 1 );
-						break;
-					case "rt-tag":
-						$buffer = preg_replace( '/\(edit\(rt-tag\)\)/', "<rt>" , $buffer, 1 );
-						break;
-					case "end-rt":
-						$buffer = preg_replace( '/\(edit\(end-rt\)\)/', "</rt>" , $buffer, 1 );
-						break;
-					case "color-tag":
-						$buffer = preg_replace( '/\(edit\(color-tag-([a-zA-Z0-9#]+)\)\)/', "</span><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"color: $1;white-space: " . $arr[ 'white-space' ] . ";\">", $buffer, 1 );
-						break;
-					case "end-color":
-						$buffer = preg_replace( '/\(edit\(end-color\)\)/', "</span><span id=\"" . $arr [ 'id' ] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr[ 'white-space' ] . ";\">", $buffer, 1 );
-						break;
-					default:
-						$buffer = preg_replace( '/\(edit\(([a-z]+\-[a-z]+)[a-zA-Z0-9#\-]*\)\)/', "", $buffer, 1 );
-						break;
+			if ( preg_match_all( '/\(edit\(([a-z]+\-[a-z]+)[a-zA-Z0-9#\-]*\)\)/', $buffer, $matches, PREG_PATTERN_ORDER ) > 0) {
+				// $matches[0] stores all matched text
+				// $matches[1] and after stores words in parenthesis
+				// $matches[1] stores 1st and 2nd word connected with a hyphen. 3rd word is omitted.
+				foreach ( $matches[1] as $value ) {
+					switch ( $value ) {
+						case "hard-hyphen":
+							$buffer = preg_replace( '/\(edit\(hard-hyphen\)\)/', "\x2D\r\n", $buffer, 1 );
+							break;
+						case "soft-hyphen":
+							$buffer = preg_replace( '/\(edit\(soft-hyphen\)\)/', "&shy;", $buffer, 1 );
+							break;
+						case "new-line":
+							$buffer = preg_replace( '/\(edit\(new-line\)\)/', "\r\n", $buffer, 1 );
+							break;
+						case "br-tag":
+							$buffer = preg_replace( '/\(edit\(br-tag\)\)/', "</span><br /><span id=\"" . $arr ['id'] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr['white-space'] . ";\">", $buffer, 1 );
+							break;
+						case "ruby-tag":
+							$buffer = preg_replace( '/\(edit\(ruby-tag\)\)/', "</span><ruby>" , $buffer, 1 );
+							break;
+						case "end-ruby":
+							$buffer = preg_replace( '/\(edit\(end-ruby\)\)/', "</ruby><span id=\"" . $arr ['id'] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr['white-space'] . ";\">", $buffer, 1 );
+							break;
+						case "rb-tag":
+							$buffer = preg_replace( '/\(edit\(rb-tag\)\)/', "<rb>" , $buffer, 1 );
+							break;
+						case "end-rb":
+							$buffer = preg_replace( '/\(edit\(end-rb\)\)/', "</rb>" , $buffer, 1 );
+							break;
+						case "rt-tag":
+							$buffer = preg_replace( '/\(edit\(rt-tag\)\)/', "<rt>" , $buffer, 1 );
+							break;
+						case "end-rt":
+							$buffer = preg_replace( '/\(edit\(end-rt\)\)/', "</rt>" , $buffer, 1 );
+							break;
+						case "color-tag":
+							$buffer = preg_replace( '/\(edit\(color-tag-([a-zA-Z0-9#]+)\)\)/', "</span><span id=\"" . $arr ['id'] . $incre . "-sp" . ++$sequence . "\" style=\"color: $1;white-space: " . $arr['white-space'] . ";\">", $buffer, 1 );
+							break;
+						case "end-color":
+							$buffer = preg_replace( '/\(edit\(end-color\)\)/', "</span><span id=\"" . $arr ['id'] . $incre . "-sp" . ++$sequence . "\" style=\"white-space: " . $arr['white-space'] . ";\">", $buffer, 1 );
+							break;
+						default:
+							$buffer = preg_replace( '/\(edit\(([a-z]+\-[a-z]+)[a-zA-Z0-9#\-]*\)\)/', "", $buffer, 1 );
+							break;
+					}
 				}
 			}
 		}
@@ -346,9 +356,9 @@ function jimmy_codeviewer_shortcode_codeview( $atts, $content_text ) {
 		// Then Make HTML codes
 		$return_str .= "\t<div style=\"display: block;margin: 0;padding: 0;width: 100%;text-align: left;\">\r\n";
 
-		$return_str .= "\t\t<div style=\"display: inline-block;margin: 0;vertical-align: top;text-align: right;width: " . $arr[ 'number-width' ] . ";color: " . $arr[ 'number-color' ];
+		$return_str .= "\t\t<div style=\"display: inline-block;margin: 0;vertical-align: top;text-align: right;width: " . $arr['number-width'] . ";color: " . $arr['number-color'];
 
-		if ( $arr [ 'number-width' ] > 0 ) {
+		if ( $arr ['number-width'] > 0 ) {
 			$return_str .= ";padding: 0 1% 0 0;\">\r\n";
 		} else {
 			$return_str .= ";padding: 0;visibility:hidden;\">\r\n";
@@ -361,29 +371,29 @@ function jimmy_codeviewer_shortcode_codeview( $atts, $content_text ) {
 
 		// Change Color by line number, odd or even
 		// No need to \t\t because of inline-block
-		if ( $arr[ 'id' ] ) {
-			$return_str .= "<div id=\"" . $arr [ 'id' ] . $incre . "\" style=\"";
+		if ( $arr['id'] ) {
+			$return_str .= "<div id=\"" . $arr ['id'] . $incre . "\" style=\"";
 		} else {
 			$return_str .= "<div style=\"";
 		}
 
-		if ( $incre == $arr[ 'line10-1' ] || $incre == $arr[ 'line10-2' ] || $incre == $arr[ 'line10-3' ] ) {
-			$return_str .= "color: " . $arr[ 'line10-color' ] . ";";
-		} elseif ( $incre == $arr[ 'line20-1' ] || $incre == $arr[ 'line20-2' ] || $incre == $arr[ 'line20-3' ] ) {
-			$return_str .= "color: " . $arr[ 'line20-color' ] . ";";
+		if ( $incre == $arr['line10-1'] || $incre == $arr['line10-2'] || $incre == $arr['line10-3'] ) {
+			$return_str .= "color: " . $arr['line10-color'] . ";";
+		} elseif ( $incre == $arr['line20-1'] || $incre == $arr['line20-2'] || $incre == $arr['line20-3'] ) {
+			$return_str .= "color: " . $arr['line20-color'] . ";";
 		}
 
 		// Use cast to remove "%"
-		$textwidth = 100 - (int)$arr[ 'number-width' ];
-		$return_str .= "display: inline-block;margin: 0;padding: " . $arr[ 'padding-top' ] . " " . $arr[ 'padding-right' ] . " " . $arr[ 'padding-bottom' ] . " " . $arr[ 'padding-left' ] . ";vertical-align: top;text-align: " . $arr[ 'text-align' ] . ";width: " . $textwidth . "%;";
+		$textwidth = 100 - (int)$arr['number-width'];
+		$return_str .= "display: inline-block;margin: 0;padding: " . $arr['padding-top'] . " " . $arr['padding-right'] . " " . $arr['padding-bottom'] . " " . $arr['padding-left'] . ";vertical-align: top;text-align: " . $arr['text-align'] . ";width: " . $textwidth . "%;";
 
 		if ( $incre % 2 === 1 ) {
-			$return_str .= "background-color: " . $arr[ 'odd-background-color' ] . ";\">\r\n";
+			$return_str .= "background-color: " . $arr['odd-background-color'] . ";\">\r\n";
 		} else {
-			$return_str .= "background-color: " . $arr[ 'even-background-color' ] . ";\">\r\n";
+			$return_str .= "background-color: " . $arr['even-background-color'] . ";\">\r\n";
 		}
 
-		$return_str .= "\t\t\t<span id=\"" . $arr [ 'id' ] . $incre . "-sp1\" style=\"white-space: " . $arr[ 'white-space' ] . ";\">" . $buffer . "</span>\r\n";
+		$return_str .= "\t\t\t<span id=\"" . $arr ['id'] . $incre . "-sp1\" style=\"white-space: " . $arr['white-space'] . ";\">" . $buffer . "</span>\r\n";
 
 		$return_str .= "\t\t</div>\r\n";
 		$return_str .= "\t</div>\r\n";
@@ -392,9 +402,9 @@ function jimmy_codeviewer_shortcode_codeview( $atts, $content_text ) {
 		$incre++;
 	}
 
-	if ( $arr[ 'title' ] ) {
-		$return_str .= "</div>\r\n<div style=\"display: block;text-align: center;margin: 0;padding: 0.2em;width: " . $arr[ 'width' ] . "\">\r\n";
-		$return_str .= "\t<p><em><strong>" . $arr[ 'title' ] . "</strong></em></p>\r\n";
+	if ( $arr['title'] ) {
+		$return_str .= "</div>\r\n<div style=\"display: block;text-align: center;margin: 0;padding: 0.2em;width: " . $arr['width'] . "\">\r\n";
+		$return_str .= "\t<p><em><strong>" . $arr['title'] . "</strong></em></p>\r\n";
 		$return_str .= "</div>";
 	} else {
 		$return_str .= "</div>";

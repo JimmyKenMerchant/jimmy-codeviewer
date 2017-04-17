@@ -6,7 +6,7 @@
  */
 
 $LINE_COUNT = "100";
-$BLOCK_WIDTH = "900px";
+$BLOCK_WIDTH = "100%";
 $NUMBER_WIDTH = "8%";
 $TEXT_ALIGN = "left";
 $LINE_HEIGHT = "normal";
@@ -27,3 +27,5 @@ $PADDING_LEFT = "4px";
 $WHITE_SPACE = "pre-wrap";
 $LINE10_COLOR = "#ff0";
 $LINE20_COLOR = "#f0f";
+$EDIT_INSTRUCTION = "false";
+
