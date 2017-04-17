@@ -5,15 +5,13 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Tags: code, viewer, code-viewer, text, text-viewer, layout, magazine, magazine-style
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
-Requires at least: WordPress 4.8-trunk
-Tested up to: WordPress 4.7.3
+Requires at least: 4.7.3
+Tested up to: 4.7.3
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-
-= Summary =
 
 Jimmy Codeviewer, a WordPress plugin, is a shortcode library to load text, SVG (Scalable Vector Graphics) and other scripts to WordPress pages. By using this plugin, you can reduce quantity of your code, e.g., if you want to put a proportional sample of programming code in your page, you just type one shortcode, then you get the sample with line numbers and colored words which you intended. In addition, you can make pages with layout similar to magazines on paper by using "magazine", a theme template.
 
