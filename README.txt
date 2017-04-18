@@ -2,18 +2,18 @@
 Contributors: kenjmk7r9merchant
 Plugin Name: Jimmy Codeviewer
 Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
-Tags: code, viewer, code-viewer, text, text-viewer, layout, magazine, magazine-style
+Tags: code, svg, text, script, viewer, loader, layout, magazine
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: 4.7.3
 Tested up to: 4.7.3
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Jimmy Codeviewer, a WordPress plugin, is a shortcode library to load text, SVG (Scalable Vector Graphics) and other scripts to WordPress pages. By using this plugin, you can reduce quantity of your code, e.g., if you want to put a proportional sample of programming code in your page, you just type one shortcode, then you get the sample with line numbers and colored words which you intended. In addition, you can make pages with layout similar to magazines on paper by using "magazine", a theme template.
+The shortcode library to load text, SVG (Scalable Vector Graphics) and other scripts to WordPress pages. By using this plugin, you can reduce quantity of your code, e.g., if you want to put a proportional sample of programming code in your page, you just type one shortcode, then you get the sample with line numbers and colored words which you intended. In addition, you can make pages with layout similar to magazines on paper by using "magazine", a theme template.
 
 = Introduction =
 
@@ -40,6 +40,33 @@ III. Color and Style Changer
 a. Shortcodes: [init_spansearch], [spansearch] and [spansearch_all] to change the text color and other styles. [divsearch] to change the row styles.
 
 b. JavaSctipt: spanSearch and its family, the engine to provide the above shortcodes to function.
+
+= Copyright =
+
+The Jimmy Codeviewer, A WordPress Plugin, Copyright 2017 Kenta Ishii
+Jimmy Codeviewer is distributed under the terms of the GNU GPL
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+== Installation ==
+
+From "Plugins" of your admin page, just search and install "Jimmy Codeviewer". Make sure to activate "Jimmy Codeviewer" in "Installed Plugins", a "Plugins" sub menu.
+
+You can download and test the latest version of this plugin from GitHub public repository. https://github.com/JimmyKenMerchant/jimmy-codeviewer/
+
+This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. The name of post type, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other names. LATEX, a renowned digital document preparation system, uses "jarticle" as a Japanese document class. But I think, in WordPress, "jArticle" as one of post types is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others. Embedded CSS in this plugin uses several names for HTML ids and classes, such as "magazine-content". If you meet any naming conflict in whole HTML ids or classes in your page, change these names to save each unique naming. Changing names of ids and classes in "style-codeviewer.css" does not affect functions of shortcodes in this plugin.
+
+This plugin wants encoding of the text is UTF-8, otherwise you meet empty return of HTML code. Setting UTF-8 to mb_detect_encoding and mb_convert_encoding is useful. Plus, you can use UTF-8 as PHP default, e.g., set "default_charset = UTF-8" in php.ini. You may need settings of Multibyte String Extension (php-mbstring) and more to fit UTF-8 encoding. Make sure to set UTF-8 in HTML, e.g., write "<meta charset="UTF-8">" in head tag. In addition, MySQL's Table charset needs utf8mb4, collate needs utf8mb4_unicode_ci. UTF-8 is ultimatelly in-bytes format for Unicode. If you want to search raw Unicode, you may need utf-16 style Unicode sucn as "/\x{2010}/u".
+
+== Frequently Asked Questions ==
 
 = Tutorial =
 
@@ -224,33 +251,6 @@ In PHP, 0, '', "", '0', "0", array() and null means FALSE in boolean check, TRUE
 
 Every attribute in shortcodes seems like to be String type. Check shortcode_parse_atts in shortcodes.php in wp-includes. This function uses a set of shorcode attributes as a text. Therefore, for example, if you want some number as Integer type, you need cast the value to Integer type. PHP's integer cast uses 'atoi', a C language function.
 
-== Installation ==
-
-From "Plugins" of your admin page, just search and install "Jimmy Codeviewer". Make sure to activate "Jimmy Codeviewer" in "Installed Plugins", a "Plugins" sub menu.
-
-You can download and test developing version of this plugin from GitHub public repository. https://github.com/JimmyKenMerchant/jimmy-codeviewer/
-
-This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. The name of post type, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other names. LATEX, a renowned digital document preparation system, uses "jarticle" as a Japanese document class. But I think, in WordPress, "jArticle" as one of post types is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others. Embedded CSS in this plugin uses several names for HTML ids and classes, such as "magazine-content". If you meet any naming conflict in whole HTML ids or classes in your page, change these names to save each unique naming. Changing names of ids and classes in "style-codeviewer.css" does not affect functions of shortcodes in this plugin.
-
-This plugin wants encoding of the text is UTF-8, otherwise you meet empty return of HTML code. Setting UTF-8 to mb_detect_encoding and mb_convert_encoding is useful. Plus, you can use UTF-8 as PHP default, e.g., set "default_charset = UTF-8" in php.ini. You may need settings of Multibyte String Extension (php-mbstring) and more to fit UTF-8 encoding. Make sure to set UTF-8 in HTML, e.g., write "<meta charset="UTF-8">" in head tag. In addition, MySQL's Table charset needs utf8mb4, collate needs utf8mb4_unicode_ci. UTF-8 is ultimatelly in-bytes format for Unicode. If you want to search raw Unicode, you may need utf-16 style Unicode sucn as "/\x{2010}/u".
-
-= Copyright =
-
-The Jimmy Codeviewer, A WordPress Plugin, Copyright 2017 Kenta Ishii
-Jimmy Codeviewer is distributed under the terms of the GNU GPL
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-== Frequently Asked Questions ==
-
 = Why will several special chars for searching make breaking of HTML in 'spansearch' series? =
 
 This problem is derived from the structure of shortcode itself. [, ], ", ', < , > should be used escape characters with ASCII code as the instruction below.
@@ -281,7 +281,7 @@ I'm thinking of making a GUI tool in this plugin. If you have some curious, plea
 
 == Upgrade Notice ==
 
-= 1.0.1 =
+= 1.0.2 =
 Please upgrade because of fixing bugs.
 
 == Changelog ==

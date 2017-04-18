@@ -5,7 +5,7 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Description: Multipurpose Text Viewer
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
-Version: 1.0.1
+Version: 1.0.2
 Text Domain: jimmy-codeviewer
 Domain Path: /languages
 License: GPL2 or Later
@@ -119,7 +119,9 @@ function jimmy_codeviewer_cancel_tagging() {
 		remove_filter( 'the_content', 'wpautop' );
 		remove_filter( 'the_excerpt', 'wpautop' );
 		add_filter( 'the_content', 'jimmy_codeviewer_erase_indents' );
+		add_filter( 'the_content', 'jimmy_codeviewer_changeto_ascii' );
 		add_filter( 'the_excerpt', 'jimmy_codeviewer_erase_indents' );
+		add_filter( 'the_excerpt', 'jimmy_codeviewer_changeto_ascii' );
 	}
 	return true;
 }
@@ -133,6 +135,44 @@ function jimmy_codeviewer_erase_indents( $content ) {
 	// add multi-lines pattern modifier "m" to use beginning of line outside of the delimiter.
 	$content = preg_replace( "/^[\t\s]+(<\/?div>?)/m", "$1", $content );
 	$content = preg_replace( "/^\t+\[|^\s+\[/m", "[", $content );
+	return $content;
+}
+
+/**
+ * Change several special characters to escape characters with ASCII code
+ * Only in enclosed contents of 'spansearch' series
+ */
+function jimmy_codeviewer_changeto_ascii( $content ) {
+	$offset_content = 0;
+	$i = 0;
+
+	while ( preg_match( '/(?:\[spansearch(?:_all)?[^\[\]]*\])(.*)(?:\[\/spansearch(?:_all)?\])/', $content, $matches, PREG_OFFSET_CAPTURE, $offset_content ) > 0 && $i < JIMMY_CODEVIEWER_LOOP_LIMITTER ) {
+		// $matches[0][0] stores all matched text
+		// $matches[0][1] the offset in the target text
+		// $matches[1][0] stores words in parenthesis captured [not(?:)]
+		// $matches[1][1] the offset in the target text
+		$front_content = substr( $content, 0, $matches[0][1] );
+		$back_content = substr( $content, $matches[0][1] + strlen( $matches[0][0] ) );
+		$front_tag = substr( $content, $matches[0][1], $matches[1][1] - $matches[0][1] );
+		$back_tag = substr( $content, $matches[1][1] + strlen( $matches[1][0] ), ( $matches[0][1] + strlen( $matches[0][0] ) ) - ( $matches[1][1] + strlen( $matches[1][0] ) ) );
+
+		// Make sure to use single quotations to the second argument
+		// Because of using escape character
+		$matches[1][0] = preg_replace( '/</', '\x3c', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/>/', '\x3e', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/\[/', '\x5b', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/\]/', '\x5d', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/"/', '\x22', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/\'/', '\x27', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/\-/', '\x2d', $matches[1][0] );
+
+		$content = $front_content . $front_tag . $matches[1][0] . $back_tag;
+		$offset_content = strlen( $content );
+		$content .= $back_content;
+
+		$i++;
+	}
+
 	return $content;
 }
 
