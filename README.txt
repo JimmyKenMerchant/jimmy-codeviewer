@@ -13,7 +13,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-The shortcode library to load text, SVG (Scalable Vector Graphics) and other scripts to WordPress pages. By using this plugin, you can reduce quantity of your code, e.g., if you want to put a proportional sample of programming code in your page, you just type one shortcode, then you get the sample with line numbers and colored words which you intended. In addition, you can make pages with layout similar to magazines on paper by using "magazine", a theme template.
+Jimmy Codeviewer is a shortcode library to load text, SVG (Scalable Vector Graphics) and other scripts to WordPress pages. By using this plugin, you can reduce quantity of your code, e.g., if you want to put a proportional sample of programming code in your page, you just type one shortcode, then you get the sample with line numbers and colored words which you intended. In addition, you can make pages with layout similar to magazines on paper by using "magazine", a theme template.
 
 = Introduction =
 
@@ -69,6 +69,9 @@ This plugin wants encoding of the text is UTF-8, otherwise you meet empty return
 == Frequently Asked Questions ==
 
 = Tutorial =
+
+Visit my site to check layout samples, and actually how to write HTML and shortcodes in your posts.
+http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 
 I. Brief
 First, you publish your text or SVGs in "jArticles". Second, you call these in "Posts" by using shortcodes. If you want to change color or style on some particular string and row, use shortcodes as the instruction below.
@@ -143,9 +146,9 @@ Searches the string "Some Word" on lines No.11 to No.14 of id "desc" which named
 c. '[spansearch_all id="text" background-color="blue"]Some String[/spansearch_all]':
 Searches the string "Some String" on all lines of id "text" which named in 'codeview' series then changes "Some String" background-color to blue. This shortcode does not require sequenced line numbers of made tables by 'codeview' series.
 
-To search for some special chars, you may need escape chars. WordPress shortcodes specially hate raw ">" and "<", even in the enclosed content (between a shortcode and its slashed shortcode), otherwise shortcodes will be broken. Shortcode values should not contain [, ], ", ', <, >. See the newest text of "https://codex.wordpress.org/Shortcode_API". Plus, by adding a code, ' (single quotation), " (double quotations) and & (ampersand) in the enclosed content will be HTML entities because of safety. To search special chars, use "\x3E" for ">", less-than and "\x3C" for "<", greater-than. To put spaces in attribute values, use quotes. Spaces in unquoted values will be broken.
+Shortcode attribute values should not contain several special characters. Read the newest version of "https://codex.wordpress.org/Shortcode_API". From Jimmy Codeviewer Version 1.0.2, the enclosed content (between a shortcode and its slashed shortcode) of 'spansearch' series can contain special characters, [, ], ", ', <, >.
 
-In the enclosed content, just use typed chars. No need of escape char for space, etc. Even if you want both 1 byte and 2 bytes chars. Besides, if you want to search HTML entities such as "&nbsp;" use unicode escape, just as "\xA0", "\u00A0" or "\u{00A0}". In making attributes of each shortcode, escape chars translate actual chars.
+If you want to search HTML entities such as "&nbsp;", use unicode escape characters just as "\xA0", "\u00A0" or "\u{00A0}". In the process of JavaScript (Node.textContent), HTML entities translate actual chars.
 
 'spansearch' series have these attributes below.
 
@@ -231,9 +234,6 @@ This Instruction is a little special. If you want to color the string to red, us
 (12) '(edit(end-color))':
 To end color-tag.
 
-Visit my site to check layout samples, and actually how to write HTML and shortcodes in your posts.
-http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
-
 = Compatibility =
 
 I. Themes
@@ -243,6 +243,10 @@ On WordPress Team's "Twenty Seventeen", this Plugin works but you may need to cu
 II. Web Browsers
 Firefox, Chrome, Opera, IE and Edge work on this plugin. Other browsers have not been tested. This plugin never guarantee to work SVG, JavaScript or other scripts in browsers. Even though you can load scripts using 'articleloader' series, these may not work properly.
 
+= When I used a 'codeview' shortcode, an error message was displayed on my post instead of the text I wanted. What's this? =
+
+'codeview' series and 'articleloader' series display error messages on several situations, e.g., if you use these shortcodes with incorrect post IDs or Slugs, error messages emerge with error numbers. Each error number is assigned to know where the error occurs. If you want to see meaning of each error number, check jimmy-codeviewer.php and article-loader.php.
+
 = Security Notice =
 
 Both 'codeview' series and 'articleloader' series do not support loading by post titles. Because post titles can not be guaranteed for unique naming, cross-site scripting attacks may occur by rewriting contents of "jArticles" on junior graded users (such as "jFellow"). Post ID and post slug have its unique naming. In extending or modifying this plugin, make sure NOT to use post titles for loading "jArticles". This plugin prohibit to load "jArticles" which don't be published by senior graded users (such as "Editor"). Senior graded users should pay attention to investigate SVGs, JavaScript and other scripts in "jArticles" for stopping any malicious activities before publishing "jArticles".
@@ -250,30 +254,6 @@ Both 'codeview' series and 'articleloader' series do not support loading by post
 In PHP, 0, '', "", '0', "0", array() and null means FALSE in boolean check, TRUE in empty check [empty()]. Besides, "\0" stores null character in String. This means no empty. C language recognizes null character such as null terminator (recognized as End of String). This difference between PHP and C language is used by hackers. To prevent possible null byte injection, I added a method to erase every null character in every relevant shortcode.
 
 Every attribute in shortcodes seems like to be String type. Check shortcode_parse_atts in shortcodes.php in wp-includes. This function uses a set of shorcode attributes as a text. Therefore, for example, if you want some number as Integer type, you need cast the value to Integer type. PHP's integer cast uses 'atoi', a C language function.
-
-= Why will several special chars for searching make breaking of HTML in 'spansearch' series? =
-
-This problem is derived from the structure of shortcode itself. [, ], ", ', < , > should be used escape characters with ASCII code as the instruction below.
-
-[ should be \x5b or \x5B
-
-] should be \x5d or \x5D
-
-" should be \x22
-
-' should be \x27
-
-< should be \x3c or \x3C
-
-> should be \x3e or \x3E
-
-= Why can't I get correct searching in 'spansearch' series? =
-
-Some characters may be automatically changed through searching process, e.g., double hyphens (--) may make em dash (—). If so, change the character to escape characters with ASCII code. In this case, use \x2d\x2d or \x2D\x2D instead of double hyphens.
-
-= When I used a 'codeview' shortcode, an error message was displayed on my post instead of the text I wanted. What's that? =
-
-'codeview' series and 'articleloader' series display error messages on several situations, e.g., if you use these shortcodes with incorrect post IDs or Slugs, error messages emerge with error numbers. Each error number is assigned to know where the error occurs. If you want to see meaning of each error number, check jimmy-codeviewer.php and article-loader.php.
 
 = What will you do here in the future? =
 
@@ -285,6 +265,9 @@ I'm thinking of making a GUI tool in this plugin. If you have some curious, plea
 Please upgrade because of fixing bugs.
 
 == Changelog ==
+
+= 1.0.2 =
+* Enabled to use special characters in enclosed contents in 'spansearch' series.
 
 = 1.0.1 =
 * Added an attribute whether Edit Instruction will be enabled or disabled on 'codeview' series

@@ -156,8 +156,9 @@ function jimmy_codeviewer_changeto_ascii( $content ) {
 		$front_tag = substr( $content, $matches[0][1], $matches[1][1] - $matches[0][1] );
 		$back_tag = substr( $content, $matches[1][1] + strlen( $matches[1][0] ), ( $matches[0][1] + strlen( $matches[0][0] ) ) - ( $matches[1][1] + strlen( $matches[1][0] ) ) );
 
-		// Make sure to use single quotations to the second argument
-		// Because of using escape character
+		// Replace special characters to escape characters
+		// Use apostrophes to second argument because of putting escape character itself
+		// Hyphen-minus should be replaced to hide automatic conversion '--' to em dash
 		$matches[1][0] = preg_replace( '/</', '\x3c', $matches[1][0] );
 		$matches[1][0] = preg_replace( '/>/', '\x3e', $matches[1][0] );
 		$matches[1][0] = preg_replace( '/\[/', '\x5b', $matches[1][0] );
