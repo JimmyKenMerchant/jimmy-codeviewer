@@ -6,7 +6,7 @@ Tags: code, svg, text, script, viewer, loader, layout, magazine
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: 4.7.3
-Tested up to: 4.7.3
+Tested up to: 4.7.4
 Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -55,6 +55,10 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
+
+== Screenshots ==
+1. Usage sample of shortcodes, 'codeview' series.
+2. Usage sample of shortcodes, 'spansearch' series and 'articleloader' series.
 
 == Installation ==
 
@@ -146,7 +150,7 @@ Searches the string "Some Word" on lines No.11 to No.14 of id "desc" which named
 c. '[spansearch_all id="text" background-color="blue"]Some String[/spansearch_all]':
 Searches the string "Some String" on all lines of id "text" which named in 'codeview' series then changes "Some String" background-color to blue. This shortcode does not require sequenced line numbers of made tables by 'codeview' series.
 
-Shortcode attribute values should not contain several special characters. Read the newest version of "https://codex.wordpress.org/Shortcode_API". From Jimmy Codeviewer Version 1.0.2, the enclosed content (between a shortcode and its slashed shortcode) of 'spansearch' series can contain special characters, [, ], ", ', <, >.
+From Jimmy Codeviewer Version 1.0.2, the enclosed content (between a shortcode and its slashed shortcode) of 'spansearch' series can contain special characters, [, ], ", ', <, >, &. Remember that "<". ">", "[", "]" need to append backslashes like "\<", "\>", "\[", "\]", because these are special brackets to use HTML, WordPress shortcode and Regular Expression. Shortcode attribute values should not contain several special characters. Read the latest version of "https://codex.wordpress.org/Shortcode_API". 
 
 If you want to search HTML entities such as "&nbsp;", use unicode escape characters just as "\xA0", "\u00A0" or "\u{00A0}". In the process of JavaScript (Node.textContent), HTML entities translate actual chars.
 
@@ -234,6 +238,14 @@ This Instruction is a little special. If you want to color the string to red, us
 (12) '(edit(end-color))':
 To end color-tag.
 
+= When I used a 'codeview' shortcode, an error message was displayed on my post instead of the text I wanted. What's this? =
+
+'codeview' series and 'articleloader' series display error messages on several situations, e.g., if you use these shortcodes with incorrect post IDs or Slugs, error messages emerge with error numbers. Each error number is assigned to know where the error occurs. If you want to see meaning of each error number, check jimmy-codeviewer.php and article-loader.php.
+
+= Why can't I get correct searching in 'spansearch' series? =
+
+In WordPress, several characters automatically converted. This function may cause incorrect searching. It's in "wp-includes/formatting.php". I'm trying to suppress these conversions. If you find a malfunction of searching process caused by any automatic converted character, please note it in the support forum of this plugin.
+
 = Compatibility =
 
 I. Themes
@@ -242,10 +254,6 @@ On WordPress Team's "Twenty Seventeen", this Plugin works but you may need to cu
 
 II. Web Browsers
 Firefox, Chrome, Opera, IE and Edge work on this plugin. Other browsers have not been tested. This plugin never guarantee to work SVG, JavaScript or other scripts in browsers. Even though you can load scripts using 'articleloader' series, these may not work properly.
-
-= When I used a 'codeview' shortcode, an error message was displayed on my post instead of the text I wanted. What's this? =
-
-'codeview' series and 'articleloader' series display error messages on several situations, e.g., if you use these shortcodes with incorrect post IDs or Slugs, error messages emerge with error numbers. Each error number is assigned to know where the error occurs. If you want to see meaning of each error number, check jimmy-codeviewer.php and article-loader.php.
 
 = Security Notice =
 
@@ -257,17 +265,18 @@ Every attribute in shortcodes seems like to be String type. Check shortcode_pars
 
 = What will you do here in the future? =
 
-I'm thinking of making a GUI tool in this plugin. If you have some curious, please note in the support forum of this plugin.
+I'm thinking of making a GUI tool in this plugin. If you have some curious, please note it in the support forum of this plugin.
 
 == Upgrade Notice ==
 
 = 1.0.2 =
-Please upgrade because of fixing bugs.
+Please upgrade because of fixing bugs and having new futures.
 
 == Changelog ==
 
 = 1.0.2 =
 * Enabled to use special characters in enclosed contents in 'spansearch' series.
+: April 24, 2017
 
 = 1.0.1 =
 * Added an attribute whether Edit Instruction will be enabled or disabled on 'codeview' series

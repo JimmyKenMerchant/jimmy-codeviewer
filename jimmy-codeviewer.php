@@ -119,9 +119,9 @@ function jimmy_codeviewer_cancel_tagging() {
 		remove_filter( 'the_content', 'wpautop' );
 		remove_filter( 'the_excerpt', 'wpautop' );
 		add_filter( 'the_content', 'jimmy_codeviewer_erase_indents' );
-		add_filter( 'the_content', 'jimmy_codeviewer_changeto_ascii' );
+		// Add First Priority not to do after functions in wp-includes/formatting.php
+		add_filter( 'the_content', 'jimmy_codeviewer_changeto_ascii', 1 );
 		add_filter( 'the_excerpt', 'jimmy_codeviewer_erase_indents' );
-		add_filter( 'the_excerpt', 'jimmy_codeviewer_changeto_ascii' );
 	}
 	return true;
 }
@@ -157,15 +157,16 @@ function jimmy_codeviewer_changeto_ascii( $content ) {
 		$back_tag = substr( $content, $matches[1][1] + strlen( $matches[1][0] ), ( $matches[0][1] + strlen( $matches[0][0] ) ) - ( $matches[1][1] + strlen( $matches[1][0] ) ) );
 
 		// Replace special characters to escape characters
-		// Use apostrophes to second argument because of putting escape character itself
-		// Hyphen-minus should be replaced to hide automatic conversion '--' to em dash
-		$matches[1][0] = preg_replace( '/</', '\x3c', $matches[1][0] );
-		$matches[1][0] = preg_replace( '/>/', '\x3e', $matches[1][0] );
-		$matches[1][0] = preg_replace( '/\[/', '\x5b', $matches[1][0] );
-		$matches[1][0] = preg_replace( '/\]/', '\x5d', $matches[1][0] );
+		// Use apostrophes to second argument because of putting escape characters itself
+		$matches[1][0] = preg_replace( '/\x5c</', '\x3c', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/\x5c>/', '\x3e', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/\x5c\[/', '\x5b', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/\x5c\]/', '\x5d', $matches[1][0] );
 		$matches[1][0] = preg_replace( '/"/', '\x22', $matches[1][0] );
 		$matches[1][0] = preg_replace( '/\'/', '\x27', $matches[1][0] );
-		$matches[1][0] = preg_replace( '/\-/', '\x2d', $matches[1][0] );
+		//To hide WordPress default conversion '--' to em dash
+		$matches[1][0] = preg_replace( '/\-\-/', '\x2d\x2d', $matches[1][0] );
+		$matches[1][0] = preg_replace( '/&/', '\x26', $matches[1][0] );
 
 		$content = $front_content . $front_tag . $matches[1][0] . $back_tag;
 		$offset_content = strlen( $content );
