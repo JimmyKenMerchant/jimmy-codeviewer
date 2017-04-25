@@ -7,7 +7,7 @@ Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: 4.7.3
 Tested up to: 4.7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,11 +29,9 @@ b. Edit Instructions: "(edit(exam-ple))" to make HTML markup or other escaped li
 
 c. Style Sheet: CSS Style Sheet to make web layout easier with Code Viewer.
 
-
 II. Article Loader
 
 a. Shortcodes: [articleloader_byid] and [articleloader_byname] to show SVGs or other scripts in "Posts".
-
 
 III. Color and Style Changer
 
@@ -72,18 +70,15 @@ This plugin wants encoding of the text is UTF-8, otherwise you meet empty return
 
 == Frequently Asked Questions ==
 
-= Tutorial =
+= Tutorial I - III =
 
-Visit my site to check layout samples, and actually how to write HTML and shortcodes in your posts.
-http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
+Visit my site to check layout samples, and actually how to write HTML and shortcodes in your posts. http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 
 I. Brief
 First, you publish your text or SVGs in "jArticles". Second, you call these in "Posts" by using shortcodes. If you want to change color or style on some particular string and row, use shortcodes as the instruction below.
 
-
 II. Publish your text or SVGs in "jArticles"
-After activated this plugin, you can see "jArticles" menu on the Admin Side Bar. Click this, then edit your text and publish. Make sure to note the post ID (on URL of the editor page itself) or the slug you made. This "jArticle" can not been shown in your site publicly.
-
+After activated this plugin, you can see "jArticles" menu on the Admin Side Bar. Click this, then edit your text and publish. Make sure to note the post ID (on URL of the editor page itself) or the slug you made. This "jArticle" can not be shown in your site publicly.
 
 III. Calling "jArticles" in "Posts"
 Now you can use shortcodes on "Posts".
@@ -94,7 +89,7 @@ Shows line No.1 and sequenced 5 lines from No.1 in the text of the jArticle, the
 b. '[codeview_byname theme="magazine" id="text" start="4"]some-thing(the post slug [name] of jArticle)[/codeview_byname]':
 Shows line No.4 in the text of the jArticle, the post slug is "some-thing" and assign each row ID as "text-(its line number)" and table class as "text" with magazine template.
 
-'theme="magazine"' in these shortcodes means making HTML tags with magazine template. For example, if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
+'theme="magazine"' means making HTML tags with magazine template, e.g., if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
 
 Styles can change individually on each shortcode. You can use attributes below.
 
@@ -139,6 +134,7 @@ c. '[articleloader_byid"]111(the post ID of jArticle)[/articleloader_byid]':
 d. '[articleloader_byname"]some-thing(the post slug [name] of jArticle)[/articleloader_byname]':
 Likewise 'codeview' series, these show jArticles on your posts. But these are not for text but for scripts. SVGs and other scripts can be loaded to particular posts. Unlike 'codeview' series, attributes don't exist.
 
+= Tutorial IV =
 
 IV. Change Color or style on some particular string and row
 a. '[init_spansearch]':
@@ -191,10 +187,10 @@ Searches lines No.3 to No.7 of id "title" which named in 'codeview' series then 
 (10) 'font-style' // background-color of target line(s)
 (11) 'font-weight' // background-color of target line(s)
 
+= Tutorial V - VI =
 
 V. Capabilities of editing "jArticles"
 On activation of this plugin, "Adiministor" and "Editor" are added full capabilities to edit and publish "jArticles". "jFellow" role, which has limited capabilities to edit "jArticle", added to admin system. On deactivation of this plugin, capabilities for "jArticles" and "jFellow" role will be erased.
-
 
 VI. Edit Instructions
 In text of "jArticles" to use 'codeview' series, you can use Edit Instructions to put HTML tags for ruby, newline, etc. In 'codeview', HTML special characters and some entities changes to HTML escapes such as "&lt;" (for "<"). Therefore, you need to use Edit Instructions to put HTML tags. Plus, to function 'spansearch' series, each children tag needs to be named. To take easy of these work, Edit Instructions exist. Plus, if you want newlines in one line on "jArticles", you can use '(edit(new-line))'.
@@ -251,7 +247,6 @@ In WordPress, several characters automatically converted. This function may caus
 I. Themes
 On WordPress Team's "Twenty Seventeen", this Plugin works but you may need to customize "Twenty Seventeen" or this plugin to fit on display. Some themes such as "Twenty Seventeen" are having style flexibility between mobile devices and personal computers. Nowadays, rendering power of displays on both mobiles and personals are close to each other. Small displays can work as well as big displays by high density pixels. So I now recommend to trash flexibility between both. This gives us concentration of manpower to one layout in one site and grows quality of the site design. 
 
-
 II. Web Browsers
 Firefox, Chrome, Opera, IE and Edge work on this plugin. Other browsers have not been tested. This plugin never guarantee to work SVG, JavaScript or other scripts in browsers. Even though you can load scripts using 'articleloader' series, these may not work properly.
 
@@ -269,10 +264,13 @@ I'm thinking of making a GUI tool in this plugin. If you have some curious, plea
 
 == Upgrade Notice ==
 
-= 1.0.2 =
+= 1.0.3 =
 Please upgrade because of fixing bugs and having new futures.
 
 == Changelog ==
+
+= 1.0.3 =
+* README.txt modified
 
 = 1.0.2 =
 * Enabled to use special characters in enclosed contents in 'spansearch' series.
