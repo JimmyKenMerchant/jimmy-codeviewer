@@ -62,7 +62,7 @@ GNU General Public License for more details.
 
 From "Plugins" of your admin page, just search and install "Jimmy Codeviewer". Make sure to activate "Jimmy Codeviewer" in "Installed Plugins", a "Plugins" sub menu.
 
-You can download and test the latest version of this plugin from GitHub public repository. https://github.com/JimmyKenMerchant/jimmy-codeviewer/
+You can download and test the latest version of this plugin from GitHub public repository. <https://github.com/JimmyKenMerchant/jimmy-codeviewer/>
 
 This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. The name of post type, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other names. LATEX, a renowned digital document preparation system, uses "jarticle" as a Japanese document class. But I think, in WordPress, "jArticle" as one of post types is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others. Embedded CSS in this plugin uses several names for HTML ids and classes, such as "magazine-content". If you meet any naming conflict in whole HTML ids or classes in your page, change these names to save each unique naming. Changing names of ids and classes in "style-codeviewer.css" does not affect functions of shortcodes in this plugin.
 
@@ -72,7 +72,7 @@ This plugin wants encoding of the text is UTF-8, otherwise you meet empty return
 
 = Tutorial I - III =
 
-Visit my site to check layout samples, and actually how to write HTML and shortcodes in your posts. http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
+Visit my site to check layout samples, and actually how to write HTML and shortcodes in your posts. <http://electronics.jimmykenmerchant.com/jimmy-codeviewer/>
 
 I. Brief
 First, you publish your text or SVGs in "jArticles". Second, you call these in "Posts" by using shortcodes. If you want to change color or style on some particular string and row, use shortcodes as the instruction below.
