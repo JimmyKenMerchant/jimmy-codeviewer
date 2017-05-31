@@ -44,7 +44,7 @@ function jimmy_codeviewer_shortcode_spansearch( $atts, $content = null ) {
 
 	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
-	$return_str .= "\tspanSearch(\"" . $arr['id'] .
+	$return_str .= "\tJIMMY_CODEVIEWER.spanSearch(\"" . $arr['id'] .
 						"\", \"" . $arr['start'] .
 						"\", \"" . $arr['end'] .
 						"\", \"" . htmlspecialchars( $content ) . // target string to change status
@@ -88,7 +88,7 @@ function jimmy_codeviewer_shortcode_spansearch_all( $atts, $content = null ) {
 
 	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
-	$return_str .= "\tspanSearch_All(\"" . $arr['id'] .
+	$return_str .= "\tJIMMY_CODEVIEWER.spanSearch_All(\"" . $arr['id'] .
 						"\", \"" . htmlspecialchars( $content ) . // target string to change status
 						"\", \"" . $arr['color'] .
 						"\", \"" . $arr['background-color'] .
@@ -131,7 +131,7 @@ function jimmy_codeviewer_shortcode_divsearch( $atts ) {
 
 	$return_str = "<script type=\"text/javascript\" defer>\r\n";
 
-	$return_str .= "\tdivSearch(\"" . $arr['id'] .
+	$return_str .= "\tJIMMY_CODEVIEWER.divSearch(\"" . $arr['id'] .
 						"\", \"" . $arr['start'] .
 						"\", \"" . $arr['end'] .
 						"\", \"" . $arr['text-align'] .

@@ -13,7 +13,9 @@
  * Besides, if you want plain space, just use " " itself.
  */
 
-//spanSearch("alpha", "24", "25", "Array", "#0ff", "", "", "", "", "", "", "", "");
+//JIMMY_CODEVIEWER.spanSearch("alpha", "24", "25", "Array", "#0ff", "", "", "", "", "", "", "", "");
+
+var JIMMY_CODEVIEWER = JIMMY_CODEVIEWER || {};
 
 /**
  * Search some word or spring then treat its font styles, color, etc.
@@ -33,7 +35,7 @@
  * 
  * end, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier can be undefined.
  */
-function spanSearch (id, start, end, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
+JIMMY_CODEVIEWER.spanSearch = function (id, start, end, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
 	if (id === "" || typeof id === "undefined") {
 		console.error("spanSearch: 'id' empty or undefined!");
 		return false;
@@ -58,7 +60,7 @@ function spanSearch (id, start, end, str, col, back_col, font_family, font_size,
 		//console.log(idnum);
 		var roottag = document.getElementById(idnum);
 		if (roottag) {
-			var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier);
+			var error = JIMMY_CODEVIEWER.__spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier);
 			if (!error) {
 				console.error("spanSearch: Failed to __spanSearch");
 				return false;
@@ -71,7 +73,7 @@ function spanSearch (id, start, end, str, col, back_col, font_family, font_size,
 		i++;
 	}
 	return true;
-}
+};
 
 /**
  * Search some word or spring then treat its font styles, color, etc. in all line of the table
@@ -89,7 +91,7 @@ function spanSearch (id, start, end, str, col, back_col, font_family, font_size,
  * 
  * col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier can be undefined.
  */
-function spanSearch_All (id, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
+JIMMY_CODEVIEWER.spanSearch_All = function (id, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
 	if (id === "" || typeof id === "undefined") {
 		console.error("spanSearch_All: 'id' empty or undefined!");
 		return false;
@@ -113,7 +115,7 @@ function spanSearch_All (id, str, col, back_col, font_family, font_size, font_st
 			var incre = 2;
 			for (var k = 0; k < blk_length; k++) {
 				idnum = c_eles[incre].id;
-				var error = __spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier);
+				var error = JIMMY_CODEVIEWER.__spanSearch(idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier);
 				if (!error) {
 					console.error("spanSearch_All: Failed to __spanSearch");
 					return false;
@@ -126,13 +128,13 @@ function spanSearch_All (id, str, col, back_col, font_family, font_size, font_st
 		return false;
 	}
 	return true;
-}
+};
 
 /**
  * Pseudo Recursive Function to search target string in all span tags on one line
  * Change font styles, color, etc. of target string
  */
-function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
+JIMMY_CODEVIEWER.__spanSearch = function (idnum, str, col, back_col, font_family, font_size, font_style, font_weight, v_align, regex_enable, regex_modifier) {
 	if (regex_enable === "TRUE" || regex_enable === "true") {
 		var modi = "";
 		if (regex_modifier.indexOf("m") !== -1) {
@@ -160,7 +162,7 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 			// Get Text on the last lavel child to search target string
 			var seartxt = target.textContent;
 			// Check whether target string exists or not in text
-			if (txtChecker(seartxt, str, regex_enable) !== -1) {
+			if (JIMMY_CODEVIEWER.txtChecker(seartxt, str, regex_enable) !== -1) {
 				// Remove all text node in this span tag
 				while (target.hasChildNodes()) {
 					target.removeChild(target.lastChild);
@@ -168,7 +170,7 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 				// Check whether second time or not on next loop
 				var stflag = false;
 				// Loop to change status of all target string in this tag
-				while (txtChecker(seartxt, str, regex_enable) !== -1) {
+				while (JIMMY_CODEVIEWER.txtChecker(seartxt, str, regex_enable) !== -1) {
 					// If second time on this loop, remove last children span tag in this tag not to duplicate strings
 					if (stflag) {
 						target.removeChild(target.lastChild);
@@ -195,7 +197,7 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 							fstspan.id = pre_spanid + asign_number;
 							asign_number++;
 							var fsttxt = document.createTextNode(fst);
-							fstspan = spanStyle(fstspan, col, back_col, font_family, font_size, font_style, font_weight, v_align);
+							fstspan = JIMMY_CODEVIEWER.spanStyle(fstspan, col, back_col, font_family, font_size, font_style, font_weight, v_align);
 							if (!fstspan) {
 								return false;
 							}
@@ -235,7 +237,7 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 							sndspan.id = pre_spanid + asign_number;
 							asign_number++;
 							var sndtxt = document.createTextNode(snd);
-							sndspan = spanStyle(sndspan, col, back_col, font_family, font_size, font_style, font_weight, v_align);
+							sndspan = JIMMY_CODEVIEWER.spanStyle(sndspan, col, back_col, font_family, font_size, font_style, font_weight, v_align);
 							if (!sndspan) {
 								return false;
 							}
@@ -261,7 +263,7 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 							fstspan.id = pre_spanid + asign_number;
 							asign_number++;
 							var fsttxt = document.createTextNode(fst);
-							fstspan = spanStyle(fstspan, col, back_col, font_family, font_size, font_style, font_weight, v_align);
+							fstspan = JIMMY_CODEVIEWER.spanStyle(fstspan, col, back_col, font_family, font_size, font_style, font_weight, v_align);
 							if (!fstspan) {
 								return false;
 							}
@@ -316,7 +318,7 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 							sndspan.id = pre_spanid + asign_number;
 							asign_number++;
 							var sndtxt = document.createTextNode(snd);
-							sndspan = spanStyle(sndspan, col, back_col, font_family, font_size, font_style, font_weight, v_align);
+							sndspan = JIMMY_CODEVIEWER.spanStyle(sndspan, col, back_col, font_family, font_size, font_style, font_weight, v_align);
 							if (!sndspan) {
 								return false;
 							}
@@ -356,13 +358,13 @@ function __spanSearch (idnum, str, col, back_col, font_family, font_size, font_s
 		//console.log(clist.length);
 	}
 	return true;
-}
+};
 
 
 /**
  * Check usage of Regular Expression in function __spanSearch
  */
-function txtChecker (seartxt, str, regex_enable) {
+JIMMY_CODEVIEWER.txtChecker = function (seartxt, str, regex_enable) {
 	if (regex_enable === "TRUE" || regex_enable === "true") {
 		var val = seartxt.search(str);
 		return val;
@@ -370,12 +372,12 @@ function txtChecker (seartxt, str, regex_enable) {
 		var val = seartxt.indexOf(str);
 		return val;
 	}
-}
+};
 
 /**
  * Style Changer in function __spanSearch
  */
-function spanStyle (ele, col, back_col, font_family, font_size, font_style, font_weight, v_align) {
+JIMMY_CODEVIEWER.spanStyle = function (ele, col, back_col, font_family, font_size, font_style, font_weight, v_align) {
 	if (col !== "" && typeof col !== "undefined") {
 		ele.style.color = col;
 		if (!ele.style.color) {
@@ -427,7 +429,7 @@ function spanStyle (ele, col, back_col, font_family, font_size, font_style, font
 	}
 
 	return ele;
-}
+};
 
 /**
  * Search line(s) and set text-align, line-height, etc.
@@ -446,7 +448,7 @@ function spanStyle (ele, col, back_col, font_family, font_size, font_style, font
  * end, t_align, line_height, col, back_col, font_family, font_size, font_style, font_weight can be undefined.
  *
  */
-function divSearch (id, start, end, t_align, line_height, col, back_col, font_family, font_size, font_style, font_weight) {
+JIMMY_CODEVIEWER.divSearch = function (id, start, end, t_align, line_height, col, back_col, font_family, font_size, font_style, font_weight) {
 	if (id === "" || typeof id === "undefined") {
 		console.error("divSearch: 'id' empty or undefined!");
 		return false;
@@ -538,4 +540,4 @@ function divSearch (id, start, end, t_align, line_height, col, back_col, font_fa
 		i++;
 	}
 	return true;
-}
+};

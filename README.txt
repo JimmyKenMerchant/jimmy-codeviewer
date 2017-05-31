@@ -5,8 +5,8 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Tags: code, svg, text, script, viewer, loader, layout, magazine
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
-Requires at least: 4.7.3
-Tested up to: 4.7.4
+Requires at least: 4.7
+Tested up to: 4.7
 Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -37,7 +37,7 @@ III. Color and Style Changer
 
 a. Shortcodes: [init_spansearch], [spansearch] and [spansearch_all] to change the text color and other styles. [divsearch] to change the row styles.
 
-b. JavaSctipt: spanSearch and its family, the engine to provide the above shortcodes to function.
+b. JavaSctipt: 'spanSearch' and its family, the engine to provide the above shortcodes to function.
 
 = Copyright =
 
@@ -271,6 +271,7 @@ Please upgrade because of fixing bugs and having new futures.
 
 = 1.0.3 =
 * README.txt modified
+* Capsulation of JavaScript by objectification to 'JIMMY_CODEVIEWER'
 
 = 1.0.2 =
 * Enabled to use special characters in enclosed contents in 'spansearch' series.
