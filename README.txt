@@ -6,7 +6,7 @@ Tags: code, svg, text, script, viewer, loader, layout, magazine
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: 4.7
-Tested up to: 4.7
+Tested up to: 4.8
 Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -263,15 +263,15 @@ Every attribute in shortcodes seems like to be String type. Check shortcode_pars
 I'm thinking of making a GUI tool in this plugin. If you have some curious, please note it in the support forum of this plugin.
 
 == Upgrade Notice ==
-
 = 1.0.3 =
-Please upgrade because of fixing bugs and having new futures.
+Please upgrade because of fixing bugs and having new futures: Capsulation of JavaScript by objectification to 'JIMMY_CODEVIEWER'. Confirmed Compatibility with WordPress Version 4.8.
 
 == Changelog ==
 
 = 1.0.3 =
-* README.txt modified
 * Capsulation of JavaScript by objectification to 'JIMMY_CODEVIEWER'
+* Confirmed Compatibility with WordPress Version 4.8
+: June 10, 2017
 
 = 1.0.2 =
 * Enabled to use special characters in enclosed contents in 'spansearch' series.

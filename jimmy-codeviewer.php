@@ -111,17 +111,13 @@ register_deactivation_hook( __FILE__, 'jimmy_codeviewer_roles_retrieve' );
 
 
 /**
- * Cancel auto html tagging <p> and/or <br />
+ * Cancel auto html tagging (<p> and/or <br />) and so on
  * On default of this plugin, post is only capable with Code Viewer. 
  */
 function jimmy_codeviewer_cancel_tagging() {
 	if ( get_post_type() === "post" ) {
-		remove_filter( 'the_content', 'wpautop' );
-		remove_filter( 'the_excerpt', 'wpautop' );
-		add_filter( 'the_content', 'jimmy_codeviewer_erase_indents' );
-		// Add First Priority not to do after functions in wp-includes/formatting.php
+		// Add First Priority not to do after default functions in wp-includes/formatting.php
 		add_filter( 'the_content', 'jimmy_codeviewer_changeto_ascii', 0 );
-		add_filter( 'the_excerpt', 'jimmy_codeviewer_erase_indents' );
 	}
 	return true;
 }
@@ -129,12 +125,11 @@ add_action( 'the_post', 'jimmy_codeviewer_cancel_tagging' );
 
 
 /**
- * Erase indents in posts for proportional HTML code to review
+ * Erase indents of 'codeview' shortcodes for proportional HTML code to review
  */
 function jimmy_codeviewer_erase_indents( $content ) {
 	// add multi-lines pattern modifier "m" to use beginning of line outside of the delimiter.
-	$content = preg_replace( "/^[\t\s]+(<\/?div>?)/m", "$1", $content );
-	$content = preg_replace( "/^\t+\[|^\s+\[/m", "[", $content );
+	$content = preg_replace( "/^(?:\t+|\s+)\[(codeview_byid|codeview_byname)/m", "[$1", $content );
 	return $content;
 }
 
@@ -175,6 +170,13 @@ function jimmy_codeviewer_changeto_ascii( $content ) {
 		$i++;
 	}
 
+	// Only on 'codeview' shortcodes usage, remove auto tagging and erase these indents
+	if ( preg_match( '/\[codeview_(?:byid|byname)/', $content ) > 0 ) {
+		// Because of First Priority, you can remove and/or add events afterwards
+		remove_filter( 'the_content', 'wpautop' );
+		add_filter( 'the_content', 'jimmy_codeviewer_erase_indents' );
+	}
+
 	return $content;
 }
 
@@ -183,7 +185,7 @@ function jimmy_codeviewer_changeto_ascii( $content ) {
  * Add style in using 'codeview' series
  */
 function jimmy_codeviewer_style() {
-	wp_enqueue_style( 'jimmy-codeviewer-style',  plugins_url( 'style-codeviewer.css', __FILE__ ), array(), null );
+	wp_enqueue_style( 'jimmy-codeviewer-style',  plugins_url( 'style-codeviewer.css', __FILE__ ), array(), '1.0' );
 	return true;
 }
 add_action( 'wp_enqueue_scripts', 'jimmy_codeviewer_style' );
