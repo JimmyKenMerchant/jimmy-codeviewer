@@ -7,7 +7,7 @@ Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: 4.7
 Tested up to: 4.8
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,7 +66,7 @@ You can download and test the latest version of this plugin from GitHub public r
 
 This Plugin uses several text domains. Names of shortcodes may conflict with shortcodes in other plugins. The name of post type, "jArticle" is considering its unique naming, but even "jArticle", this name may conflict with other names. LATEX, a renowned digital document preparation system, uses "jarticle" as a Japanese document class. But I think, in WordPress, "jArticle" as one of post types is unique naming. Before activating this plugin, make sure to check naming conflict between this plugin and others. Embedded CSS in this plugin uses several names for HTML ids and classes, such as "magazine-content". If you meet any naming conflict in whole HTML ids or classes in your page, change these names to save each unique naming. Changing names of ids and classes in "style-codeviewer.css" does not affect functions of shortcodes in this plugin.
 
-This plugin wants encoding of the text is UTF-8, otherwise you meet empty return of HTML code. Setting UTF-8 to mb_detect_encoding and mb_convert_encoding is useful. Plus, you can use UTF-8 as PHP default, e.g., set "default_charset = UTF-8" in php.ini. You may need settings of Multibyte String Extension (php-mbstring) and more to fit UTF-8 encoding. Make sure to set UTF-8 in HTML, e.g., write "<meta charset="UTF-8">" in head tag. In addition, MySQL's Table charset needs utf8mb4, collate needs utf8mb4_unicode_ci. UTF-8 is ultimatelly in-bytes format for Unicode. If you want to search raw Unicode, you may need utf-16 style Unicode sucn as "/\x{2010}/u".
+This plugin wants encoding of the text is UTF-8, otherwise you meet empty return of HTML code. Setting UTF-8 to mb_detect_encoding and mb_convert_encoding is useful. Plus, you can use UTF-8 as PHP default, e.g., set "default_charset = UTF-8" in php.ini. You may need settings of Multibyte String Extension (php-mbstring) and more to fit UTF-8 encoding. Make sure to set UTF-8 in HTML, e.g., write "<meta charset="UTF-8">" in head tag. In addition, MySQL's Table charset needs utf8mb4, collate needs utf8mb4_unicode_ci. UTF-8 is ultimatelly in-bytes format for Unicode. If you want to search raw Unicode, you may need utf-16 style Unicode such as "/\x{2010}/u".
 
 == Frequently Asked Questions ==
 
@@ -81,7 +81,7 @@ II. Publish your text or SVGs in "jArticles"
 After activated this plugin, you can see "jArticles" menu on the Admin Side Bar. Click this, then edit your text and publish. Make sure to note the post ID (on URL of the editor page itself) or the slug you made. This "jArticle" can not be shown in your site publicly.
 
 III. Calling "jArticles" in "Posts"
-Now you can use shortcodes on "Posts".
+Now you can use shortcodes on "Posts". In use of 'codeview' shorcodes, auto tagging (<p> and/or <br />) for your post will be disabled, and indents for 'codeview' shortcodes will be erased automatically.
 
 a. '[codeview_byid theme="default" id="desc" start="1" count="5"]111(the post ID of jArticle)[/codeview_byid]':
 Shows line No.1 and sequenced 5 lines from No.1 in the text of the jArticle, the post ID is "111" and assign each row ID as "desc-(its line number)" and table class as "desc" with default template.
@@ -267,6 +267,10 @@ I'm thinking of making a GUI tool in this plugin. If you have some curious, plea
 Please upgrade because of fixing bugs and having new futures: Capsulation of JavaScript by objectification to 'JIMMY_CODEVIEWER'. Confirmed Compatibility with WordPress Version 4.8.
 
 == Changelog ==
+
+= 1.0.4 =
+*
+:
 
 = 1.0.3 =
 * Capsulation of JavaScript by objectification to 'JIMMY_CODEVIEWER'

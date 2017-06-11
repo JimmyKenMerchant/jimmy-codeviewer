@@ -5,7 +5,7 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Description: Multipurpose Text Viewer
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
-Version: 1.0.3
+Version: 1.0.4
 Text Domain: jimmy-codeviewer
 Domain Path: /languages
 License: GPL2 or Later
@@ -129,7 +129,7 @@ add_action( 'the_post', 'jimmy_codeviewer_cancel_tagging' );
  */
 function jimmy_codeviewer_erase_indents( $content ) {
 	// add multi-lines pattern modifier "m" to use beginning of line outside of the delimiter.
-	$content = preg_replace( "/^(?:\t+|\s+)\[(codeview_byid|codeview_byname)/m", "[$1", $content );
+	$content = preg_replace( "/^(?:\t+|\s+)(\[codeview_byid[^\]]*\]|\[codeview_byname[^\]]*\])/m", "$1", $content );
 	return $content;
 }
 
@@ -171,7 +171,7 @@ function jimmy_codeviewer_changeto_ascii( $content ) {
 	}
 
 	// Only on 'codeview' shortcodes usage, remove auto tagging and erase these indents
-	if ( preg_match( '/\[codeview_(?:byid|byname)/', $content ) > 0 ) {
+	if ( preg_match( '/\[codeview_(?:byid|byname)[^\]]*\]/', $content ) > 0 ) {
 		// Because of First Priority, you can remove and/or add events afterwards
 		remove_filter( 'the_content', 'wpautop' );
 		add_filter( 'the_content', 'jimmy_codeviewer_erase_indents' );
