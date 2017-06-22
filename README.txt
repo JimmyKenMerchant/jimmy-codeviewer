@@ -7,7 +7,7 @@ Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: 4.7
 Tested up to: 4.8
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,7 +89,7 @@ Shows line No.1 and sequenced 5 lines from No.1 in the text of the jArticle, the
 b. `[codeview_byname theme="magazine" id="text" start="4"]some-thing(slug name of jArticle content)[/codeview_byname]` :
 Shows line No.4 in the text of the jArticle, the post slug is "some-thing" and assign each row ID as "text-(its line number)" and table class as "text" with magazine template.
 
-`theme="magazine"` means making HTML tags with magazine template, e.g., if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
+'theme="magazine"' means making HTML tags with magazine template, e.g., if you use magazine template, background-color of your text becomes transparent. Besides, if you use default template, the background-color becomes blue.
 
 Styles can change individually on each shortcode. You can use attributes below.
 
@@ -263,10 +263,14 @@ Every attribute in shortcodes seems like to be String type. Check shortcode_pars
 I'm thinking of making a GUI tool in this plugin. If you have some curious, please note it in the support forum of this plugin.
 
 == Upgrade Notice ==
-= 1.0.4 =
-Please upgrade because of fixing bugs and having new futures: Modified 'codeview' shortcodes detecting process to cancel auto tagging and/or remove indents.
+= 1.0.5 =
+Please upgrade because of fixing bugs and having new futures: Modified README.txt.
 
 == Changelog ==
+
+= 1.0.5 =
+* Modified README.txt
+: June 22, 2017
 
 = 1.0.4 =
 * Modified 'codeview' shortcodes detecting process to cancel auto tagging and/or remove indents
