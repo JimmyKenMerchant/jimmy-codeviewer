@@ -5,7 +5,7 @@ Plugin URI: http://electronics.jimmykenmerchant.com/jimmy-codeviewer/
 Description: Multipurpose Text Viewer
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
-Version: 1.0.5
+Version: 1.0.6
 Text Domain: jimmy-codeviewer
 Domain Path: /languages
 License: GPL2 or Later
