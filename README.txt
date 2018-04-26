@@ -6,8 +6,8 @@ Tags: code, svg, text, script, viewer, loader, layout, magazine
 Author: Kenta Ishii
 Author URI: http://electronics.jimmykenmerchant.com
 Requires at least: 4.7
-Tested up to: 4.8
-Stable tag: 1.0.5
+Tested up to: 4.9
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -263,10 +263,14 @@ Every attribute in shortcodes seems like to be String type. Check shortcode_pars
 I'm thinking of making a GUI tool in this plugin. If you have some curious, please note it in the support forum of this plugin.
 
 == Upgrade Notice ==
-= 1.0.5 =
-Please upgrade because of fixing bugs and having new futures: Modified README.txt.
+= 1.0.6 =
+Please upgrade because of fixing bugs and having new futures: Confirmed Compatibility with WordPress Version 4.9.
 
 == Changelog ==
+
+= 1.0.6 =
+* Confirmed Compatibility with WordPress Version 4.9
+: April 26, 2018
 
 = 1.0.5 =
 * Modified README.txt
